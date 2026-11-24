@@ -589,7 +589,8 @@ class MagicWorldApp {
       const pathsHtml = guides.map(st => `<path d="${st.d}" fill="none" stroke="#2563EB" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />`).join('');
       svgContainer.innerHTML = `
         <svg viewBox="0 0 100 160" width="84" height="116" style="background:#FAFDFE; border-radius:12px; border:1px solid #BAE6FD; box-shadow:inset 0 1px 4px rgba(0,0,0,0.05);">
-          <!-- 4 ruling lines -->
+          <!-- 5 ruling lines -->
+          <line x1="0" y1="20" x2="100" y2="20" stroke="#E2E8F0" stroke-width="0.8" stroke-dasharray="2,2" />
           <line x1="0" y1="40" x2="100" y2="40" stroke="#E2E8F0" stroke-width="0.8" stroke-dasharray="2,2" />
           <line x1="0" y1="64" x2="100" y2="64" stroke="#7DD3FC" stroke-width="1.2" stroke-dasharray="3,2" />
           <line x1="0" y1="88" x2="100" y2="88" stroke="#BAE6FD" stroke-width="0.8" stroke-dasharray="2,2" />

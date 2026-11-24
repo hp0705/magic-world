@@ -1,10 +1,10 @@
-// Magic World Strokes Guide (29 Lowercase Letters)
+// Magic World Handwriting Strokes Data (All 29 Letters - Standard Primary School & Textbook Spec)
 window.MagicWorld = window.MagicWorld || {};
 window.MagicWorld.Strokes = {
   "a": [
     {
       "order": 1,
-      "d": "M 66 72 C 62 64 54 64 48 64 C 36 64 26 74 26 88 C 26 102 36 112 48 112 C 58 112 68 104 68 88 C 68 80 67 74 66 72 Z",
+      "d": "M 66 72 C 60 64 42 64 36 78 C 30 92 34 112 50 112 C 64 112 68 98 68 84 C 68 74 67 70 66 72 Z",
       "start": {
         "x": 66,
         "y": 72
@@ -14,19 +14,19 @@ window.MagicWorld.Strokes = {
     },
     {
       "order": 2,
-      "d": "M 68 64 L 68 102 C 68 112 78 112 86 104 C 90 100 92 92 92 88",
+      "d": "M 68 64 L 68 102 C 68 112 76 112 84 104",
       "start": {
         "x": 68,
         "y": 64
       },
-      "dir": "down",
+      "dir": "down-right",
       "label": "Nét móc ngược"
     }
   ],
   "aw": [
     {
       "order": 1,
-      "d": "M 66 72 C 62 64 54 64 48 64 C 36 64 26 74 26 88 C 26 102 36 112 48 112 C 58 112 68 104 68 88 C 68 80 67 74 66 72 Z",
+      "d": "M 66 72 C 60 64 42 64 36 78 C 30 92 34 112 50 112 C 64 112 68 98 68 84 C 68 74 67 70 66 72 Z",
       "start": {
         "x": 66,
         "y": 72
@@ -36,29 +36,29 @@ window.MagicWorld.Strokes = {
     },
     {
       "order": 2,
-      "d": "M 68 64 L 68 102 C 68 112 78 112 86 104 C 90 100 92 92 92 88",
+      "d": "M 68 64 L 68 102 C 68 112 76 112 84 104",
       "start": {
         "x": 68,
         "y": 64
       },
-      "dir": "down",
+      "dir": "down-right",
       "label": "Nét móc ngược"
     },
     {
       "order": 3,
-      "d": "M 36 52 C 44 58 52 58 60 52",
+      "d": "M 40 50 C 48 56 56 56 64 50",
       "start": {
-        "x": 36,
-        "y": 52
+        "x": 40,
+        "y": 50
       },
-      "dir": "right",
+      "dir": "smile",
       "label": "Dấu trăng"
     }
   ],
   "aa": [
     {
       "order": 1,
-      "d": "M 66 72 C 62 64 54 64 48 64 C 36 64 26 74 26 88 C 26 102 36 112 48 112 C 58 112 68 104 68 88 C 68 80 67 74 66 72 Z",
+      "d": "M 66 72 C 60 64 42 64 36 78 C 30 92 34 112 50 112 C 64 112 68 98 68 84 C 68 74 67 70 66 72 Z",
       "start": {
         "x": 66,
         "y": 72
@@ -68,154 +68,164 @@ window.MagicWorld.Strokes = {
     },
     {
       "order": 2,
-      "d": "M 68 64 L 68 102 C 68 112 78 112 86 104 C 90 100 92 92 92 88",
+      "d": "M 68 64 L 68 102 C 68 112 76 112 84 104",
       "start": {
         "x": 68,
         "y": 64
       },
-      "dir": "down",
+      "dir": "down-right",
       "label": "Nét móc ngược"
     },
     {
       "order": 3,
-      "d": "M 36 56 L 48 46 L 60 56",
+      "d": "M 40 54 L 52 42 L 64 54",
       "start": {
-        "x": 36,
-        "y": 56
+        "x": 40,
+        "y": 54
       },
-      "dir": "up-down",
+      "dir": "hat",
       "label": "Dấu nón"
     }
   ],
   "b": [
     {
       "order": 1,
-      "d": "M 32 108 L 32 35 C 32 25 45 25 45 40 L 45 105 C 45 112 55 112 60 100",
+      "d": "M 40 20 L 40 112",
       "start": {
-        "x": 32,
-        "y": 108
+        "x": 40,
+        "y": 20
       },
-      "dir": "up-loop",
-      "label": "Nét khuyết trên & thắt"
+      "dir": "down",
+      "label": "Nét sổ thẳng dài"
+    },
+    {
+      "order": 2,
+      "d": "M 40 66 C 52 64 72 66 72 88 C 72 110 52 112 40 112",
+      "start": {
+        "x": 40,
+        "y": 66
+      },
+      "dir": "curve-right",
+      "label": "Nét cong phải"
     }
   ],
   "c": [
     {
       "order": 1,
-      "d": "M 68 72 C 60 62 38 62 32 82 C 28 96 36 112 55 112 C 65 112 72 106 75 100",
+      "d": "M 68 72 C 60 64 36 66 36 88 C 36 110 58 112 68 106",
       "start": {
         "x": 68,
         "y": 72
       },
-      "dir": "counter-clockwise",
+      "dir": "curve-left",
       "label": "Nét cong hở phải"
     }
   ],
   "d": [
     {
       "order": 1,
-      "d": "M 62 75 C 57 62 40 62 35 75 C 28 90 28 100 35 110 C 42 118 58 118 62 105 Z",
+      "d": "M 64 74 C 58 64 40 64 34 78 C 28 92 32 112 48 112 C 62 112 66 98 66 84 Z",
       "start": {
-        "x": 60,
-        "y": 70
+        "x": 64,
+        "y": 74
       },
       "dir": "counter-clockwise",
       "label": "Nét cong kín"
     },
     {
       "order": 2,
-      "d": "M 62 40 L 62 105 C 62 112 70 114 76 110",
+      "d": "M 66 40 L 66 102 C 66 112 74 112 82 104",
       "start": {
-        "x": 62,
+        "x": 66,
         "y": 40
       },
-      "dir": "down",
+      "dir": "down-right",
       "label": "Nét móc ngược dài"
     }
   ],
   "dd": [
     {
       "order": 1,
-      "d": "M 62 75 C 57 62 40 62 35 75 C 28 90 28 100 35 110 C 42 118 58 118 62 105 Z",
+      "d": "M 64 74 C 58 64 40 64 34 78 C 28 92 32 112 48 112 C 62 112 66 98 66 84 Z",
       "start": {
-        "x": 60,
-        "y": 70
+        "x": 64,
+        "y": 74
       },
       "dir": "counter-clockwise",
       "label": "Nét cong kín"
     },
     {
       "order": 2,
-      "d": "M 62 40 L 62 105 C 62 112 70 114 76 110",
+      "d": "M 66 40 L 66 102 C 66 112 74 112 82 104",
       "start": {
-        "x": 62,
+        "x": 66,
         "y": 40
       },
-      "dir": "down",
+      "dir": "down-right",
       "label": "Nét móc ngược dài"
     },
     {
       "order": 3,
-      "d": "M 50 48 L 74 48",
+      "d": "M 52 44 L 80 44",
       "start": {
-        "x": 50,
-        "y": 48
+        "x": 52,
+        "y": 44
       },
-      "dir": "right",
+      "dir": "horizontal",
       "label": "Nét gạch ngang"
     }
   ],
   "e": [
     {
       "order": 1,
-      "d": "M 32 92 L 68 85 C 68 65 42 60 34 78 C 28 95 38 112 58 112 C 68 112 74 106 76 100",
+      "d": "M 34 90 L 68 84 C 68 64 42 62 34 78 C 28 94 36 112 56 112 C 66 112 74 106 76 100",
       "start": {
-        "x": 32,
-        "y": 92
+        "x": 34,
+        "y": 90
       },
-      "dir": "up-loop",
+      "dir": "loop-curve",
       "label": "Nét cong liền"
     }
   ],
   "ee": [
     {
       "order": 1,
-      "d": "M 32 92 L 68 85 C 68 65 42 60 34 78 C 28 95 38 112 58 112 C 68 112 74 106 76 100",
+      "d": "M 34 90 L 68 84 C 68 64 42 62 34 78 C 28 94 36 112 56 112 C 66 112 74 106 76 100",
       "start": {
-        "x": 32,
-        "y": 92
+        "x": 34,
+        "y": 90
       },
-      "dir": "up-loop",
+      "dir": "loop-curve",
       "label": "Nét cong liền"
     },
     {
       "order": 2,
-      "d": "M 40 54 L 51 44 L 62 54",
+      "d": "M 40 52 L 52 40 L 64 52",
       "start": {
         "x": 40,
-        "y": 54
+        "y": 52
       },
-      "dir": "up-down",
+      "dir": "hat",
       "label": "Dấu nón"
     }
   ],
   "g": [
     {
       "order": 1,
-      "d": "M 65 75 C 60 62 40 62 35 75 C 28 90 28 100 35 110 C 42 118 60 118 65 105 Z",
+      "d": "M 66 74 C 60 64 42 64 36 78 C 30 92 34 112 50 112 C 64 112 68 98 68 84 Z",
       "start": {
-        "x": 62,
-        "y": 70
+        "x": 66,
+        "y": 74
       },
       "dir": "counter-clockwise",
       "label": "Nét cong kín"
     },
     {
       "order": 2,
-      "d": "M 65 65 L 65 135 C 65 146 52 146 45 138 L 40 130",
+      "d": "M 68 64 L 68 142 C 68 156 50 156 42 144 L 38 132",
       "start": {
-        "x": 65,
-        "y": 65
+        "x": 68,
+        "y": 64
       },
       "dir": "down-loop",
       "label": "Nét khuyết dưới"
@@ -224,42 +234,42 @@ window.MagicWorld.Strokes = {
   "h": [
     {
       "order": 1,
-      "d": "M 32 108 L 32 35 C 32 25 45 25 45 40 L 45 108",
+      "d": "M 38 20 L 38 112",
       "start": {
-        "x": 32,
-        "y": 108
+        "x": 38,
+        "y": 20
       },
-      "dir": "up-down",
-      "label": "Nét khuyết trên"
+      "dir": "down",
+      "label": "Nét sổ thẳng dài"
     },
     {
       "order": 2,
-      "d": "M 45 85 C 50 68 68 68 70 82 L 70 105 C 70 112 76 114 80 110",
+      "d": "M 38 84 C 44 64 64 64 64 80 L 64 102 C 64 112 72 112 78 104",
       "start": {
-        "x": 45,
-        "y": 85
+        "x": 38,
+        "y": 84
       },
-      "dir": "right-down",
+      "dir": "curve-hook",
       "label": "Nét móc hai đầu"
     }
   ],
   "i": [
     {
       "order": 1,
-      "d": "M 38 80 L 48 65 L 48 105 C 48 112 55 114 60 110",
+      "d": "M 38 84 L 50 66 L 50 102 C 50 112 58 112 66 104",
       "start": {
         "x": 38,
-        "y": 80
+        "y": 84
       },
-      "dir": "up-down",
+      "dir": "up-down-hook",
       "label": "Nét móc ngược"
     },
     {
       "order": 2,
-      "d": "M 48 52 A 2 2 0 1 1 48 50",
+      "d": "M 50 52 A 2 2 0 1 1 50 50",
       "start": {
-        "x": 48,
-        "y": 51
+        "x": 50,
+        "y": 52
       },
       "dir": "dot",
       "label": "Dấu chấm"
@@ -268,35 +278,35 @@ window.MagicWorld.Strokes = {
   "k": [
     {
       "order": 1,
-      "d": "M 32 108 L 32 35 C 32 25 45 25 45 40 L 45 108",
+      "d": "M 38 20 L 38 112",
       "start": {
-        "x": 32,
-        "y": 108
+        "x": 38,
+        "y": 20
       },
-      "dir": "up-down",
-      "label": "Nét khuyết trên"
+      "dir": "down",
+      "label": "Nét sổ thẳng dài"
     },
     {
       "order": 2,
-      "d": "M 68 68 L 46 88 L 68 110",
+      "d": "M 66 66 L 40 88 L 68 112",
       "start": {
-        "x": 68,
-        "y": 68
+        "x": 66,
+        "y": 66
       },
-      "dir": "in-out",
-      "label": "Nét thắt giữa"
+      "dir": "zigzag",
+      "label": "Nét xiên nét gãy"
     }
   ],
   "l": [
     {
       "order": 1,
-      "d": "M 35 108 L 35 35 C 35 24 50 24 50 38 L 50 105 C 50 114 62 114 70 108",
+      "d": "M 48 20 L 48 102 C 48 112 56 112 66 104",
       "start": {
-        "x": 35,
-        "y": 108
+        "x": 48,
+        "y": 20
       },
-      "dir": "up-loop",
-      "label": "Nét khuyết trên dài"
+      "dir": "down-hook",
+      "label": "Nét sổ móc dưới"
     }
   ],
   "m": [
@@ -307,7 +317,7 @@ window.MagicWorld.Strokes = {
         "x": 25,
         "y": 78
       },
-      "dir": "down",
+      "dir": "hook-down",
       "label": "Nét móc xuôi 1"
     },
     {
@@ -317,7 +327,7 @@ window.MagicWorld.Strokes = {
         "x": 40,
         "y": 85
       },
-      "dir": "down",
+      "dir": "hook-down",
       "label": "Nét móc xuôi 2"
     },
     {
@@ -327,7 +337,7 @@ window.MagicWorld.Strokes = {
         "x": 58,
         "y": 85
       },
-      "dir": "down-hook",
+      "dir": "curve-hook",
       "label": "Nét móc hai đầu"
     }
   ],
@@ -339,7 +349,7 @@ window.MagicWorld.Strokes = {
         "x": 32,
         "y": 78
       },
-      "dir": "down",
+      "dir": "hook-down",
       "label": "Nét móc xuôi"
     },
     {
@@ -349,7 +359,7 @@ window.MagicWorld.Strokes = {
         "x": 48,
         "y": 85
       },
-      "dir": "down-hook",
+      "dir": "curve-hook",
       "label": "Nét móc hai đầu"
     }
   ],
@@ -358,7 +368,7 @@ window.MagicWorld.Strokes = {
       "order": 1,
       "d": "M 52 64 C 35 64 26 80 26 92 C 26 106 36 114 50 114 C 66 114 74 104 74 90 C 74 74 65 64 52 64 Z",
       "start": {
-        "x": 50,
+        "x": 52,
         "y": 64
       },
       "dir": "counter-clockwise",
@@ -370,7 +380,7 @@ window.MagicWorld.Strokes = {
       "order": 1,
       "d": "M 52 64 C 35 64 26 80 26 92 C 26 106 36 114 50 114 C 66 114 74 104 74 90 C 74 74 65 64 52 64 Z",
       "start": {
-        "x": 50,
+        "x": 52,
         "y": 64
       },
       "dir": "counter-clockwise",
@@ -383,7 +393,7 @@ window.MagicWorld.Strokes = {
         "x": 40,
         "y": 54
       },
-      "dir": "up-down",
+      "dir": "hat",
       "label": "Dấu nón"
     }
   ],
@@ -392,7 +402,7 @@ window.MagicWorld.Strokes = {
       "order": 1,
       "d": "M 52 64 C 35 64 26 80 26 92 C 26 106 36 114 50 114 C 66 114 74 104 74 90 C 74 74 65 64 52 64 Z",
       "start": {
-        "x": 50,
+        "x": 52,
         "y": 64
       },
       "dir": "counter-clockwise",
@@ -412,102 +422,112 @@ window.MagicWorld.Strokes = {
   "p": [
     {
       "order": 1,
-      "d": "M 32 85 L 42 66 L 42 140",
+      "d": "M 40 66 L 40 146",
       "start": {
-        "x": 32,
-        "y": 85
+        "x": 40,
+        "y": 66
       },
       "dir": "down",
-      "label": "Nét xiên & thẳng đứng"
+      "label": "Nét sổ thẳng dài"
     },
     {
       "order": 2,
-      "d": "M 42 78 C 50 64 70 64 70 82 C 70 96 52 108 42 100",
+      "d": "M 40 66 C 52 64 72 66 72 88 C 72 110 52 112 40 112",
       "start": {
-        "x": 42,
-        "y": 78
+        "x": 40,
+        "y": 66
       },
-      "dir": "right-curve",
-      "label": "Nét móc hai đầu khép"
+      "dir": "curve-right",
+      "label": "Nét cong phải"
     }
   ],
   "q": [
     {
       "order": 1,
-      "d": "M 65 75 C 60 62 40 62 35 75 C 28 90 28 100 35 110 C 42 118 60 118 65 105 Z",
+      "d": "M 66 74 C 60 64 42 64 36 78 C 30 92 34 112 50 112 C 64 112 68 98 68 84 Z",
       "start": {
-        "x": 62,
-        "y": 70
+        "x": 66,
+        "y": 74
       },
       "dir": "counter-clockwise",
       "label": "Nét cong kín"
     },
     {
       "order": 2,
-      "d": "M 65 65 L 65 140",
+      "d": "M 68 64 L 68 146",
       "start": {
-        "x": 65,
-        "y": 65
+        "x": 68,
+        "y": 64
       },
       "dir": "down",
-      "label": "Nét thẳng dài"
+      "label": "Nét sổ thẳng dài"
     }
   ],
   "r": [
     {
       "order": 1,
-      "d": "M 30 110 L 38 62 C 45 58 48 68 55 68 L 68 70 C 72 82 72 104 76 110",
+      "d": "M 40 66 L 40 112",
       "start": {
-        "x": 30,
-        "y": 110
+        "x": 40,
+        "y": 66
       },
-      "dir": "up-loop-down",
-      "label": "Nét thắt trên & móc"
+      "dir": "down",
+      "label": "Nét sổ thẳng"
+    },
+    {
+      "order": 2,
+      "d": "M 40 76 C 42 66 52 64 68 66",
+      "start": {
+        "x": 40,
+        "y": 76
+      },
+      "dir": "curve-right",
+      "label": "Nét móc trên"
     }
   ],
   "s": [
     {
       "order": 1,
-      "d": "M 30 110 L 46 62 C 54 62 68 70 62 82 C 55 92 38 98 42 110 L 68 110",
+      "d": "M 64 72 C 60 64 42 64 42 76 C 42 86 66 88 66 100 C 66 112 46 112 38 106",
       "start": {
-        "x": 30,
-        "y": 110
+        "x": 64,
+        "y": 72
       },
-      "dir": "up-twist",
-      "label": "Nét cong thắt"
+      "dir": "s-curve",
+      "label": "Nét lượn chữ s"
     }
   ],
   "t": [
     {
       "order": 1,
-      "d": "M 32 85 L 48 48 L 48 105 C 48 112 55 114 62 110",
+      "d": "M 48 40 L 48 102 C 48 112 56 112 66 104",
       "start": {
-        "x": 32,
-        "y": 85
+        "x": 48,
+        "y": 40
       },
-      "dir": "up-down",
-      "label": "Nét móc ngược"
+      "dir": "down-hook",
+      "label": "Nét móc ngược dài"
     },
     {
       "order": 2,
-      "d": "M 38 65 L 60 65",
+      "d": "M 36 64 L 60 64",
       "start": {
-        "x": 38,
-        "y": 65
+        "x": 36,
+        "y": 64
       },
-      "dir": "right",
+      "dir": "horizontal",
       "label": "Nét gạch ngang"
     }
   ],
   "u": [
     {
       "order": 1,
-      "d": "M 30 82 L 40 66 L 40 100 C 40 112 58 112 60 100 L 60 66",
+      "d": "M 32 82 L 42 66 L 42 100 C 42 112 56 112 60 100 L 60 66",
       "start": {
-        "x": 30,
+        "x": 32,
         "y": 82
       },
-      "dir": "down-up",
+      "dir": "hook-up",
       "label": "Nét móc ngược rộng"
     },
     {
@@ -517,19 +537,19 @@ window.MagicWorld.Strokes = {
         "x": 60,
         "y": 66
       },
-      "dir": "down",
+      "dir": "down-right",
       "label": "Nét móc ngược"
     }
   ],
   "uw": [
     {
       "order": 1,
-      "d": "M 30 82 L 40 66 L 40 100 C 40 112 58 112 60 100 L 60 66",
+      "d": "M 32 82 L 42 66 L 42 100 C 42 112 56 112 60 100 L 60 66",
       "start": {
-        "x": 30,
+        "x": 32,
         "y": 82
       },
-      "dir": "down-up",
+      "dir": "hook-up",
       "label": "Nét móc ngược rộng"
     },
     {
@@ -539,7 +559,7 @@ window.MagicWorld.Strokes = {
         "x": 60,
         "y": 66
       },
-      "dir": "down",
+      "dir": "down-right",
       "label": "Nét móc ngược"
     },
     {
@@ -556,53 +576,53 @@ window.MagicWorld.Strokes = {
   "v": [
     {
       "order": 1,
-      "d": "M 30 76 C 36 66 45 66 48 76 L 54 100 C 58 112 66 112 70 100 C 72 92 78 74 80 66",
+      "d": "M 36 72 C 40 64 48 64 52 74 L 56 102 C 58 112 64 112 68 102 L 74 68",
       "start": {
-        "x": 30,
-        "y": 76
+        "x": 36,
+        "y": 72
       },
-      "dir": "down-up",
-      "label": "Nét móc hai đầu & thắt"
+      "dir": "curve-v",
+      "label": "Nét lượn chữ v"
     }
   ],
   "x": [
     {
       "order": 1,
-      "d": "M 62 72 C 55 62 38 64 34 82 C 30 96 38 110 52 110",
+      "d": "M 40 66 L 76 112",
       "start": {
-        "x": 62,
-        "y": 72
+        "x": 40,
+        "y": 66
       },
-      "dir": "left-c",
-      "label": "Nét cong hở phải"
+      "dir": "diagonal-down-right",
+      "label": "Nét xiên phải"
     },
     {
       "order": 2,
-      "d": "M 42 72 C 48 62 66 64 70 82 C 74 96 66 110 52 110",
+      "d": "M 76 66 L 40 112",
       "start": {
-        "x": 42,
-        "y": 72
+        "x": 76,
+        "y": 66
       },
-      "dir": "right-c",
-      "label": "Nét cong hở trái"
+      "dir": "diagonal-down-left",
+      "label": "Nét xiên trái"
     }
   ],
   "y": [
     {
       "order": 1,
-      "d": "M 32 82 L 42 66 L 42 100 C 42 112 56 112 60 100 L 60 66",
+      "d": "M 34 82 L 44 66 L 44 100 C 44 112 58 112 62 100 L 62 66",
       "start": {
-        "x": 32,
+        "x": 34,
         "y": 82
       },
-      "dir": "down-up",
+      "dir": "hook-up",
       "label": "Nét móc ngược rộng"
     },
     {
       "order": 2,
-      "d": "M 60 66 L 60 135 C 60 146 48 146 42 138 L 38 130",
+      "d": "M 62 66 L 62 142 C 62 156 46 156 38 144 L 34 132",
       "start": {
-        "x": 60,
+        "x": 62,
         "y": 66
       },
       "dir": "down-loop",

@@ -115,20 +115,18 @@ class HandwritingService {
     ctx.fillStyle = "#FAFDFE";
     ctx.fillRect(0, 0, w, h);
 
-    // DYNAMIC & GENEROUS PROPORTIONS:
-    // Letter 'a' has height = 2 * oliSize.
-    // We want the letter to occupy ~55% of canvas height (generous, easy to trace for 3-4 year old toddlers).
-    const oliSize = Math.max(52, Math.min(Math.round(h * 0.25), 135));
+    // Primary school 4-oli ruling proportion (vở ô ly chuẩn tiểu học):
+    // 1 oli = ~h * 0.155 (around 42px - 64px, neat and comfortable for kids)
+    const oliSize = Math.max(42, Math.min(Math.round(h * 0.155), 64));
     
-    // Center letter 'a' (Line 3 to Line 1) vertically:
-    // Midline (Line 2) is at canvas vertical center (h / 2).
-    const line2Y = Math.round(h / 2);
-    const line1Y = line2Y + oliSize; // Baseline (Đáy chữ)
-    const line3Y = line2Y - oliSize; // Top of lowercase 'a' (Đỉnh chữ thấp)
-    const line4Y = line3Y - oliSize; // 3 ô li (d, đ, q, p)
-    const line5Y = line4Y - oliSize; // 4 ô li (b, l, h, k)
-    const lineUnderY = line1Y + oliSize; // Chân chữ g, y
-    const marginX = Math.max(72, Math.round(w * 0.12));
+    // Position Baseline (Dòng 1 - đáy chữ) comfortably at ~66% of canvas height
+    const line1Y = Math.round(h * 0.66);
+    const line2Y = line1Y - oliSize; // Dòng 2 (1 ô ly)
+    const line3Y = line1Y - (2 * oliSize); // Dòng 3 (2 ô ly - đỉnh chữ thấp: a, c, e, o, m, n...)
+    const line4Y = line1Y - (3 * oliSize); // Dòng 4 (3 ô ly - đỉnh chữ d, đ, t...)
+    const line5Y = line1Y - (4 * oliSize); // Dòng 5 (4 ô ly - đỉnh chữ b, l, h, k...)
+    const lineUnderY = line1Y + Math.round(1.5 * oliSize); // Chân chữ g, y, p, q
+    const marginX = Math.max(92, Math.round(w * 0.12));
 
     // Vertical ruling lines (lưới ô vuông nhỏ - mỗi ô vuông = 1 ô li x 1 ô li)
     ctx.strokeStyle = '#E0F2FE';
@@ -221,7 +219,7 @@ class HandwritingService {
     ctx.stroke();
 
     // Ruling line labels on the left margin
-    ctx.font = 'bold 13px "Baloo 2", system-ui';
+    ctx.font = 'bold 12px "Quicksand", "Nunito", system-ui';
     ctx.textAlign = 'right';
     ctx.textBaseline = 'middle';
     
@@ -233,6 +231,15 @@ class HandwritingService {
 
     ctx.fillStyle = '#0284C7';
     ctx.fillText('Dòng 3', marginX - 10, line3Y);
+
+    if (line4Y > 35) {
+      ctx.fillStyle = '#64748B';
+      ctx.fillText('Dòng 4', marginX - 10, line4Y);
+    }
+    if (line5Y > 35) {
+      ctx.fillStyle = '#64748B';
+      ctx.fillText('Dòng 5', marginX - 10, line5Y);
+    }
 
     ctx.restore();
   }
@@ -246,14 +253,13 @@ class HandwritingService {
 
     // Scale calculation:
     // In stroke data: baseline y=112, Line 3 y=64 (height 48 units = 2 ô li).
-    const oliSize = Math.max(52, Math.min(Math.round(h * 0.25), 135));
-    const line2Y = Math.round(h / 2);
-    const line1Y = line2Y + oliSize; // baseline
+    const oliSize = Math.max(42, Math.min(Math.round(h * 0.155), 64));
+    const line1Y = Math.round(h * 0.66);
     const uniformScale = (oliSize * 2) / 48;
 
-    // Center letter horizontally around x = 58 in stroke data
+    // Center letter horizontally around x = 54 in stroke data
     const centerX = Math.round(w / 2);
-    const offsetX = Math.round(centerX - (58 * uniformScale));
+    const offsetX = Math.round(centerX - (54 * uniformScale));
     const offsetY = Math.round(line1Y - (112 * uniformScale));
 
     ctx.save();
@@ -315,7 +321,7 @@ class HandwritingService {
 
         // Stroke number tag inside dot
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 16px "Baloo 2", system-ui';
+        ctx.font = 'bold 15px "Quicksand", "Nunito", system-ui';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(st.order, sx, sy);
@@ -323,10 +329,10 @@ class HandwritingService {
         // Friendly guide badge at the top
         ctx.save();
         const badgeText = `Nét ${st.order}: ${st.label}`;
-        ctx.font = 'bold 16px "Baloo 2", system-ui';
+        ctx.font = 'bold 15px "Quicksand", "Nunito", system-ui';
         const textWidth = ctx.measureText(badgeText).width;
         const badgeX = w / 2;
-        const badgeY = 32;
+        const badgeY = 28;
 
         ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
         ctx.strokeStyle = '#38BDF8';

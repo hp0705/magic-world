@@ -288,36 +288,28 @@ class MagicWorldApp {
     }
   }
 
-  playSpellingKaraoke() {
+  async playSpellingKaraoke() {
     const dayObj = this.spellingDaysData.find(d => d.day === this.spellingDay);
     if (!dayObj) return;
     const currentWord = dayObj.words[this.spellingWordIndex];
     if (!currentWord) return;
 
     const chipEls = document.querySelectorAll('#spellingChipsContainer .spell-chip');
-    let chipIndex = 0;
 
-    const playNextChip = () => {
-      if (chipIndex >= currentWord.chips.length) {
-        // Finally read whole word
-        this.audio.speak(currentWord.text);
-        this.audio.playChime();
-        chipEls.forEach(el => el.classList.remove('karaoke-active'));
-        return;
-      }
-
+    for (let i = 0; i < currentWord.chips.length; i++) {
       chipEls.forEach(el => el.classList.remove('karaoke-active'));
-      if (chipEls[chipIndex]) {
-        chipEls[chipIndex].classList.add('karaoke-active');
+      if (chipEls[i]) {
+        chipEls[i].classList.add('karaoke-active');
       }
+      const tok = currentWord.chips[i].text;
+      await this.audio.speak(tok);
+      await new Promise(r => setTimeout(r, 220));
+    }
 
-      const tok = currentWord.chips[chipIndex].text;
-      this.audio.speak(tok);
-      chipIndex++;
-      setTimeout(playNextChip, 850);
-    };
-
-    playNextChip();
+    chipEls.forEach(el => el.classList.remove('karaoke-active'));
+    await new Promise(r => setTimeout(r, 180));
+    await this.audio.speak(currentWord.text);
+    this.audio.playChime();
   }
 
   onSpellingReadConfirmed() {
@@ -744,10 +736,13 @@ class MagicWorldApp {
 
   // --- EVENT LISTENERS ---
   bindEvents() {
-    // Safari Unlock Audio on first click anywhere
-    document.addEventListener('pointerdown', () => {
+    // Safari & iPad Unlock Audio on first interaction anywhere
+    const unlockHandler = () => {
       if (this.audio) this.audio.unlockAudio();
-    }, { once: true });
+    };
+    ['touchstart', 'touchend', 'click', 'pointerdown'].forEach(evt => {
+      document.addEventListener(evt, unlockHandler, { passive: true });
+    });
 
     // Bottom Navigation Bar tabs
     document.querySelectorAll('.nav-tab').forEach(tab => {
@@ -1021,8 +1016,16 @@ class MagicWorldApp {
   }
 }
 
-// Instantiate and launch
-window.addEventListener('DOMContentLoaded', () => {
-  window.MagicWorldAppInstance = new MagicWorldApp();
-  window.MagicWorldAppInstance.init();
-});
+// Instantiate and launch robustly across all browsers & load states
+function launchMagicWorldApp() {
+  if (!window.MagicWorldAppInstance) {
+    window.MagicWorldAppInstance = new MagicWorldApp();
+    window.MagicWorldAppInstance.init();
+  }
+}
+
+if (document.readyState === 'loading') {
+  window.addEventListener('DOMContentLoaded', launchMagicWorldApp);
+} else {
+  launchMagicWorldApp();
+}

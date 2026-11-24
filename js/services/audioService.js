@@ -71,6 +71,23 @@ class AudioService {
     if (this.audioCtx && this.audioCtx.state === 'suspended') {
       this.audioCtx.resume();
     }
+    // Safari & iPad HTML5 Audio unlock
+    if (!this.sharedAudio) {
+      this.sharedAudio = document.getElementById('sharedGameAudio') || new Audio();
+      this.sharedAudio.setAttribute('playsinline', '');
+      this.sharedAudio.setAttribute('webkit-playsinline', '');
+    }
+    try {
+      this.sharedAudio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+      const p = this.sharedAudio.play();
+      if (p !== undefined) {
+        p.then(() => {
+          this.sharedAudio.pause();
+          this.unlocked = true;
+        }).catch(() => {});
+      }
+    } catch (e) {}
+
     // Safari speech unlock
     if (this.synth) {
       try {
@@ -123,7 +140,7 @@ class AudioService {
     return result;
   }
 
-  // Speak sentence or token using Native Vietnamese Audio (/api/tts) or SpeechSynthesis
+  // Speak sentence or token using Pre-cached Static Audio, Native Vietnamese Audio (/api/tts), or SpeechSynthesis
   async speak(text, options = {}) {
     this.unlockAudio();
     this.stopSpeaking();
@@ -136,12 +153,18 @@ class AudioService {
       processedText = this.ttsOverrides[lower];
     }
 
-    // 1. Prefer HTTP Server Native Vietnamese Audio (/api/tts)
-    const isHttp = window.location.protocol.startsWith('http');
-    if (isHttp) {
+    // 1. Direct Static Audio Manifest Lookup (100% works on GitHub Pages, iPad, Localhost, Offline!)
+    const manifest = (window.MagicWorld && window.MagicWorld.AudioManifest) || {};
+    const staticAudioPath = manifest[processedText] || manifest[text] || manifest[text.trim()] || manifest[lower];
+
+    if (staticAudioPath) {
       return new Promise((resolve) => {
-        const audioUrl = `/api/tts?text=${encodeURIComponent(processedText)}`;
-        const audio = new Audio(audioUrl);
+        if (!this.sharedAudio) {
+          this.sharedAudio = document.getElementById('sharedGameAudio') || new Audio();
+          this.sharedAudio.setAttribute('playsinline', '');
+          this.sharedAudio.setAttribute('webkit-playsinline', '');
+        }
+        const audio = this.sharedAudio;
         this.currentAudioElement = audio;
 
         audio.onended = () => {
@@ -159,17 +182,69 @@ class AudioService {
           }
         };
 
-        audio.play().catch(() => {
+        audio.src = staticAudioPath;
+        audio.currentTime = 0;
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((err) => {
+            if (err.name === 'AbortError') return;
+            console.warn('Playback error:', err);
+            if (this.hasVietnameseSpeechVoice) {
+              this.speakWithSpeechSynthesis(processedText, options).then(resolve);
+            } else {
+              resolve();
+            }
+          });
+        }
+      });
+    }
+
+    // 2. If running local server, fallback to /api/tts endpoint
+    const isLocalServer = window.location.hostname === 'localhost' || 
+                          window.location.hostname === '127.0.0.1' || 
+                          window.location.hostname.startsWith('192.168.');
+    if (isLocalServer && window.location.protocol.startsWith('http')) {
+      return new Promise((resolve) => {
+        if (!this.sharedAudio) {
+          this.sharedAudio = document.getElementById('sharedGameAudio') || new Audio();
+          this.sharedAudio.setAttribute('playsinline', '');
+          this.sharedAudio.setAttribute('webkit-playsinline', '');
+        }
+        const audio = this.sharedAudio;
+        this.currentAudioElement = audio;
+        const audioUrl = `/api/tts?text=${encodeURIComponent(processedText)}`;
+
+        audio.onended = () => {
+          this.currentAudioElement = null;
+          resolve();
+        };
+
+        audio.onerror = () => {
+          this.currentAudioElement = null;
           if (this.hasVietnameseSpeechVoice) {
             this.speakWithSpeechSynthesis(processedText, options).then(resolve);
           } else {
             resolve();
           }
-        });
+        };
+
+        audio.src = audioUrl;
+        audio.currentTime = 0;
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((err) => {
+            if (err.name === 'AbortError') return;
+            if (this.hasVietnameseSpeechVoice) {
+              this.speakWithSpeechSynthesis(processedText, options).then(resolve);
+            } else {
+              resolve();
+            }
+          });
+        }
       });
     }
 
-    // 2. If opened via file:// protocol: only use speech synthesis if real Vietnamese voice exists
+    // 3. Fallback: only use speech synthesis if real Vietnamese voice exists
     if (this.hasVietnameseSpeechVoice) {
       return this.speakWithSpeechSynthesis(processedText, options);
     }
@@ -234,7 +309,13 @@ class AudioService {
 
   stopSpeaking() {
     // Stop HTML5 audio element
-    if (this.currentAudioElement) {
+    if (this.sharedAudio) {
+      try {
+        this.sharedAudio.pause();
+        this.sharedAudio.currentTime = 0;
+      } catch (e) {}
+    }
+    if (this.currentAudioElement && this.currentAudioElement !== this.sharedAudio) {
       try {
         this.currentAudioElement.pause();
         this.currentAudioElement.currentTime = 0;

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#4CC9F0">
+  <title>Bé Mây — Vương quốc Băng Lam</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800;900&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Background Snowfall -->
+  <canvas id="snowCanvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:1;"></canvas>
+
+  <div id="appContainer">
+    <!-- Header Bar -->
+    <header class="game-header">
+      <div class="header-left">
+        <button id="headerHomeBtn" class="icon-btn" title="Về Bản Đồ">🏰</button>
+        <div class="badge-item">
+          <span>⭐</span>
+          <span id="headerStarCount">0</span>
+        </div>
+        <div class="badge-item">
+          <span>❄️</span>
+          <span id="headerSnowCount">0</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <button id="headerStickersBtn" class="icon-btn" title="Bộ sưu tập sticker">👑</button>
+        <button id="headerParentBtn" class="icon-btn" title="Góc phụ huynh">⚙️</button>
+      </div>
+    </header>
+
+    <!-- Master Stage Views -->
+    <main class="game-stage">
+      
+      <!-- 1. WORLD MAP SCREEN -->
+      <section id="screen-world-map" class="screen-view active">
+        <div class="map-container">
+          <div class="map-header-banner">
+            <h1>🏰 Vương quốc Băng Lam</h1>
+            <p id="mapGreeting">Xin chào Bé Mây! Hãy cùng Lumi đánh thức các bạn chữ nhé!</p>
+          </div>
+
+          <div class="map-zones-grid">
+            <!-- Zone 1 -->
+            <div class="zone-card" data-target="alphabet">
+              <div class="zone-icon">🌲🔤</div>
+              <div class="zone-title">Rừng Chữ Lung Linh</div>
+              <div class="zone-sub">29 Chữ Cái Tiếng Việt</div>
+              <button class="zone-btn">Khám phá ▶</button>
+            </div>
+
+            <!-- Zone 2 -->
+            <div class="zone-card" data-target="vocab">
+              <div class="zone-icon">🏞️🌸</div>
+              <div class="zone-title">Thung Lũng Từ Vựng</div>
+              <div class="zone-sub">38 Ngày (304 Từ Đời Sống)</div>
+              <button class="zone-btn">Học tiếp ▶</button>
+            </div>
+
+            <!-- Zone 3 -->
+            <div class="zone-card" data-target="spelling">
+              <div class="zone-icon">🏰✨</div>
+              <div class="zone-title">Lâu Đài Đánh Vần</div>
+              <div class="zone-sub">14 Ngày (112 Nhóm Vần)</div>
+              <button class="zone-btn">Vào lâu đài ▶</button>
+            </div>
+
+            <!-- Zone 4 -->
+            <div class="zone-card" id="mapStoryBtn">
+              <div class="zone-icon">🌠📖</div>
+              <div class="zone-title">Kể Chuyện Cổ Tích</div>
+              <div class="zone-sub">Cô Sao Băng & Lumi Kể</div>
+              <button class="zone-btn">Nghe kể ▶</button>
+            </div>
+
+            <!-- Zone 5 -->
+            <div class="zone-card" data-target="matching">
+              <div class="zone-icon">🧩✨</div>
+              <div class="zone-title">Game Ghép Hình</div>
+              <div class="zone-sub">Ghép Tranh & Từ Vựng</div>
+              <button class="zone-btn">Chơi ngay ▶</button>
+            </div>
+
+            <!-- Zone 6 -->
+            <div class="zone-card" data-target="story-bedtime">
+              <div class="zone-icon">🌙⭐</div>
+              <div class="zone-title">Bông Tuyết Ru Ngủ</div>
+              <div class="zone-sub">Giai điệu êm đềm cho bé</div>
+              <button class="zone-btn">Nghe ru ▶</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. ALPHABET SCREEN -->
+      <section id="screen-alphabet" class="screen-view">
+        <div class="lesson-layout">
+          <!-- Left Visual -->
+          <div class="lesson-visual-pane">
+            <div class="hero-emoji-display" id="alphabetEmoji">🧥</div>
+            <div class="characters-corner">
+              <div class="char-badge">👧 Bé Mây</div>
+              <div class="char-badge">🦄 Lumi</div>
+            </div>
+          </div>
+
+          <!-- Right Content -->
+          <div class="lesson-content-pane">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:700; color:#64748B;">Rừng Chữ Cái</span>
+              <div class="crystals-bar" id="alphabetCrystals"></div>
+            </div>
+
+            <div class="letter-title-row">
+              <span class="letter-hero-text" id="alphabetLower">a</span>
+              <span class="letter-hero-text" style="color:#0284C7;" id="alphabetUpper">A</span>
+            </div>
+
+            <div class="word-hero-text" id="alphabetWord">áo</div>
+
+            <div class="example-sentence-box" id="alphabetSentence" title="Chạm để nghe câu">
+              Bé Mây mặc chiếc áo ấm. 🔊
+            </div>
+
+            <!-- Action buttons -->
+            <div class="action-buttons-grid">
+              <button id="btnListenLetter" class="action-btn btn-blue">🔊 Đọc chữ</button>
+              <button id="btnListenExample" class="action-btn btn-gold">📖 Đọc ví dụ</button>
+              <button id="btnWriteLetter" class="action-btn btn-purple">✍️ Tập viết</button>
+            </div>
+
+            <!-- Arrow Navigation -->
+            <div class="nav-arrows-row">
+              <button id="alphaPrevBtn" class="nav-arrow-btn">◀</button>
+              <button id="alphaNextBtn" class="nav-arrow-btn">▶</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. VOCABULARY SCREEN -->
+      <section id="screen-vocab" class="screen-view">
+        <div class="lesson-layout">
+          <!-- Left Visual -->
+          <div class="lesson-visual-pane">
+            <div class="hero-emoji-display" id="vocabEmoji">👨</div>
+            <div class="characters-corner">
+              <div class="char-badge">👧 Bé Mây</div>
+              <div class="char-badge">🦄 Lumi</div>
+            </div>
+          </div>
+
+          <!-- Right Content -->
+          <div class="lesson-content-pane">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span id="vocabDayBadge" style="font-weight:800; color:#0284C7; cursor:pointer;" title="Chạm để đổi ngày">Ngày 1 (2 chữ cái) ▾</span>
+              <div class="crystals-bar" id="vocabCrystals"></div>
+            </div>
+
+            <div style="text-align:center; font-weight:700; color:#64748B;" id="vocabTopicBadge">Gia đình</div>
+
+            <div class="word-hero-text" id="vocabText">ba</div>
+
+            <div class="example-sentence-box" id="vocabSentence" title="Chạm để nghe câu">
+              Ba đọc sách cho Bé Mây. 🔊
+            </div>
+
+            <!-- Action buttons grid -->
+            <div class="action-buttons-grid">
+              <button id="btnVocabListen" class="action-btn btn-blue">🔊 Nghe từ</button>
+              <button id="btnVocabListenSentence" class="action-btn btn-gold">📖 Nghe câu</button>
+              <button id="btnVocabPlayMatching" class="action-btn btn-purple">🧩 Ghép hình</button>
+            </div>
+
+            <!-- Primary Confirmation Button -->
+            <button id="btnVocabDone" class="btn-primary-read">
+              <span>Con đã đọc</span>
+              <span>✓</span>
+            </button>
+
+            <!-- Arrow Navigation -->
+            <div class="nav-arrows-row">
+              <button id="vocabPrevBtn" class="nav-arrow-btn">◀</button>
+              <button id="vocabNextBtn" class="nav-arrow-btn">▶</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. SPELLING SCREEN -->
+      <section id="screen-spelling" class="screen-view">
+        <div class="lesson-layout">
+          <!-- Left Visual -->
+          <div class="lesson-visual-pane">
+            <div class="hero-emoji-display" id="spellingEmoji">🐟</div>
+            <div class="characters-corner">
+              <div class="char-badge">👧 Bé Mây</div>
+              <div class="char-badge">🦄 Lumi</div>
+            </div>
+          </div>
+
+          <!-- Right Content -->
+          <div class="lesson-content-pane">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span id="spellingDayBadge" style="font-weight:800; color:#0A6FC2; cursor:pointer;" title="Chạm để đổi ngày">Ngày 1: Vần mở ▾</span>
+              <div class="crystals-bar" id="spellingCrystals"></div>
+            </div>
+
+            <div class="word-hero-text" id="spellingText">cá</div>
+
+            <!-- 3-Group Karaoke Chips -->
+            <div class="spelling-chips-row" id="spellingChipsContainer"></div>
+
+            <div class="example-sentence-box" id="spellingSentence" title="Chạm để nghe câu">
+              Bé Mây xem chú cá bơi. 🔊
+            </div>
+
+            <!-- Buttons -->
+            <div class="action-buttons-grid">
+              <button id="btnSpellingListen" class="action-btn btn-blue">🔊 Đọc trơn</button>
+              <button id="btnSpellingSpell" class="action-btn btn-green">🎵 Đánh vần</button>
+              <button id="btnSpellingPlayMatching" class="action-btn btn-purple">🧩 Ghép hình</button>
+            </div>
+
+            <!-- Primary Confirmation Button -->
+            <button id="btnSpellingDone" class="btn-primary-read">
+              <span>Con đã đọc</span>
+              <span>✓</span>
+            </button>
+
+            <!-- Arrow Navigation -->
+            <div class="nav-arrows-row">
+              <button id="spellingPrevBtn" class="nav-arrow-btn">◀</button>
+              <button id="spellingNextBtn" class="nav-arrow-btn">▶</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. FINAL QUIZ (10 QUESTIONS) -->
+      <section id="screen-quiz" class="screen-view">
+        <div class="quiz-container">
+          <!-- Top Bar -->
+          <div class="quiz-top-bar">
+            <button id="quizExitBtn" class="icon-btn">✕</button>
+            <span id="quizProgressTag" style="color:#0284C7;">Câu 1/10</span>
+            <span id="quizScoreTag" style="color:#15803D;">⭐ Đúng: 0/10</span>
+          </div>
+
+          <!-- Prompt Header -->
+          <div class="quiz-prompt-header">
+            <h3 id="quizPromptHeader">Bé Mây hãy tự đọc chữ và chọn đúng hình nhé:</h3>
+          </div>
+
+          <!-- Target Box -->
+          <div class="quiz-target-box" id="quizTargetBox">
+            <div class="quiz-target-word" id="quizTargetWord">cá</div>
+            <button id="quizSoundBtn" class="quiz-hint-btn">🔊 Gợi ý âm thanh</button>
+          </div>
+
+          <!-- 3 Big Emoji / Word Cards -->
+          <div class="quiz-options-grid" id="quizOptionsGrid"></div>
+
+          <!-- Bottom Actions -->
+          <div class="quiz-bottom-actions">
+            <button id="quizSkipBtn" class="btn-skip">Bỏ qua ↷</button>
+            <button id="quizNextBtn" class="btn-next-question" style="display:none;">Từ tiếp theo ▶</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. HANDWRITING CANVAS SCREEN -->
+      <section id="screen-handwriting" class="screen-view">
+        <div class="handwriting-layout">
+          <!-- Left Canvas -->
+          <div class="hw-canvas-container">
+            <canvas id="handwritingCanvas"></canvas>
+          </div>
+
+          <!-- Right Controls -->
+          <div class="hw-controls-pane">
+            <div class="hw-letter-preview">
+              <div id="hwLetterSvgPreview" style="display:flex; justify-content:center; align-items:center; min-height:100px;"></div>
+              <p id="hwLetterWord" style="font-weight:700; color:#64748B; margin-top:4px;">Ví dụ: áo (🧥)</p>
+              <div style="font-size:12px; font-weight:700; color:#0284C7; margin-top:2px;">Mẫu chữ viết thường lớp 1 (Bộ GD&ĐT)</div>
+            </div>
+
+            <div class="hw-buttons-list">
+              <button id="hwDemoBtn" class="action-btn btn-blue">✨ Xem Bé Mây viết</button>
+              <button id="hwClearBtn" class="action-btn btn-gold">🗑️ Xóa viết lại</button>
+              <button id="hwSkipBtn" class="action-btn btn-green">✓ Đã viết xong</button>
+              <button id="hwBackBtn" class="action-btn btn-purple">◀ Quay lại bài học</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. STORY THEATER SCREEN -->
+      <section id="screen-story" class="screen-view">
+        <div class="story-theater-container">
+          <div class="story-top-row">
+            <button id="storyCloseBtn" class="icon-btn">✕</button>
+            <h2 id="storyTitleHeader" style="font-size:22px;">Sương Mù Quên Chữ</h2>
+            <div style="width:48px;"></div>
+          </div>
+
+          <!-- Scene Art Display -->
+          <div class="story-art-screen" id="storyArtDisplay">🏔️🏘️❄️</div>
+
+          <!-- Dialogue Subtitle Bubble -->
+          <div class="dialog-bubble co" id="storyBubble">
+            <div class="dialog-speaker" id="storySpeaker">🌠 Cô Sao Băng</div>
+            <div id="storyText">Chào Bé Mây yêu quý! Một sớm mùa đông, sương mù tuyết trắng phủ khắp vương quốc.</div>
+          </div>
+
+          <!-- Control Bar -->
+          <div class="story-controls-row">
+            <button id="storyRepeatBtn" class="icon-btn" title="Lặp lại cảnh">⟲</button>
+            <button id="storyPlayPauseBtn" class="icon-btn" style="width:64px; height:64px; font-size:28px;" title="Tạm dừng / Tiếp tục">❚❚</button>
+            <button id="storyNextBtn" class="icon-btn" title="Cảnh tiếp theo">⏭</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. MATCHING PUZZLE GAME SCREEN -->
+      <section id="screen-matching" class="screen-view">
+        <div class="matching-game-container">
+          <div class="matching-top-bar">
+            <button id="matchingBackBtn" class="icon-btn">✕</button>
+            <div style="font-size:22px; font-weight:800; color:#0A6FC2;">
+              🧩 Ghép Đúng: <span id="matchingScoreText">0/4</span> Cặp
+            </div>
+            <button id="matchingResetBtn" class="action-btn btn-gold" style="min-height:48px; padding:0 18px; font-size:16px;">
+              🔄 Vòng Mới
+            </button>
+          </div>
+
+          <div style="text-align:center; font-size:18px; font-weight:700; color:#475569; margin:4px 0 8px 0;">
+            Bé Mây hãy lật mở và ghép đôi 1 thẻ hình với 1 thẻ chữ nhé! ✨
+          </div>
+
+          <!-- Matching Cards Grid -->
+          <div class="matching-grid" id="matchingCardsGrid"></div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="game-navbar">
+      <button class="nav-tab active" data-screen="world-map">
+        <span class="tab-icon">🏰</span>
+        <span>Bản Đồ</span>
+      </button>
+      <button class="nav-tab" data-screen="alphabet">
+        <span class="tab-icon">🔤</span>
+        <span>Chữ Cái</span>
+      </button>
+      <button class="nav-tab" data-screen="vocab">
+        <span class="tab-icon">📖</span>
+        <span>Từ Vựng</span>
+      </button>
+      <button class="nav-tab" data-screen="spelling">
+        <span class="tab-icon">🎵</span>
+        <span>Đánh Vần</span>
+      </button>
+      <button class="nav-tab" data-screen="matching">
+        <span class="tab-icon">🧩</span>
+        <span>Ghép Hình</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- SESSION GAME CHOICE MODAL -->
+  <div id="gameChoiceModal" class="victory-modal-backdrop" style="display:none;">
+    <div class="victory-card">
+      <div style="font-size:64px;">🎉💎✨</div>
+      <h2 style="font-size:28px; color:#0A6FC2; margin-top:8px;">Bé Mây Đã Đọc Xong 8 Từ!</h2>
+      <p style="font-size:18px; font-weight:700; color:#475569; margin:8px 0 16px 0;">Bé Mây hãy chọn trò chơi yêu thích cuối buổi nhé:</p>
+      
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <button id="choiceMatchingBtn" class="action-btn btn-purple" style="min-height:72px; font-size:22px;">
+          🧩 Trò Chơi Ghép Hình (Tranh & Chữ)
+        </button>
+        <button id="choiceQuizBtn" class="action-btn btn-blue" style="min-height:72px; font-size:22px;">
+          🎯 Chốt Buổi Học (10 Câu Chọn Hình)
+        </button>
+        <button id="choiceMapBtn" class="btn-skip" style="width:100%; margin-top:4px;">
+          Về bản đồ 🏰
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VICTORY MODAL -->
+  <div id="victoryModal" class="victory-modal-backdrop" style="display:none;">
+    <div class="victory-card">
+      <div style="font-size:72px;">🎉❄️👑</div>
+      <h2 style="font-size:32px; color:#0A6FC2; margin-top:8px;">Bé Mây Tuyệt Vời Quá!</h2>
+      <div class="victory-stars-row" id="victoryStarsDisplay">⭐⭐⭐</div>
+      <p id="victoryScoreText" style="font-size:20px; font-weight:700; color:#334155;">Bé Mây đã hoàn thành xuất sắc!</p>
+
+      <div class="victory-sticker-reward" id="victoryStickerBox">
+        <div style="font-size:15px; font-weight:800; color:#0369A1; margin-bottom:4px;">PHẦN THƯỞNG STICKER MỚI:</div>
+        <div class="sticker-emoji" id="victoryStickerEmoji">🦄</div>
+        <div style="font-weight:800; color:#1E293B;" id="victoryStickerName">Linh thú Lumi</div>
+      </div>
+
+      <button id="victoryCloseBtn" class="btn-primary-read" style="width:100%; margin-top:16px;">
+        Tiếp tục phiêu lưu ▶
+      </button>
+    </div>
+  </div>
+
+  <!-- PARENT SETTINGS MODAL -->
+  <div id="parentModal" class="victory-modal-backdrop" style="display:none;">
+    <div class="parent-modal">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h2 style="color:#0A6FC2;">⚙️ Góc Phụ Huynh</h2>
+        <button id="parentCloseBtn" class="icon-btn">✕</button>
+      </div>
+
+      <div class="parent-form-group">
+        <label>Tên của Bé:</label>
+        <div style="display:flex; gap:8px;">
+          <input type="text" id="parentChildNameInput" value="Bé Mây" style="flex:1;">
+          <button id="parentTestVoiceBtn" class="action-btn btn-blue" style="min-height:48px; padding:0 16px;">🔊 Thử</button>
+        </div>
+      </div>
+
+      <div class="parent-form-group">
+        <button id="parentSaveBtn" class="action-btn btn-green" style="width:100%; min-height:56px; margin-bottom:12px;">
+          Lưu cài đặt
+        </button>
+        <button id="parentResetBtn" class="action-btn btn-gold" style="width:100%; min-height:56px;">
+          Đặt lại toàn bộ tiến độ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STICKERS MODAL -->
+  <div id="stickersModal" class="victory-modal-backdrop" style="display:none;">
+    <div class="parent-modal">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h2 style="color:#0A6FC2;">👑 Bộ Sưu Tập Sticker</h2>
+        <button onclick="document.getElementById('stickersModal').style.display='none'" class="icon-btn">✕</button>
+      </div>
+
+      <div id="stickersGrid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(100px, 1fr)); gap:12px;"></div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS LOAD ORDER -->
+  <script src="js/data/emojiMap.js"></script>
+  <script src="js/data/alphabet.js"></script>
+  <script src="js/data/vocab.js"></script>
+  <script src="js/data/spelling.js"></script>
+  <script src="js/data/feedback.js"></script>
+  <script src="js/data/stories.js"></script>
+  <script src="js/data/strokes.js"></script>
+
+  <script src="js/services/audioService.js"></script>
+  <script src="js/services/progressService.js"></script>
+  <script src="js/services/quizService.js"></script>
+  <script src="js/services/handwritingService.js"></script>
+  <script src="js/services/storyService.js"></script>
+  <script src="js/services/matchingGameService.js"></script>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

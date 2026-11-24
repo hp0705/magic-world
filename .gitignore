@@ -1,0 +1,5 @@
+# Temporary & test files
+*.png
+*.log
+test_*.js
+.system_generated/

@@ -1,0 +1,626 @@
+{
+  "version": "2.4",
+  "note": "emoji hệ thống (Noto/Apple); quiz=false nghĩa là không dùng trong trò chọn hình vì emoji không rõ nghĩa",
+  "words": {
+    "ba": {
+      "emoji": "👨",
+      "quiz": true
+    },
+    "bay": {
+      "emoji": "🕊️",
+      "quiz": true
+    },
+    "bi": {
+      "emoji": null,
+      "quiz": false
+    },
+    "bà": {
+      "emoji": "👵",
+      "quiz": true
+    },
+    "bàn": {
+      "emoji": null,
+      "quiz": false
+    },
+    "bác": {
+      "emoji": null,
+      "quiz": false
+    },
+    "bánh": {
+      "emoji": "🍪",
+      "quiz": true
+    },
+    "bát": {
+      "emoji": "🥣",
+      "quiz": true
+    },
+    "bão": {
+      "emoji": "🌪️",
+      "quiz": true
+    },
+    "bé": {
+      "emoji": "👶",
+      "quiz": true
+    },
+    "bình": {
+      "emoji": "🏺",
+      "quiz": true
+    },
+    "bò": {
+      "emoji": "🐮",
+      "quiz": true
+    },
+    "bóng": {
+      "emoji": "⚽",
+      "quiz": true
+    },
+    "búp": {
+      "emoji": null,
+      "quiz": false
+    },
+    "búp bê": {
+      "emoji": "🪆",
+      "quiz": true
+    },
+    "bút": {
+      "emoji": "🖊️",
+      "quiz": true
+    },
+    "bơ": {
+      "emoji": "🥑",
+      "quiz": true
+    },
+    "bướm": {
+      "emoji": "🦋",
+      "quiz": true
+    },
+    "bắp": {
+      "emoji": "🌽",
+      "quiz": true
+    },
+    "bếp": {
+      "emoji": "🍳",
+      "quiz": true
+    },
+    "bể": {
+      "emoji": null,
+      "quiz": false
+    },
+    "bốn": {
+      "emoji": "4️⃣",
+      "quiz": true
+    },
+    "bữa": {
+      "emoji": "🍱",
+      "quiz": true
+    },
+    "cam": {
+      "emoji": "🍊",
+      "quiz": true
+    },
+    "chia": {
+      "emoji": null,
+      "quiz": false
+    },
+    "chim": {
+      "emoji": "🐦",
+      "quiz": true
+    },
+    "chuyện": {
+      "emoji": null,
+      "quiz": false
+    },
+    "chuông": {
+      "emoji": "🔔",
+      "quiz": true
+    },
+    "chuối": {
+      "emoji": "🍌",
+      "quiz": true
+    },
+    "chân": {
+      "emoji": "🦶",
+      "quiz": true
+    },
+    "chó": {
+      "emoji": "🐶",
+      "quiz": true
+    },
+    "cua": {
+      "emoji": "🦀",
+      "quiz": true
+    },
+    "cà rốt": {
+      "emoji": "🥕",
+      "quiz": true
+    },
+    "cá": {
+      "emoji": "🐟",
+      "quiz": true
+    },
+    "cây": {
+      "emoji": "🌳",
+      "quiz": true
+    },
+    "cúc": {
+      "emoji": "🌼",
+      "quiz": true
+    },
+    "cún": {
+      "emoji": "🐕",
+      "quiz": true
+    },
+    "cơm": {
+      "emoji": "🍚",
+      "quiz": true
+    },
+    "cười": {
+      "emoji": "😄",
+      "quiz": true
+    },
+    "cọp": {
+      "emoji": "🐯",
+      "quiz": true
+    },
+    "cốc": {
+      "emoji": "🥛",
+      "quiz": true
+    },
+    "cổng": {
+      "emoji": null,
+      "quiz": false
+    },
+    "diều": {
+      "emoji": "🪁",
+      "quiz": true
+    },
+    "dâu": {
+      "emoji": "🍓",
+      "quiz": true
+    },
+    "dép": {
+      "emoji": "🩴",
+      "quiz": true
+    },
+    "dừa": {
+      "emoji": "🥥",
+      "quiz": true
+    },
+    "em": {
+      "emoji": "🧒",
+      "quiz": true
+    },
+    "ghế": {
+      "emoji": "🪑",
+      "quiz": true
+    },
+    "giường": {
+      "emoji": "🛏️",
+      "quiz": true
+    },
+    "gà": {
+      "emoji": "🐔",
+      "quiz": true
+    },
+    "gạch": {
+      "emoji": "🧱",
+      "quiz": true
+    },
+    "gấu": {
+      "emoji": "🐻",
+      "quiz": true
+    },
+    "hoa": {
+      "emoji": "🌸",
+      "quiz": true
+    },
+    "huệ": {
+      "emoji": null,
+      "quiz": false
+    },
+    "hót": {
+      "emoji": null,
+      "quiz": false
+    },
+    "hươu": {
+      "emoji": "🦒",
+      "quiz": true
+    },
+    "hộp": {
+      "emoji": "📦",
+      "quiz": true
+    },
+    "kem": {
+      "emoji": "🍦",
+      "quiz": true
+    },
+    "khoanh": {
+      "emoji": "⭕",
+      "quiz": true
+    },
+    "khoe": {
+      "emoji": null,
+      "quiz": false
+    },
+    "khuy": {
+      "emoji": null,
+      "quiz": false
+    },
+    "khuấy": {
+      "emoji": null,
+      "quiz": false
+    },
+    "khăn": {
+      "emoji": "🧣",
+      "quiz": true
+    },
+    "khỏe": {
+      "emoji": "💪",
+      "quiz": true
+    },
+    "kêu": {
+      "emoji": null,
+      "quiz": false
+    },
+    "kính": {
+      "emoji": "👓",
+      "quiz": true
+    },
+    "kẹo": {
+      "emoji": "🍬",
+      "quiz": true
+    },
+    "loa": {
+      "emoji": "🔊",
+      "quiz": true
+    },
+    "lá": {
+      "emoji": "🍃",
+      "quiz": true
+    },
+    "lê": {
+      "emoji": "🍐",
+      "quiz": true
+    },
+    "lịch": {
+      "emoji": "📅",
+      "quiz": true
+    },
+    "lựu": {
+      "emoji": null,
+      "quiz": false
+    },
+    "miệng": {
+      "emoji": "👄",
+      "quiz": true
+    },
+    "mây": {
+      "emoji": "☁️",
+      "quiz": true
+    },
+    "mèo": {
+      "emoji": "🐱",
+      "quiz": true
+    },
+    "mía": {
+      "emoji": null,
+      "quiz": false
+    },
+    "mùa": {
+      "emoji": "🍂",
+      "quiz": true
+    },
+    "mũ": {
+      "emoji": "🧢",
+      "quiz": true
+    },
+    "mũi": {
+      "emoji": "👃",
+      "quiz": true
+    },
+    "mưa": {
+      "emoji": "🌧️",
+      "quiz": true
+    },
+    "mắt": {
+      "emoji": "👀",
+      "quiz": true
+    },
+    "mặc": {
+      "emoji": null,
+      "quiz": false
+    },
+    "mẹ": {
+      "emoji": "👩",
+      "quiz": true
+    },
+    "một": {
+      "emoji": "1️⃣",
+      "quiz": true
+    },
+    "mực": {
+      "emoji": "🦑",
+      "quiz": true
+    },
+    "na": {
+      "emoji": null,
+      "quiz": false
+    },
+    "ngoan": {
+      "emoji": null,
+      "quiz": false
+    },
+    "ngửi": {
+      "emoji": null,
+      "quiz": false
+    },
+    "ngựa": {
+      "emoji": "🐴",
+      "quiz": true
+    },
+    "nhà": {
+      "emoji": "🏠",
+      "quiz": true
+    },
+    "nón": {
+      "emoji": "👒",
+      "quiz": true
+    },
+    "nơ": {
+      "emoji": "🎀",
+      "quiz": true
+    },
+    "nước": {
+      "emoji": "💧",
+      "quiz": true
+    },
+    "nấm": {
+      "emoji": "🍄",
+      "quiz": true
+    },
+    "nắng": {
+      "emoji": "☀️",
+      "quiz": true
+    },
+    "ong": {
+      "emoji": "🐝",
+      "quiz": true
+    },
+    "phòng": {
+      "emoji": null,
+      "quiz": false
+    },
+    "pin": {
+      "emoji": "🔋",
+      "quiz": true
+    },
+    "quà": {
+      "emoji": "🎁",
+      "quiz": true
+    },
+    "quạt": {
+      "emoji": null,
+      "quiz": false
+    },
+    "rau": {
+      "emoji": "🥬",
+      "quiz": true
+    },
+    "rừng": {
+      "emoji": "🌲",
+      "quiz": true
+    },
+    "sao": {
+      "emoji": "⭐",
+      "quiz": true
+    },
+    "sách": {
+      "emoji": "📖",
+      "quiz": true
+    },
+    "sóc": {
+      "emoji": "🐿️",
+      "quiz": true
+    },
+    "sư tử": {
+      "emoji": "🦁",
+      "quiz": true
+    },
+    "sữa": {
+      "emoji": "🍼",
+      "quiz": true
+    },
+    "tai": {
+      "emoji": "👂",
+      "quiz": true
+    },
+    "tay": {
+      "emoji": "✋",
+      "quiz": true
+    },
+    "thìa": {
+      "emoji": "🥄",
+      "quiz": true
+    },
+    "thùng": {
+      "emoji": "🗑️",
+      "quiz": true
+    },
+    "thư": {
+      "emoji": "✉️",
+      "quiz": true
+    },
+    "thỏ": {
+      "emoji": "🐰",
+      "quiz": true
+    },
+    "trăng": {
+      "emoji": "🌙",
+      "quiz": true
+    },
+    "trường": {
+      "emoji": "🏫",
+      "quiz": true
+    },
+    "trống": {
+      "emoji": "🥁",
+      "quiz": true
+    },
+    "trời": {
+      "emoji": "🌤️",
+      "quiz": true
+    },
+    "tuyết": {
+      "emoji": "❄️",
+      "quiz": true
+    },
+    "táo": {
+      "emoji": "🍎",
+      "quiz": true
+    },
+    "tóc": {
+      "emoji": "💇",
+      "quiz": true
+    },
+    "tô": {
+      "emoji": "🍜",
+      "quiz": true
+    },
+    "tôm": {
+      "emoji": "🦐",
+      "quiz": true
+    },
+    "tất": {
+      "emoji": "🧦",
+      "quiz": true
+    },
+    "tập": {
+      "emoji": null,
+      "quiz": false
+    },
+    "tắm": {
+      "emoji": "🛁",
+      "quiz": true
+    },
+    "tết": {
+      "emoji": "🎍",
+      "quiz": true
+    },
+    "tỏa": {
+      "emoji": "✨",
+      "quiz": true
+    },
+    "tủ": {
+      "emoji": "🗄️",
+      "quiz": true
+    },
+    "voi": {
+      "emoji": "🐘",
+      "quiz": true
+    },
+    "vàng": {
+      "emoji": "🟡",
+      "quiz": true
+    },
+    "võng": {
+      "emoji": null,
+      "quiz": false
+    },
+    "vịt": {
+      "emoji": "🦆",
+      "quiz": true
+    },
+    "xanh": {
+      "emoji": null,
+      "quiz": false
+    },
+    "xe": {
+      "emoji": "🚗",
+      "quiz": true
+    },
+    "xe đạp": {
+      "emoji": "🚲",
+      "quiz": true
+    },
+    "xoay": {
+      "emoji": "🔄",
+      "quiz": true
+    },
+    "xoài": {
+      "emoji": "🥭",
+      "quiz": true
+    },
+    "xoăn": {
+      "emoji": "👩‍🦱",
+      "quiz": true
+    },
+    "xoải": {
+      "emoji": null,
+      "quiz": false
+    },
+    "xíu": {
+      "emoji": null,
+      "quiz": false
+    },
+    "xòe": {
+      "emoji": null,
+      "quiz": false
+    },
+    "y tá": {
+      "emoji": "🧑‍⚕️",
+      "quiz": true
+    },
+    "áo": {
+      "emoji": "👕",
+      "quiz": true
+    },
+    "ô tô": {
+      "emoji": "🚘",
+      "quiz": true
+    },
+    "ông": {
+      "emoji": "👴",
+      "quiz": true
+    },
+    "ăn": {
+      "emoji": "🍽️",
+      "quiz": true
+    },
+    "đèn": {
+      "emoji": "💡",
+      "quiz": true
+    },
+    "đường": {
+      "emoji": "🛣️",
+      "quiz": true
+    },
+    "đạp": {
+      "emoji": null,
+      "quiz": false
+    },
+    "ấm": {
+      "emoji": null,
+      "quiz": false
+    },
+    "ếch": {
+      "emoji": "🐸",
+      "quiz": true
+    },
+    "ớt": {
+      "emoji": "🌶️",
+      "quiz": true
+    },
+    "môi": {
+      "emoji": "👄",
+      "quiz": true
+    },
+    "hổ": {
+      "emoji": "🐯",
+      "quiz": true
+    },
+    "đẹp": {
+      "emoji": "👗",
+      "quiz": true
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+ "version": "2.4",
+ "note": "Cảnh truyện dựng bằng emoji lớn thay SVG; dùng thêm 👸 hoặc 🧚 cho Cô Sao Băng, 🦄 cho Lumi, 👧 cho Bé Mây khi cần nhân vật",
+ "art": {
+  "ice-village": "🏔️🏘️❄️",
+  "mist": "🌫️☁️",
+  "lumi-appears": "🦄✨❄️",
+  "crown-star": "👑⭐",
+  "crystal": "💎✨",
+  "ice-village-sunrise": "🌅🏘️❄️",
+  "forest-letters": "🌲🔤🌲",
+  "glow-path": "✨🛤️✨",
+  "valley": "🏞️🌸",
+  "castle": "🏰✨",
+  "castle-door": "🚪🏰",
+  "rainbow-bridge": "🌈🌉",
+  "aurora-peak": "🏔️🌌",
+  "snow-forest": "🌲❄️🦌",
+  "home-light": "🏠💡",
+  "crown-room": "👑🏰",
+  "crown-glow": "👑✨💫",
+  "bedroom-night": "🛏️🌙⭐",
+  "ceremony": "🎉⭐🎊"
+ },
+ "characters": {
+  "co": "🌠",
+  "lumi": "🦄",
+  "be_may": "👧"
+ }
+}

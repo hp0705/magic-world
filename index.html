@@ -114,8 +114,16 @@
 
           <!-- Right Content -->
           <div class="lesson-content-pane">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-weight:700; color:#64748B;">Rừng Chữ Cái</span>
+            <div class="lesson-top-bar">
+              <div class="day-picker-group">
+                <button id="alphaPrevLetterStepBtn" class="day-step-btn" title="Chữ trước">◀</button>
+                <button id="alphaPickerBtn" class="day-picker-btn" title="Chạm để tự do chọn bất kỳ chữ cái nào">
+                  <span>🔤</span>
+                  <span id="alphaPickerText">Chữ a (A)</span>
+                  <span>▾</span>
+                </button>
+                <button id="alphaNextLetterStepBtn" class="day-step-btn" title="Chữ sau">▶</button>
+              </div>
               <div class="crystals-bar" id="alphabetCrystals"></div>
             </div>
 
@@ -160,8 +168,16 @@
 
           <!-- Right Content -->
           <div class="lesson-content-pane">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span id="vocabDayBadge" style="font-weight:800; color:#0284C7; cursor:pointer;" title="Chạm để đổi ngày">Ngày 1 (2 chữ cái) ▾</span>
+            <div class="lesson-top-bar">
+              <div class="day-picker-group">
+                <button id="vocabPrevDayBtn" class="day-step-btn" title="Ngày trước">◀</button>
+                <button id="vocabDayBadge" class="day-picker-btn" title="Chạm để tự do chọn ngày học">
+                  <span>📅</span>
+                  <span id="vocabDayBadgeText">Ngày 1 (2 chữ cái)</span>
+                  <span>▾</span>
+                </button>
+                <button id="vocabNextDayBtn" class="day-step-btn" title="Ngày sau">▶</button>
+              </div>
               <div class="crystals-bar" id="vocabCrystals"></div>
             </div>
 
@@ -209,8 +225,16 @@
 
           <!-- Right Content -->
           <div class="lesson-content-pane">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span id="spellingDayBadge" style="font-weight:800; color:#0A6FC2; cursor:pointer;" title="Chạm để đổi ngày">Ngày 1: Vần mở ▾</span>
+            <div class="lesson-top-bar">
+              <div class="day-picker-group">
+                <button id="spellingPrevDayBtn" class="day-step-btn" title="Ngày trước">◀</button>
+                <button id="spellingDayBadge" class="day-picker-btn" title="Chạm để tự do chọn ngày học">
+                  <span>🏰</span>
+                  <span id="spellingDayBadgeText">Ngày 1: Vần mở</span>
+                  <span>▾</span>
+                </button>
+                <button id="spellingNextDayBtn" class="day-step-btn" title="Ngày sau">▶</button>
+              </div>
               <div class="crystals-bar" id="spellingCrystals"></div>
             </div>
 
@@ -387,10 +411,13 @@
       <p style="font-size:18px; font-weight:700; color:#475569; margin:8px 0 16px 0;">Bé Mây hãy chọn trò chơi yêu thích cuối buổi nhé:</p>
       
       <div style="display:flex; flex-direction:column; gap:12px;">
-        <button id="choiceMatchingBtn" class="action-btn btn-purple" style="min-height:72px; font-size:22px;">
+        <button id="choiceNextDayBtn" class="action-btn btn-green" style="min-height:64px; font-size:22px;">
+          🌟 Học Ngày Tiếp Theo ▶
+        </button>
+        <button id="choiceMatchingBtn" class="action-btn btn-purple" style="min-height:64px; font-size:20px;">
           🧩 Trò Chơi Ghép Hình (Tranh & Chữ)
         </button>
-        <button id="choiceQuizBtn" class="action-btn btn-blue" style="min-height:72px; font-size:22px;">
+        <button id="choiceQuizBtn" class="action-btn btn-blue" style="min-height:64px; font-size:20px;">
           🎯 Chốt Buổi Học (10 Câu Chọn Hình)
         </button>
         <button id="choiceMapBtn" class="btn-skip" style="width:100%; margin-top:4px;">
@@ -414,9 +441,26 @@
         <div style="font-weight:800; color:#1E293B;" id="victoryStickerName">Linh thú Lumi</div>
       </div>
 
-      <button id="victoryCloseBtn" class="btn-primary-read" style="width:100%; margin-top:16px;">
-        Tiếp tục phiêu lưu ▶
+      <button id="victoryNextDayBtn" class="btn-primary-read" style="width:100%; margin-top:16px;">
+        🌟 Học Ngày Tiếp Theo ▶
       </button>
+      <button id="victoryCloseBtn" class="btn-skip" style="width:100%; margin-top:8px;">
+        Về bản đồ 🏰
+      </button>
+    </div>
+  </div>
+
+  <!-- DAY & LESSON SELECTOR MODAL (Visual Lesson Picker for iPad & Desktop) -->
+  <div id="daySelectorModal" class="victory-modal-backdrop" style="display:none;">
+    <div class="day-selector-card">
+      <div class="day-selector-header">
+        <div>
+          <h2 id="daySelectorTitle" style="color:#0A6FC2; font-size:24px; margin:0;">📅 Chọn Bài Học</h2>
+          <p id="daySelectorSubtitle" style="color:#64748B; font-size:15px; margin:4px 0 0 0;">Chạm vào bất kỳ bài nào để học ngay</p>
+        </div>
+        <button id="daySelectorCloseBtn" class="icon-btn" style="font-size:20px; width:44px; height:44px;">✕</button>
+      </div>
+      <div id="daySelectorGrid" class="day-selector-grid"></div>
     </div>
   </div>
 

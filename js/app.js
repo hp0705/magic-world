@@ -139,6 +139,12 @@ class MagicWorldApp {
       });
     }
 
+    // Top picker button text
+    const pickerTextEl = document.getElementById('alphaPickerText');
+    if (pickerTextEl) {
+      pickerTextEl.textContent = `Chữ ${letter.lower} (${letter.upper})`;
+    }
+
     // Displays
     document.getElementById('alphabetUpper').textContent = letter.upper;
     document.getElementById('alphabetLower').textContent = letter.lower;
@@ -170,7 +176,13 @@ class MagicWorldApp {
     const currentWord = words[this.vocabWordIndex] || words[0];
 
     // Day title & topic
-    document.getElementById('vocabDayBadge').textContent = `Ngày ${this.vocabDay} (${currentWord.group})`;
+    const badgeTextEl = document.getElementById('vocabDayBadgeText');
+    if (badgeTextEl) {
+      badgeTextEl.textContent = `Ngày ${this.vocabDay} (${currentWord.group})`;
+    } else {
+      const badge = document.getElementById('vocabDayBadge');
+      if (badge) badge.textContent = `Ngày ${this.vocabDay} (${currentWord.group}) ▾`;
+    }
     document.getElementById('vocabTopicBadge').textContent = currentWord.topic;
 
     // 8 Crystals Bar
@@ -219,13 +231,43 @@ class MagicWorldApp {
 
   nextVocabWord() {
     const words = this.vocabDaysData[this.vocabDay] || [];
-    this.vocabWordIndex = (this.vocabWordIndex + 1) % words.length;
-    this.renderVocabScreen();
+    if (this.vocabWordIndex < words.length - 1) {
+      this.vocabWordIndex++;
+      this.renderVocabScreen();
+    } else {
+      // Smoothly advance to Next Day!
+      this.nextVocabDay();
+    }
   }
 
   prevVocabWord() {
-    const words = this.vocabDaysData[this.vocabDay] || [];
-    this.vocabWordIndex = (this.vocabWordIndex - 1 + words.length) % words.length;
+    if (this.vocabWordIndex > 0) {
+      this.vocabWordIndex--;
+      this.renderVocabScreen();
+    } else {
+      // Step back to Previous Day (last word)
+      const totalDays = Object.keys(this.vocabDaysData).length;
+      this.vocabDay = this.vocabDay > 1 ? this.vocabDay - 1 : totalDays;
+      const prevWords = this.vocabDaysData[this.vocabDay] || [];
+      this.vocabWordIndex = Math.max(0, prevWords.length - 1);
+      this.audio.playPop();
+      this.renderVocabScreen();
+    }
+  }
+
+  nextVocabDay() {
+    const totalDays = Object.keys(this.vocabDaysData).length;
+    this.vocabDay = this.vocabDay < totalDays ? this.vocabDay + 1 : 1;
+    this.vocabWordIndex = 0;
+    this.audio.playPop();
+    this.renderVocabScreen();
+  }
+
+  prevVocabDay() {
+    const totalDays = Object.keys(this.vocabDaysData).length;
+    this.vocabDay = this.vocabDay > 1 ? this.vocabDay - 1 : totalDays;
+    this.vocabWordIndex = 0;
+    this.audio.playPop();
     this.renderVocabScreen();
   }
 
@@ -236,7 +278,13 @@ class MagicWorldApp {
 
     const currentWord = dayObj.words[this.spellingWordIndex] || dayObj.words[0];
 
-    document.getElementById('spellingDayBadge').textContent = `Ngày ${this.spellingDay}: ${dayObj.title}`;
+    const badgeTextEl = document.getElementById('spellingDayBadgeText');
+    if (badgeTextEl) {
+      badgeTextEl.textContent = `Ngày ${this.spellingDay}: ${dayObj.title}`;
+    } else {
+      const badge = document.getElementById('spellingDayBadge');
+      if (badge) badge.textContent = `Ngày ${this.spellingDay}: ${dayObj.title} ▾`;
+    }
 
     // 8 Crystals Bar
     const progressObj = this.progress.getSpellingDayProgress(this.spellingDay);
@@ -334,14 +382,43 @@ class MagicWorldApp {
   nextSpellingWord() {
     const dayObj = this.spellingDaysData.find(d => d.day === this.spellingDay);
     if (!dayObj) return;
-    this.spellingWordIndex = (this.spellingWordIndex + 1) % dayObj.words.length;
-    this.renderSpellingScreen();
+    if (this.spellingWordIndex < dayObj.words.length - 1) {
+      this.spellingWordIndex++;
+      this.renderSpellingScreen();
+    } else {
+      // Smoothly advance to Next Day!
+      this.nextSpellingDay();
+    }
   }
 
   prevSpellingWord() {
-    const dayObj = this.spellingDaysData.find(d => d.day === this.spellingDay);
-    if (!dayObj) return;
-    this.spellingWordIndex = (this.spellingWordIndex - 1 + dayObj.words.length) % dayObj.words.length;
+    if (this.spellingWordIndex > 0) {
+      this.spellingWordIndex--;
+      this.renderSpellingScreen();
+    } else {
+      // Step back to previous Day (last word)
+      const totalDays = this.spellingDaysData.length;
+      this.spellingDay = this.spellingDay > 1 ? this.spellingDay - 1 : totalDays;
+      const prevDayObj = this.spellingDaysData.find(d => d.day === this.spellingDay);
+      this.spellingWordIndex = prevDayObj && prevDayObj.words ? prevDayObj.words.length - 1 : 0;
+      this.audio.playPop();
+      this.renderSpellingScreen();
+    }
+  }
+
+  nextSpellingDay() {
+    const totalDays = this.spellingDaysData.length;
+    this.spellingDay = this.spellingDay < totalDays ? this.spellingDay + 1 : 1;
+    this.spellingWordIndex = 0;
+    this.audio.playPop();
+    this.renderSpellingScreen();
+  }
+
+  prevSpellingDay() {
+    const totalDays = this.spellingDaysData.length;
+    this.spellingDay = this.spellingDay > 1 ? this.spellingDay - 1 : totalDays;
+    this.spellingWordIndex = 0;
+    this.audio.playPop();
     this.renderSpellingScreen();
   }
 
@@ -804,6 +881,10 @@ class MagicWorldApp {
     // Alphabet Buttons
     document.getElementById('alphaPrevBtn').addEventListener('click', () => this.prevLetter());
     document.getElementById('alphaNextBtn').addEventListener('click', () => this.nextLetter());
+    document.getElementById('alphaPrevLetterStepBtn')?.addEventListener('click', () => this.prevLetter());
+    document.getElementById('alphaNextLetterStepBtn')?.addEventListener('click', () => this.nextLetter());
+    document.getElementById('alphaPickerBtn')?.addEventListener('click', () => this.openDaySelectorModal('alphabet'));
+
     document.getElementById('btnListenLetter').addEventListener('click', () => {
       const letter = this.alphabetData[this.alphabetIndex];
       if (letter) this.audio.speak(letter.lower);
@@ -823,6 +904,9 @@ class MagicWorldApp {
     // Vocab Buttons
     document.getElementById('vocabPrevBtn').addEventListener('click', () => this.prevVocabWord());
     document.getElementById('vocabNextBtn').addEventListener('click', () => this.nextVocabWord());
+    document.getElementById('vocabPrevDayBtn')?.addEventListener('click', () => this.prevVocabDay());
+    document.getElementById('vocabNextDayBtn')?.addEventListener('click', () => this.nextVocabDay());
+
     document.getElementById('btnVocabListen').addEventListener('click', () => {
       const words = this.vocabDaysData[this.vocabDay] || [];
       const currentWord = words[this.vocabWordIndex];
@@ -847,6 +931,9 @@ class MagicWorldApp {
     // Spelling Buttons
     document.getElementById('spellingPrevBtn').addEventListener('click', () => this.prevSpellingWord());
     document.getElementById('spellingNextBtn').addEventListener('click', () => this.nextSpellingWord());
+    document.getElementById('spellingPrevDayBtn')?.addEventListener('click', () => this.prevSpellingDay());
+    document.getElementById('spellingNextDayBtn')?.addEventListener('click', () => this.nextSpellingDay());
+
     document.getElementById('btnSpellingListen').addEventListener('click', () => {
       const dayObj = this.spellingDaysData.find(d => d.day === this.spellingDay);
       if (dayObj && dayObj.words[this.spellingWordIndex]) {
@@ -929,6 +1016,21 @@ class MagicWorldApp {
     if (matchReset) matchReset.addEventListener('click', () => this.renderMatchingGameScreen());
 
     // Game Choice Modal Buttons
+    const choiceNext = document.getElementById('choiceNextDayBtn');
+    if (choiceNext) {
+      choiceNext.addEventListener('click', () => {
+        document.getElementById('gameChoiceModal').style.display = 'none';
+        const s = this.currentQuizSession || { module: 'vocab', day: this.vocabDay };
+        if (s.module === 'vocab') {
+          this.nextVocabDay();
+          this.showScreen('vocab');
+        } else {
+          this.nextSpellingDay();
+          this.showScreen('spelling');
+        }
+      });
+    }
+
     const choiceMatch = document.getElementById('choiceMatchingBtn');
     if (choiceMatch) {
       choiceMatch.addEventListener('click', () => {
@@ -951,25 +1053,142 @@ class MagicWorldApp {
         this.showScreen('world-map');
       });
     }
+
+    // Victory Next Day button
+    const victoryNext = document.getElementById('victoryNextDayBtn');
+    if (victoryNext) {
+      victoryNext.addEventListener('click', () => {
+        document.getElementById('victoryModal').style.display = 'none';
+        const s = this.currentQuizSession || { module: 'vocab', day: this.vocabDay };
+        if (s.module === 'vocab') {
+          this.nextVocabDay();
+          this.showScreen('vocab');
+        } else {
+          this.nextSpellingDay();
+          this.showScreen('spelling');
+        }
+      });
+    }
+
+    // Day Selector Modal Close buttons
+    const dayModal = document.getElementById('daySelectorModal');
+    const dayClose = document.getElementById('daySelectorCloseBtn');
+    if (dayClose) {
+      dayClose.addEventListener('click', () => {
+        if (dayModal) dayModal.style.display = 'none';
+      });
+    }
+    if (dayModal) {
+      dayModal.addEventListener('click', (e) => {
+        if (e.target === dayModal) dayModal.style.display = 'none';
+      });
+    }
   }
 
-  // Day Selector Modal
-  openDaySelectorModal(moduleType) {
-    const list = moduleType === 'vocab' ? Object.keys(this.vocabDaysData) : this.spellingDaysData.map(d => d.day);
-    let promptText = `Chọn ngày học (1 - ${list.length}):`;
-    let choice = prompt(promptText, moduleType === 'vocab' ? this.vocabDay : this.spellingDay);
-    let num = parseInt(choice, 10);
-    if (!isNaN(num) && num >= 1 && num <= list.length) {
-      if (moduleType === 'vocab') {
-        this.vocabDay = num;
-        this.vocabWordIndex = 0;
-        this.renderVocabScreen();
-      } else {
-        this.spellingDay = num;
-        this.spellingWordIndex = 0;
-        this.renderSpellingScreen();
-      }
+  // Day & Lesson Selector Modal (Visual, Touch-Friendly for iPad & Desktop)
+  openDaySelectorModal(moduleType = 'vocab') {
+    const modal = document.getElementById('daySelectorModal');
+    const titleEl = document.getElementById('daySelectorTitle');
+    const subEl = document.getElementById('daySelectorSubtitle');
+    const gridEl = document.getElementById('daySelectorGrid');
+    if (!modal || !gridEl) return;
+
+    gridEl.innerHTML = '';
+
+    if (moduleType === 'vocab') {
+      titleEl.textContent = '📅 Thung Lũng Từ Vựng — 38 Ngày Học';
+      subEl.textContent = 'Chạm vào ngày bất kỳ để cùng Bé Mây học 8 từ vựng mới';
+
+      const daysList = Object.keys(this.vocabDaysData).map(k => parseInt(k, 10)).sort((a, b) => a - b);
+      daysList.forEach(day => {
+        const words = this.vocabDaysData[day] || [];
+        const firstWord = words[0] || {};
+        const progress = this.progress.getVocabDayProgress(day);
+        const isComplete = progress.completedWords && progress.completedWords.length >= words.length;
+        const isActive = (day === this.vocabDay);
+
+        const card = document.createElement('div');
+        card.className = `day-card-item ${isActive ? 'active' : ''}`;
+        card.innerHTML = `
+          <div class="day-card-badge">Ngày ${day}</div>
+          <div class="day-card-topic">${firstWord.topic || 'Từ vựng'}</div>
+          <div class="day-card-sub">${firstWord.group || `${words.length} từ`}</div>
+          <div class="day-card-status">${isComplete ? '💎 Xong' : (progress.completedWords.length > 0 ? `⭐ ${progress.completedWords.length}/${words.length}` : '🌱 Mới')}</div>
+        `;
+
+        card.addEventListener('click', () => {
+          this.vocabDay = day;
+          this.vocabWordIndex = 0;
+          this.audio.playPop();
+          modal.style.display = 'none';
+          this.showScreen('vocab');
+        });
+
+        gridEl.appendChild(card);
+      });
+    } else if (moduleType === 'spelling') {
+      titleEl.textContent = '🏰 Lâu Đài Đánh Vần — 14 Ngày Học';
+      subEl.textContent = 'Chạm vào ngày bất kỳ để cùng Bé Mây ghép vần diệu kỳ';
+
+      this.spellingDaysData.forEach(d => {
+        const progress = this.progress.getSpellingDayProgress(d.day);
+        const isComplete = progress.completedWords && progress.completedWords.length >= d.words.length;
+        const isActive = (d.day === this.spellingDay);
+
+        const card = document.createElement('div');
+        card.className = `day-card-item ${isActive ? 'active' : ''}`;
+        card.innerHTML = `
+          <div class="day-card-badge">Ngày ${d.day}</div>
+          <div class="day-card-topic">${d.title}</div>
+          <div class="day-card-sub">${d.words.length} từ ghép</div>
+          <div class="day-card-status">${isComplete ? '💎 Xong' : (progress.completedWords.length > 0 ? `⭐ ${progress.completedWords.length}/${d.words.length}` : '🌱 Mới')}</div>
+        `;
+
+        card.addEventListener('click', () => {
+          this.spellingDay = d.day;
+          this.spellingWordIndex = 0;
+          this.audio.playPop();
+          modal.style.display = 'none';
+          this.showScreen('spelling');
+        });
+
+        gridEl.appendChild(card);
+      });
+    } else if (moduleType === 'alphabet') {
+      titleEl.textContent = '🔤 Rừng Chữ Lung Linh — 29 Chữ Cái';
+      subEl.textContent = 'Chạm vào chữ cái bất kỳ để xem tranh và tập viết';
+
+      this.alphabetData.forEach((letter, idx) => {
+        const isComplete = this.progress.isLetterComplete(letter.id);
+        const isActive = (idx === this.alphabetIndex);
+
+        const card = document.createElement('div');
+        card.className = `day-card-item ${isActive ? 'active' : ''}`;
+        card.innerHTML = `
+          <div class="day-card-badge" style="font-size:22px;">${letter.lower} <span style="font-size:16px; opacity:0.8;">${letter.upper}</span></div>
+          <div class="day-card-topic">${letter.emoji || '✨'} ${letter.word}</div>
+          <div class="day-card-sub">Âm "${letter.name}"</div>
+          <div class="day-card-status">${isComplete ? '💎 Đã học' : '🌱 Mới'}</div>
+        `;
+
+        card.addEventListener('click', () => {
+          this.alphabetIndex = idx;
+          this.audio.playPop();
+          modal.style.display = 'none';
+          this.showScreen('alphabet');
+        });
+
+        gridEl.appendChild(card);
+      });
     }
+
+    modal.style.display = 'flex';
+    setTimeout(() => {
+      const activeCard = gridEl.querySelector('.day-card-item.active');
+      if (activeCard) {
+        activeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
   }
 
   // Parent Settings Modal

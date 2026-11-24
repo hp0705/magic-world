@@ -1,4 +1,4 @@
-// Magic World Spelling (14 Days, 112 Words)
+// Magic World Vietnamese Spelling Data (14 Days - 112 Core Phonetic Patterns)
 window.MagicWorld = window.MagicWorld || {};
 window.MagicWorld.SpellingDays = [
   {
@@ -89,17 +89,17 @@ window.MagicWorld.SpellingDays = [
         "id": "spell_d1_3",
         "day": 1,
         "order": 3,
-        "text": "bể",
+        "text": "dê",
         "rime": "ê",
-        "initial": "b",
-        "tone": "hỏi",
-        "spellingRead": "bờ - ê - bê | hỏi - bể",
-        "example": "Bé Mây ngắm cá trong bể.",
-        "emoji": "🐠",
+        "initial": "d",
+        "tone": null,
+        "spellingRead": "dờ - ê - dê",
+        "example": "Chú dê trắng gặm cỏ non.",
+        "emoji": "🐐",
         "quiz": true,
         "chips": [
           {
-            "text": "bờ",
+            "text": "dờ",
             "role": "onset",
             "group": 1
           },
@@ -109,19 +109,9 @@ window.MagicWorld.SpellingDays = [
             "group": 1
           },
           {
-            "text": "bê",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "hỏi",
-            "role": "tone",
-            "group": 2
-          },
-          {
-            "text": "bể",
+            "text": "dê",
             "role": "word",
-            "group": 2
+            "group": 1
           }
         ]
       },
@@ -560,13 +550,13 @@ window.MagicWorld.SpellingDays = [
         "id": "spell_d2_6",
         "day": 2,
         "order": 6,
-        "text": "ngửi",
+        "text": "gửi",
         "rime": "ưi",
-        "initial": "ng",
+        "initial": "g",
         "tone": "hỏi",
-        "spellingRead": "ư - i - ưi | ngờ - ưi - ngưi | hỏi - ngửi",
-        "example": "Bé Mây ngửi hương hoa thơm.",
-        "emoji": "👃",
+        "spellingRead": "ư - i - ưi | gờ - ưi - gưi | hỏi - gửi",
+        "example": "Bé Mây gửi thư cho bà.",
+        "emoji": "✉️",
         "quiz": true,
         "chips": [
           {
@@ -585,7 +575,7 @@ window.MagicWorld.SpellingDays = [
             "group": 1
           },
           {
-            "text": "ngờ",
+            "text": "gờ",
             "role": "onset",
             "group": 2
           },
@@ -595,7 +585,7 @@ window.MagicWorld.SpellingDays = [
             "group": 2
           },
           {
-            "text": "ngưi",
+            "text": "gưi",
             "role": "rime",
             "group": 2
           },
@@ -605,7 +595,7 @@ window.MagicWorld.SpellingDays = [
             "group": 3
           },
           {
-            "text": "ngửi",
+            "text": "gửi",
             "role": "word",
             "group": 3
           }
@@ -1292,13 +1282,13 @@ window.MagicWorld.SpellingDays = [
         "id": "spell_d4_4",
         "day": 4,
         "order": 4,
-        "text": "kêu",
+        "text": "lều",
         "rime": "êu",
-        "initial": "k",
-        "tone": "ngang",
-        "spellingRead": "ê - u - êu | ca - êu - kêu",
-        "example": "Chú vịt kêu cạp cạp.",
-        "emoji": "🦆",
+        "initial": "l",
+        "tone": "huyền",
+        "spellingRead": "ê - u - êu | lờ - êu - lêu | huyền - lều",
+        "example": "Bé Mây dựng chiếc lều xinh.",
+        "emoji": "⛺",
         "quiz": true,
         "chips": [
           {
@@ -1317,7 +1307,7 @@ window.MagicWorld.SpellingDays = [
             "group": 1
           },
           {
-            "text": "ca",
+            "text": "lờ",
             "role": "onset",
             "group": 2
           },
@@ -1327,9 +1317,19 @@ window.MagicWorld.SpellingDays = [
             "group": 2
           },
           {
-            "text": "kêu",
-            "role": "word",
+            "text": "lêu",
+            "role": "rime",
             "group": 2
+          },
+          {
+            "text": "huyền",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "lều",
+            "role": "word",
+            "group": 3
           }
         ]
       },
@@ -1337,13 +1337,13 @@ window.MagicWorld.SpellingDays = [
         "id": "spell_d4_5",
         "day": 4,
         "order": 5,
-        "text": "xíu",
+        "text": "rìu",
         "rime": "iu",
-        "initial": "x",
-        "tone": "sắc",
-        "spellingRead": "i - u - iu | xờ - iu - xiu | sắc - xíu",
-        "example": "Bé Mây có chiếc bánh nhỏ xíu.",
-        "emoji": "🧁",
+        "initial": "r",
+        "tone": "huyền",
+        "spellingRead": "i - u - iu | rờ - iu - riu | huyền - rìu",
+        "example": "Bác tiều phu có chiếc rìu.",
+        "emoji": "🪓",
         "quiz": true,
         "chips": [
           {
@@ -1362,7 +1362,7 @@ window.MagicWorld.SpellingDays = [
             "group": 1
           },
           {
-            "text": "xờ",
+            "text": "rờ",
             "role": "onset",
             "group": 2
           },
@@ -1372,17 +1372,17 @@ window.MagicWorld.SpellingDays = [
             "group": 2
           },
           {
-            "text": "xiu",
+            "text": "riu",
             "role": "rime",
             "group": 2
           },
           {
-            "text": "sắc",
+            "text": "huyền",
             "role": "tone",
             "group": 3
           },
           {
-            "text": "xíu",
+            "text": "rìu",
             "role": "word",
             "group": 3
           }
@@ -1452,13 +1452,13 @@ window.MagicWorld.SpellingDays = [
         "id": "spell_d4_7",
         "day": 4,
         "order": 7,
-        "text": "lựu",
+        "text": "cừu",
         "rime": "ưu",
-        "initial": "l",
-        "tone": "nặng",
-        "spellingRead": "ư - u - ưu | lờ - ưu - lưu | nặng - lựu",
-        "example": "Bé Mây ăn hạt lựu đỏ.",
-        "emoji": "🍎",
+        "initial": "c",
+        "tone": "huyền",
+        "spellingRead": "ư - u - ưu | cờ - ưu - cưu | huyền - cừu",
+        "example": "Bé Mây vuốt ve chú cừu trắng.",
+        "emoji": "🐑",
         "quiz": true,
         "chips": [
           {
@@ -1477,7 +1477,7 @@ window.MagicWorld.SpellingDays = [
             "group": 1
           },
           {
-            "text": "lờ",
+            "text": "cờ",
             "role": "onset",
             "group": 2
           },
@@ -1487,17 +1487,17 @@ window.MagicWorld.SpellingDays = [
             "group": 2
           },
           {
-            "text": "lưu",
+            "text": "cưu",
             "role": "rime",
             "group": 2
           },
           {
-            "text": "nặng",
+            "text": "huyền",
             "role": "tone",
             "group": 3
           },
           {
-            "text": "lựu",
+            "text": "cừu",
             "role": "word",
             "group": 3
           }
@@ -2510,13 +2510,13 @@ window.MagicWorld.SpellingDays = [
         "id": "spell_d7_3",
         "day": 7,
         "order": 3,
-        "text": "võng",
+        "text": "bóng",
         "rime": "ong",
-        "initial": "v",
-        "tone": "ngã",
-        "spellingRead": "o - ngờ - ong | vờ - ong - vong | ngã - võng",
-        "example": "Bé Mây nằm võng đung đưa.",
-        "emoji": "🏕️",
+        "initial": "b",
+        "tone": "sắc",
+        "spellingRead": "o - ngờ - ong | bờ - ong - bong | sắc - bóng",
+        "example": "Bé Mây cầm quả bóng bay màu đỏ.",
+        "emoji": "🎈",
         "quiz": true,
         "chips": [
           {
@@ -2535,7 +2535,7 @@ window.MagicWorld.SpellingDays = [
             "group": 1
           },
           {
-            "text": "vờ",
+            "text": "bờ",
             "role": "onset",
             "group": 2
           },
@@ -2545,17 +2545,17 @@ window.MagicWorld.SpellingDays = [
             "group": 2
           },
           {
-            "text": "vong",
+            "text": "bong",
             "role": "rime",
             "group": 2
           },
           {
-            "text": "ngã",
+            "text": "sắc",
             "role": "tone",
             "group": 3
           },
           {
-            "text": "võng",
+            "text": "bóng",
             "role": "word",
             "group": 3
           }
@@ -3914,8 +3914,8 @@ window.MagicWorld.SpellingDays = [
         "initial": "t",
         "tone": "sắc",
         "spellingRead": "ê - tờ - êt | tờ - êt - têt | sắc - tết",
-        "example": "Ngày tết Bé Mây được mặc áo mới.",
-        "emoji": "🎍",
+        "example": "Ngày tết Bé Mây được nhận bao lì xì.",
+        "emoji": "🧧",
         "quiz": true,
         "chips": [
           {

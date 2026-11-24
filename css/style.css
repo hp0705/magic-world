@@ -5,6 +5,22 @@
 
 /* LOCAL VIETNAMESE CHILD-FRIENDLY FONTS (OFFLINE SUPPORT) */
 @font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/Quicksand-600.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('fonts/Quicksand-700.ttf') format('truetype');
+}
+
+@font-face {
   font-family: 'Nunito';
   font-style: normal;
   font-weight: 600;
@@ -37,8 +53,8 @@
 }
 
 :root {
-  --font-primary: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-primary: 'Quicksand', 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Quicksand', 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --color-ice: #4CC9F0;
   --color-ice-deep: #0A6FC2;
   --color-snow: #F8FDFF;
@@ -480,8 +496,9 @@ h1, h2, h3, .letter-hero-text, .word-hero-text, .zone-title, .quiz-target-word, 
 .spell-chip {
   padding: 8px 16px;
   border-radius: 16px;
+  font-family: var(--font-display);
   font-size: clamp(22px, 4vw, 36px);
-  font-weight: 800;
+  font-weight: 700;
   cursor: pointer;
   background: #F1F5F9;
   box-shadow: 0 3px 8px rgba(0,0,0,0.06);

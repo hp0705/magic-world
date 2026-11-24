@@ -1,4 +1,4 @@
-// Magic World Emoji Database
+// Central Emoji Mapping Registry
 window.MagicWorld = window.MagicWorld || {};
 window.MagicWorld.EmojiMap = {
   "ba": {
@@ -18,7 +18,7 @@ window.MagicWorld.EmojiMap = {
     "quiz": true
   },
   "bàn": {
-    "emoji": "🪵",
+    "emoji": "🍽️",
     "quiz": true
   },
   "bác": {
@@ -50,7 +50,7 @@ window.MagicWorld.EmojiMap = {
     "quiz": true
   },
   "bóng": {
-    "emoji": "⚽",
+    "emoji": "🎈",
     "quiz": true
   },
   "búp": {
@@ -350,7 +350,7 @@ window.MagicWorld.EmojiMap = {
     "quiz": true
   },
   "ngửi": {
-    "emoji": "👃",
+    "emoji": "🌸",
     "quiz": true
   },
   "ngựa": {
@@ -502,7 +502,7 @@ window.MagicWorld.EmojiMap = {
     "quiz": true
   },
   "tết": {
-    "emoji": "🎍",
+    "emoji": "🧧",
     "quiz": true
   },
   "tỏa": {
@@ -731,11 +731,11 @@ window.MagicWorld.EmojiMap = {
   },
   "chú": {
     "emoji": "👨",
-    "quiz": false
+    "quiz": true
   },
   "cậu": {
-    "emoji": "👨",
-    "quiz": false
+    "emoji": "🧑",
+    "quiz": true
   },
   "bạn": {
     "emoji": "🧑‍🤝‍🧑",
@@ -890,23 +890,23 @@ window.MagicWorld.EmojiMap = {
     "quiz": true
   },
   "nhỏ": {
-    "emoji": "🤏",
-    "quiz": false
+    "emoji": "🐜",
+    "quiz": true
   },
   "cao": {
-    "emoji": "📏",
-    "quiz": false
+    "emoji": "🦒",
+    "quiz": true
   },
   "dài": {
-    "emoji": "↔️",
-    "quiz": false
+    "emoji": "🚂",
+    "quiz": true
   },
   "nhẹ": {
     "emoji": "🪶",
     "quiz": true
   },
   "mới": {
-    "emoji": "🆕",
+    "emoji": "🎁",
     "quiz": true
   },
   "đau": {
@@ -958,7 +958,7 @@ window.MagicWorld.EmojiMap = {
     "quiz": false
   },
   "biển": {
-    "emoji": "🌊",
+    "emoji": "🏖️",
     "quiz": true
   },
   "sóng": {
@@ -1006,7 +1006,7 @@ window.MagicWorld.EmojiMap = {
     "quiz": true
   },
   "canh": {
-    "emoji": "🥣",
+    "emoji": "🍲",
     "quiz": true
   },
   "cháo": {
@@ -1416,35 +1416,17 @@ window.MagicWorld.EmojiMap = {
   "tủ lạnh": {
     "emoji": "🧊",
     "quiz": false
-  }
-};
-window.MagicWorld.StoryArtEmoji = {
-  "version": "2.4",
-  "note": "Cảnh truyện dựng bằng emoji lớn thay SVG; dùng thêm 👸 hoặc 🧚 cho Cô Sao Băng, 🦄 cho Lumi, 👧 cho Bé Mây khi cần nhân vật",
-  "art": {
-    "ice-village": "🏔️🏘️❄️",
-    "mist": "🌫️☁️",
-    "lumi-appears": "🦄✨❄️",
-    "crown-star": "👑⭐",
-    "crystal": "💎✨",
-    "ice-village-sunrise": "🌅🏘️❄️",
-    "forest-letters": "🌲🔤🌲",
-    "glow-path": "✨🛤️✨",
-    "valley": "🏞️🌸",
-    "castle": "🏰✨",
-    "castle-door": "🚪🏰",
-    "rainbow-bridge": "🌈🌉",
-    "aurora-peak": "🏔️🌌",
-    "snow-forest": "🌲❄️🦌",
-    "home-light": "🏠💡",
-    "crown-room": "👑🏰",
-    "crown-glow": "👑✨💫",
-    "bedroom-night": "🛏️🌙⭐",
-    "ceremony": "🎉⭐🎊"
   },
-  "characters": {
-    "co": "🌠",
-    "lumi": "🦄",
-    "be_may": "👧"
+  "gửi": {
+    "emoji": "✉️",
+    "quiz": true
+  },
+  "lều": {
+    "emoji": "⛺",
+    "quiz": true
+  },
+  "rìu": {
+    "emoji": "🪓",
+    "quiz": true
   }
 };

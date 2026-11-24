@@ -59,23 +59,26 @@ Bộ tài liệu đặc tả đầy đủ (v2.5) cho ứng dụng web học ti�
 2. Giao `SPEC-03-PROMPT-LAP-TRINH.md` cho AI coding agent để lập `IMPLEMENTATION_PLAN.md` và triển khai từng phase.
 3. Dùng `content/lesson-samples.json` làm dữ liệu hạt giống để dựng giao diện và test luồng học ngay ở Phase 1–2.
 
-## Hướng dẫn chạy ứng dụng ở chế độ Local trên máy (Không cài thêm bất cứ thứ gì)
-Ứng dụng được thiết kế theo chuẩn **Vanilla Web Standards (HTML5, CSS3, ES6 JavaScript, Web Audio API, Web Speech API)**:
-- **Chi phí:** 0đ ($0), không cần server đám mây, không cần API key, không cần cơ sở dữ liệu bên ngoài.
-- **Cài đặt:** Không cần cài đặt bất kỳ thư viện hay package nào (0 npm packages, 0 dependencies).
-- **Chế độ chạy:** Hoạt động hoàn toàn ở chế độ Local trên máy, không push hay can thiệp vào Git remote.
+## Hướng dẫn truy cập ứng dụng trên iPad & Máy tính
 
-### Cách 1: Click đúp vào file `run_game.bat` (Khuyên dùng trên Windows)
-- Click đúp vào file `run_game.bat`.
-- Trình duyệt sẽ tự động mở giao diện game tại `http://localhost:3000`.
-- Màn hình console sẽ hiển thị địa chỉ LAN (ví dụ: `http://192.168.1.x:3000`) để ba mẹ mở cho bé chơi trên iPad / điện thoại cùng mạng Wi-Fi.
+### Cách 1: Truy cập online qua GitHub Pages (Dễ nhất cho iPad của bé)
+- **Link truy cập trực tiếp:** [https://hp0705.github.io/magic-world/](https://hp0705.github.io/magic-world/)
+- **Cách bật GitHub Pages trên repo (nếu chưa bật):**
+  1. Vào repository: [https://github.com/hp0705/magic-world](https://github.com/hp0705/magic-world)
+  2. Bấm vào **Settings** -> mục **Pages** (bên trái).
+  3. Tại mục **Branch**, chọn nhánh `main` và thư mục `/(root)`, rồi nhấn **Save**.
+  4. Đợi 1-2 phút là link `https://hp0705.github.io/magic-world/` có thể mở trực tiếp trên Safari của iPad!
 
-### Cách 2: Chạy lệnh với Node.js
-```bash
-node server.js
-```
+### Cách 2: Truy cập qua mạng Wi-Fi nội bộ gia đình (Chạy server local)
+- Bật file `run_game.bat` trên máy tính.
+- Trên iPad của bé (cùng mạng Wi-Fi), mở trình duyệt Safari và gõ:
+  ```
+  http://192.168.0.12:3000
+  ```
+  *(Hoặc địa chỉ IP hiển thị trên cửa sổ console khi chạy `run_game.bat`)*.
 
-### Cách 3: Mở trực tiếp không cần server
-- Click đúp trực tiếp vào file `index.html` trong thư mục này để mở ngay trên trình duyệt (Chrome / Edge / Firefox).
+### Cách 3: Chạy local trực tiếp trên máy tính
+- **Click đúp vào file `run_game.bat`** (Windows).
+- Hoặc mở trực tiếp file `index.html` trên trình duyệt Chrome/Edge/Firefox.
 
 

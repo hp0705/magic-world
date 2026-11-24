@@ -57,7 +57,10 @@ const server = http.createServer((req, res) => {
       return;
     }
 
-    const cleanText = text.trim();
+    let cleanText = text.trim();
+    if (cleanText.toLowerCase() === 'y' || cleanText.toLowerCase() === 'i ngắn' || cleanText.toLowerCase() === 'i dài') {
+      cleanText = 'i';
+    }
     const hash = crypto.createHash('md5').update(cleanText).digest('hex');
     const cacheFile = path.join(CACHE_DIR, `${hash}.mp3`);
 

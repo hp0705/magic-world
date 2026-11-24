@@ -33,7 +33,9 @@ class MagicWorldApp {
     this.setupSnowCanvas();
     this.bindEvents();
     this.updateHeaderStats();
-    this.showScreen('world-map');
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialScreen = urlParams.get('screen') || 'world-map';
+    this.showScreen(initialScreen);
 
     // Init handwriting canvas when element available
     const hwCanvas = document.getElementById('handwritingCanvas');

@@ -49,7 +49,9 @@ class AudioService {
       'th': 'thờ',
       'tr': 'trờ',
       'gh': 'gờ',
-      'gi': 'giờ'
+      'gi': 'gi',
+      'i ngắn': 'i',
+      'i dài': 'i'
     };
 
     this.initAudioContext();

@@ -49,7 +49,9 @@ const TTS_OVERRIDES = {
   'th': 'thờ',
   'tr': 'trờ',
   'gh': 'gờ',
-  'gi': 'giờ'
+  'gi': 'gi',
+  'i ngắn': 'i',
+  'i dài': 'i'
 };
 
 function getCleanText(rawText) {
@@ -121,6 +123,12 @@ const fb = window.MagicWorld.Feedback || {};
     (sc.lines || []).forEach(l => addPhrase(l.text));
   });
 });
+
+// 6. Explicitly ensure all phonetic overrides & alphabet sounds are cached
+Object.keys(TTS_OVERRIDES).forEach(k => addPhrase(k));
+addPhrase('gi');
+addPhrase('i');
+addPhrase('y');
 
 console.log(`Total unique phrases to cache: ${phrases.size}`);
 

@@ -5,22 +5,6 @@
 
 /* LOCAL VIETNAMESE CHILD-FRIENDLY FONTS (OFFLINE SUPPORT) */
 @font-face {
-  font-family: 'Baloo 2';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('fonts/Baloo2-SemiBold.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Baloo 2';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url('fonts/Baloo2-ExtraBold.ttf') format('truetype');
-}
-
-@font-face {
   font-family: 'Nunito';
   font-style: normal;
   font-weight: 600;
@@ -44,7 +28,17 @@
   src: url('fonts/Nunito-ExtraBold.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('fonts/Nunito-Black.ttf') format('truetype');
+}
+
 :root {
+  --font-primary: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --color-ice: #4CC9F0;
   --color-ice-deep: #0A6FC2;
   --color-snow: #F8FDFF;
@@ -82,7 +76,7 @@
 }
 
 body {
-  font-family: 'Nunito', 'Baloo 2', 'Segoe UI', Arial, sans-serif;
+  font-family: var(--font-primary);
   background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 35%, #DDD6FE 75%, #F0F9FF 100%);
   color: var(--color-ink);
   min-height: 100vh;
@@ -93,7 +87,7 @@ body {
 }
 
 h1, h2, h3, .letter-hero-text, .word-hero-text, .zone-title, .quiz-target-word, .btn-primary-read {
-  font-family: 'Baloo 2', 'Nunito', 'Segoe UI', Arial, sans-serif;
+  font-family: var(--font-display);
 }
 
 /* Background Snowfall Canvas */
@@ -555,7 +549,7 @@ h1, h2, h3, .letter-hero-text, .word-hero-text, .zone-title, .quiz-target-word, 
   max-height: 58px;
   border-radius: var(--radius-pill);
   border: none;
-  font-family: 'Baloo 2', var(--font-display);
+  font-family: var(--font-display);
   font-size: clamp(16px, 1.8vw, 20px);
   font-weight: 800;
   display: flex;
@@ -598,7 +592,7 @@ h1, h2, h3, .letter-hero-text, .word-hero-text, .zone-title, .quiz-target-word, 
   margin: 10px auto 0;
   background: linear-gradient(135deg, #10B981, #059669);
   color: #FFFFFF;
-  font-family: 'Baloo 2', var(--font-display);
+  font-family: var(--font-display);
   font-size: clamp(20px, 3vw, 28px);
   font-weight: 900;
   border-radius: var(--radius-pill);

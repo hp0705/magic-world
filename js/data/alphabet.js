@@ -285,7 +285,7 @@ window.MagicWorld.Alphabet = [
     "id": "y",
     "lower": "y",
     "upper": "Y",
-    "name": "i dài",
+    "name": "i",
     "sound": "i",
     "word": "y tá",
     "sentence": "Cô y tá khen Bé Mây ngoan.",

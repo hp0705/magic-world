@@ -48,13 +48,17 @@
             <p id="mapGreeting">Xin chào Bé Mây! Hãy cùng Lumi đánh thức các bạn chữ nhé!</p>
           </div>
 
-          <div class="map-zones-grid">
+          <div class="map-zones-grid map-zones-5">
             <!-- Zone 1 -->
             <div class="zone-card" data-target="alphabet">
               <div class="zone-icon">🌲🔤</div>
               <div class="zone-title">Rừng Chữ Lung Linh</div>
               <div class="zone-sub">29 Chữ Cái Tiếng Việt</div>
-              <button class="zone-btn">Khám phá ▶</button>
+              <div class="zone-progress-wrap">
+                <div class="zone-progress-track"><div class="zone-progress-fill" id="mapProgressAlphabetBar" style="width:0%"></div></div>
+                <div class="zone-progress-text" id="mapProgressAlphabetText">Đã học 0/29 chữ</div>
+              </div>
+              <button class="zone-btn">Chọn bài ▶</button>
             </div>
 
             <!-- Zone 2 -->
@@ -62,7 +66,11 @@
               <div class="zone-icon">🏞️🌸</div>
               <div class="zone-title">Thung Lũng Từ Vựng</div>
               <div class="zone-sub">38 Ngày (304 Từ Đời Sống)</div>
-              <button class="zone-btn">Học tiếp ▶</button>
+              <div class="zone-progress-wrap">
+                <div class="zone-progress-track"><div class="zone-progress-fill" id="mapProgressVocabBar" style="width:0%"></div></div>
+                <div class="zone-progress-text" id="mapProgressVocabText">Đã học 0/38 ngày</div>
+              </div>
+              <button class="zone-btn">Chọn bài ▶</button>
             </div>
 
             <!-- Zone 3 -->
@@ -70,31 +78,34 @@
               <div class="zone-icon">🏰✨</div>
               <div class="zone-title">Lâu Đài Đánh Vần</div>
               <div class="zone-sub">14 Ngày (112 Nhóm Vần)</div>
-              <button class="zone-btn">Vào lâu đài ▶</button>
+              <div class="zone-progress-wrap">
+                <div class="zone-progress-track"><div class="zone-progress-fill" id="mapProgressSpellingBar" style="width:0%"></div></div>
+                <div class="zone-progress-text" id="mapProgressSpellingText">Đã học 0/14 ngày</div>
+              </div>
+              <button class="zone-btn">Chọn bài ▶</button>
             </div>
 
-            <!-- Zone 4 -->
-            <div class="zone-card" id="mapStoryBtn">
-              <div class="zone-icon">🌠📖</div>
-              <div class="zone-title">Kể Chuyện Cổ Tích</div>
-              <div class="zone-sub">Cô Sao Băng & Lumi Kể</div>
-              <button class="zone-btn">Nghe kể ▶</button>
+            <!-- Zone 4: Góc Kể Chuyện (gộp Cổ Tích + Ru Ngủ) -->
+            <div class="zone-card" data-target="story-list">
+              <div class="zone-icon">🌠🌙</div>
+              <div class="zone-title">Góc Kể Chuyện</div>
+              <div class="zone-sub">Truyện cổ tích &amp; nhạc ru ngủ</div>
+              <div class="zone-progress-wrap">
+                <div class="zone-progress-track"><div class="zone-progress-fill" id="mapProgressStoryBar" style="width:0%"></div></div>
+                <div class="zone-progress-text" id="mapProgressStoryText">Đã nghe 0/10 bài</div>
+              </div>
+              <button class="zone-btn">Chọn bài ▶</button>
             </div>
 
-            <!-- Zone 5 -->
-            <div class="zone-card" data-target="matching">
-              <div class="zone-icon">🧩✨</div>
-              <div class="zone-title">Game Ghép Hình</div>
-              <div class="zone-sub">Ghép Tranh & Từ Vựng</div>
+            <!-- Zone 5: Bài Tập -->
+            <div class="zone-card" data-target="exercise">
+              <div class="zone-icon">📝✨</div>
+              <div class="zone-title">Bài Tập</div>
+              <div class="zone-sub">Ghép hình &amp; luyện tập</div>
+              <div class="zone-progress-wrap">
+                <div class="zone-progress-text" style="color:#7C3FD1;">🎯 Đọc chữ &amp; 🧩 Ghép hình</div>
+              </div>
               <button class="zone-btn">Chơi ngay ▶</button>
-            </div>
-
-            <!-- Zone 6 -->
-            <div class="zone-card" data-target="story-bedtime">
-              <div class="zone-icon">🌙⭐</div>
-              <div class="zone-title">Bông Tuyết Ru Ngủ</div>
-              <div class="zone-sub">Giai điệu êm đềm cho bé</div>
-              <button class="zone-btn">Nghe ru ▶</button>
             </div>
           </div>
         </div>
@@ -114,14 +125,7 @@
 
           <!-- Right Content -->
           <div class="lesson-content-pane">
-            <div class="lesson-top-bar">
-              <div class="day-picker-group">
-                <button id="alphaPickerBtn" class="day-picker-btn" title="Chạm để tự do chọn bất kỳ chữ cái nào">
-                  <span>🔤</span>
-                  <span id="alphaPickerText">Chữ a (A)</span>
-                  <span>▾</span>
-                </button>
-              </div>
+            <div class="lesson-top-bar lesson-top-bar-end">
               <div class="crystals-bar" id="alphabetCrystals"></div>
             </div>
 
@@ -176,14 +180,7 @@
 
           <!-- Right Content -->
           <div class="lesson-content-pane">
-            <div class="lesson-top-bar">
-              <div class="day-picker-group">
-                <button id="vocabDayBadge" class="day-picker-btn" title="Chạm để tự do chọn ngày học">
-                  <span>📅</span>
-                  <span id="vocabDayBadgeText">Ngày 1 (2 chữ cái)</span>
-                  <span>▾</span>
-                </button>
-              </div>
+            <div class="lesson-top-bar lesson-top-bar-end">
               <div class="crystals-bar" id="vocabCrystals"></div>
             </div>
 
@@ -230,14 +227,7 @@
 
           <!-- Right Content -->
           <div class="lesson-content-pane">
-            <div class="lesson-top-bar">
-              <div class="day-picker-group">
-                <button id="spellingDayBadge" class="day-picker-btn" title="Chạm để tự do chọn ngày học">
-                  <span>🏰</span>
-                  <span id="spellingDayBadgeText">Ngày 1: Vần mở</span>
-                  <span>▾</span>
-                </button>
-              </div>
+            <div class="lesson-top-bar lesson-top-bar-end">
               <div class="crystals-bar" id="spellingCrystals"></div>
             </div>
 
@@ -426,6 +416,28 @@
         </div>
       </section>
 
+      <!-- 10. SHARED LESSON LIST SCREEN (Rừng Chữ / Thung Lũng Từ Vựng / Lâu Đài Đánh Vần) -->
+      <section id="screen-lesson-list" class="screen-view">
+        <div class="list-screen-container">
+          <div class="list-screen-header">
+            <h2 id="lessonListTitle" style="font-size:24px; color:#0A6FC2; margin:0;">🌲 Rừng Chữ Lung Linh</h2>
+            <span id="lessonListProgressCount" class="list-progress-pill">Đã học 0/29</span>
+          </div>
+          <div id="lessonListGrid" class="lesson-list-grid"></div>
+        </div>
+      </section>
+
+      <!-- 11. STORY & BEDTIME LIST SCREEN (Góc Kể Chuyện) -->
+      <section id="screen-story-list" class="screen-view">
+        <div class="list-screen-container">
+          <div class="list-screen-header">
+            <h2 style="font-size:24px; color:#0A6FC2; margin:0;">🌠 Góc Kể Chuyện</h2>
+            <span id="storyListProgressCount" class="list-progress-pill">Đã nghe 0/10 bài</span>
+          </div>
+          <div id="storyListGrid" class="story-list-grid"></div>
+        </div>
+      </section>
+
     </main>
 
     <!-- Bottom Navigation Bar (ONLY visible on World Map) -->
@@ -471,7 +483,7 @@
           🎯 Chốt Buổi Học (8 Câu Đọc Chữ)
         </button>
         <button id="choiceMapBtn" class="btn-skip" style="width:100%; margin-top:4px;">
-          Về bản đồ 🏰
+          📋 Về danh sách bài
         </button>
       </div>
     </div>
@@ -516,25 +528,42 @@
 
   <!-- PARENT SETTINGS MODAL -->
   <div id="parentModal" class="victory-modal-backdrop" style="display:none;">
-    <div class="parent-modal">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+    <div class="parent-modal parent-modal-wide">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
         <h2 style="color:#0A6FC2;">⚙️ Góc Phụ Huynh</h2>
         <button id="parentCloseBtn" class="icon-btn">✕</button>
       </div>
 
       <div class="parent-form-group">
-        <label>Tên của Bé:</label>
+        <label>Tên của Bé (tối đa 20 ký tự):</label>
         <div style="display:flex; gap:8px;">
-          <input type="text" id="parentChildNameInput" value="Bé Mây" style="flex:1;">
+          <input type="text" id="parentChildNameInput" value="Bé Mây" maxlength="20" style="flex:1;">
           <button id="parentTestVoiceBtn" class="action-btn btn-blue" style="min-height:48px; padding:0 16px;">🔊 Thử</button>
         </div>
       </div>
 
-      <div class="parent-form-group">
-        <button id="parentSaveBtn" class="action-btn btn-green" style="width:100%; min-height:56px; margin-bottom:12px;">
+      <!-- Tiến độ học (3 tabs: Chữ Cái / Từ Vựng / Đánh Vần) -->
+      <div class="parent-progress-section">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+          <label style="margin:0; font-weight:800; color:#1E293B;">📊 Tiến độ học (Đánh dấu thủ công):</label>
+          <div style="display:flex; gap:6px;">
+            <button id="parentMarkAllBtn" class="parent-mini-btn parent-mini-green" type="button">✓ Đánh dấu tất cả</button>
+            <button id="parentUnmarkAllBtn" class="parent-mini-btn parent-mini-gray" type="button">✕ Bỏ đánh dấu tất cả</button>
+          </div>
+        </div>
+        <div class="parent-tabs-row">
+          <button class="parent-tab-btn active" data-p-tab="alphabet" type="button">🔤 Chữ Cái</button>
+          <button class="parent-tab-btn" data-p-tab="vocab" type="button">📖 Từ Vựng</button>
+          <button class="parent-tab-btn" data-p-tab="spelling" type="button">🎵 Đánh Vần</button>
+        </div>
+        <div id="parentProgressList" class="parent-progress-list"></div>
+      </div>
+
+      <div class="parent-form-group" style="display:flex; gap:10px; margin-top:12px; margin-bottom:0;">
+        <button id="parentSaveBtn" class="action-btn btn-green" style="flex:1; min-height:52px;">
           Lưu cài đặt
         </button>
-        <button id="parentResetBtn" class="action-btn btn-gold" style="width:100%; min-height:56px;">
+        <button id="parentResetBtn" class="action-btn btn-gold" style="flex:1; min-height:52px;">
           Đặt lại toàn bộ tiến độ
         </button>
       </div>

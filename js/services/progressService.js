@@ -32,6 +32,7 @@ class ProgressService {
       letters: {}, // { 'a': { read: true, written: true } }
       vocabProgress: {}, // { '1': { completedWords: ['vocab_ba'], stars: 3, score: 10 } }
       spellingProgress: {}, // { '1': { completedWords: ['spell_d1_1'], stars: 2, score: 9 } }
+      manualOverrides: { alphabet: {}, vocab: {}, spelling: {} },
       settings: {
         voiceRate: 0.9,
         voicePitch: 1.0,
@@ -66,15 +67,23 @@ class ProgressService {
     this.save();
   }
 
+  normalizeChildName(name) {
+    if (!name || typeof name !== 'string') return 'Bé Mây';
+    let cleaned = name.trim();
+    if (cleaned.normalize) cleaned = cleaned.normalize('NFC');
+    if (cleaned.length > 20) cleaned = cleaned.slice(0, 20).trim();
+    return cleaned || 'Bé Mây';
+  }
+
   getChildName() {
-    return this.data.childName || "Bé Mây";
+    return this.normalizeChildName(this.data.childName || 'Bé Mây');
   }
 
   setChildName(name) {
-    if (name && name.trim()) {
-      this.data.childName = name.trim();
-      this.save();
-    }
+    const normalized = this.normalizeChildName(name);
+    this.data.childName = normalized;
+    this.save();
+    return normalized;
   }
 
   addSnowflakes(amount = 1) {
@@ -87,6 +96,9 @@ class ProgressService {
   markLetterRead(id) {
     if (!this.data.letters[id]) this.data.letters[id] = {};
     this.data.letters[id].read = true;
+    if (this.data.manualOverrides && this.data.manualOverrides.alphabet && this.data.manualOverrides.alphabet[id] === false) {
+      delete this.data.manualOverrides.alphabet[id];
+    }
     this.addSnowflakes(1);
     this.save();
   }
@@ -94,11 +106,16 @@ class ProgressService {
   markLetterWritten(id) {
     if (!this.data.letters[id]) this.data.letters[id] = {};
     this.data.letters[id].written = true;
+    if (this.data.manualOverrides && this.data.manualOverrides.alphabet && this.data.manualOverrides.alphabet[id] === false) {
+      delete this.data.manualOverrides.alphabet[id];
+    }
     this.addSnowflakes(2);
     this.save();
   }
 
   isLetterComplete(id) {
+    const ov = this.data.manualOverrides && this.data.manualOverrides.alphabet && this.data.manualOverrides.alphabet[id];
+    if (typeof ov === 'boolean') return ov;
     return !!(this.data.letters[id] && (this.data.letters[id].read || this.data.letters[id].written));
   }
 
@@ -110,6 +127,9 @@ class ProgressService {
     const list = this.data.vocabProgress[day].completedWords;
     if (!list.includes(wordId)) {
       list.push(wordId);
+      if (this.data.manualOverrides && this.data.manualOverrides.vocab && this.data.manualOverrides.vocab[day] === false) {
+        delete this.data.manualOverrides.vocab[day];
+      }
       this.addSnowflakes(1);
       this.save();
     }
@@ -127,6 +147,9 @@ class ProgressService {
     const list = this.data.spellingProgress[day].completedWords;
     if (!list.includes(wordId)) {
       list.push(wordId);
+      if (this.data.manualOverrides && this.data.manualOverrides.spelling && this.data.manualOverrides.spelling[day] === false) {
+        delete this.data.manualOverrides.spelling[day];
+      }
       this.addSnowflakes(1);
       this.save();
     }
@@ -134,6 +157,38 @@ class ProgressService {
 
   getSpellingDayProgress(day) {
     return this.data.spellingProgress[day] || { completedWords: [], stars: 0, score: 0 };
+  }
+
+  // Unified lesson status ('done' | 'in_progress' | 'todo') honoring manualOverrides
+  getLessonStatus(module, key, totalItems = 8) {
+    const ovMap = (this.data.manualOverrides && this.data.manualOverrides[module]) || {};
+    if (ovMap[key] === true) return 'done';
+    if (ovMap[key] === false) return 'todo';
+
+    if (module === 'alphabet') {
+      return (this.data.letters[key] && (this.data.letters[key].read || this.data.letters[key].written)) ? 'done' : 'todo';
+    }
+    const prog = module === 'vocab' ? this.getVocabDayProgress(key) : this.getSpellingDayProgress(key);
+    const count = (prog.completedWords || []).length;
+    if (count >= totalItems && totalItems > 0) return 'done';
+    if (count > 0) return 'in_progress';
+    return 'todo';
+  }
+
+  setManualStatus(module, key, isDone) {
+    if (!this.data.manualOverrides) this.data.manualOverrides = { alphabet: {}, vocab: {}, spelling: {} };
+    if (!this.data.manualOverrides[module]) this.data.manualOverrides[module] = {};
+    this.data.manualOverrides[module][key] = !!isDone;
+    this.save();
+  }
+
+  setAllManualStatus(module, keys, isDone) {
+    if (!this.data.manualOverrides) this.data.manualOverrides = { alphabet: {}, vocab: {}, spelling: {} };
+    if (!this.data.manualOverrides[module]) this.data.manualOverrides[module] = {};
+    keys.forEach(k => {
+      this.data.manualOverrides[module][k] = !!isDone;
+    });
+    this.save();
   }
 
   // Quiz completion and star calculation

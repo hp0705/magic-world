@@ -17,6 +17,8 @@ class MagicWorldApp {
     this.spellingWordIndex = 0;
     this.currentQuizSession = null;
     this.currentExerciseContext = null;
+    this.currentLessonListModule = 'alphabet';
+    this.parentProgressTab = 'alphabet';
 
     // Services
     this.audio = window.MagicWorld.AudioService;
@@ -65,10 +67,11 @@ class MagicWorldApp {
     // Stop ongoing speech when switching screens
     if (this.audio) this.audio.stopSpeaking();
 
-    // Hide bottom navbar in all lesson/game/handwriting screens; show ONLY on world-map
+    // Hide bottom navbar in all lesson/game/handwriting screens; show on world-map & list screens
+    const showNavbarScreens = ['world-map', 'lesson-list', 'story-list'];
     const appContainer = document.getElementById('appContainer');
     if (appContainer) {
-      appContainer.classList.toggle('hide-navbar', screenId !== 'world-map');
+      appContainer.classList.toggle('hide-navbar', !showNavbarScreens.includes(screenId));
     }
 
     // Toggle active class on screen divs
@@ -82,9 +85,10 @@ class MagicWorldApp {
     }
 
     // Update bottom nav active state
+    const activeTabKey = (screenId === 'lesson-list') ? this.currentLessonListModule : screenId;
     document.querySelectorAll('.nav-tab').forEach(tab => {
       const tabTarget = tab.getAttribute('data-screen');
-      if (tabTarget === screenId) {
+      if (tabTarget === activeTabKey) {
         tab.classList.add('active');
       } else {
         tab.classList.remove('active');
@@ -95,6 +99,12 @@ class MagicWorldApp {
     switch (screenId) {
       case 'world-map':
         this.renderWorldMap();
+        break;
+      case 'lesson-list':
+        this.renderLessonListScreen();
+        break;
+      case 'story-list':
+        this.renderStoryListScreen();
         break;
       case 'alphabet':
         this.renderAlphabetScreen();
@@ -133,12 +143,201 @@ class MagicWorldApp {
   }
 
   // --- WORLD MAP ---
+  getModuleCounts() {
+    const alphaTotal = this.alphabetData.length || 29;
+    const alphaDone = this.alphabetData.filter(l => this.progress.getLessonStatus('alphabet', l.id, 1) === 'done').length;
+
+    const vocabDays = Object.keys(this.vocabDaysData);
+    const vocabTotal = vocabDays.length || 38;
+    const vocabDone = vocabDays.filter(d => {
+      const words = this.vocabDaysData[d] || [];
+      return this.progress.getLessonStatus('vocab', d, words.length) === 'done';
+    }).length;
+
+    const spellTotal = this.spellingDaysData.length || 14;
+    const spellDone = this.spellingDaysData.filter(d => this.progress.getLessonStatus('spelling', d.day, d.words.length) === 'done').length;
+
+    const stories = window.MagicWorld.Stories || [];
+    const storyTotal = stories.length || 10;
+    const listened = this.progress.data.listenedStories || [];
+    const storyDone = stories.filter(s => listened.includes(s.id)).length;
+
+    return { alphaDone, alphaTotal, vocabDone, vocabTotal, spellDone, spellTotal, storyDone, storyTotal };
+  }
+
   renderWorldMap() {
     const totalStars = this.progress.data.totalStars || 0;
     const bannerEl = document.getElementById('mapGreeting');
     if (bannerEl) {
       bannerEl.textContent = `Xin chào ${this.progress.getChildName()}! Bé đã có ${totalStars} ⭐ lấp lánh!`;
     }
+
+    const c = this.getModuleCounts();
+    const setBar = (barId, textId, done, total, unit) => {
+      const bar = document.getElementById(barId);
+      const txt = document.getElementById(textId);
+      const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+      if (bar) bar.style.width = `${pct}%`;
+      if (txt) txt.textContent = `Đã học ${done}/${total} ${unit}`;
+    };
+    setBar('mapProgressAlphabetBar', 'mapProgressAlphabetText', c.alphaDone, c.alphaTotal, 'chữ');
+    setBar('mapProgressVocabBar', 'mapProgressVocabText', c.vocabDone, c.vocabTotal, 'ngày');
+    setBar('mapProgressSpellingBar', 'mapProgressSpellingText', c.spellDone, c.spellTotal, 'ngày');
+
+    const sBar = document.getElementById('mapProgressStoryBar');
+    const sTxt = document.getElementById('mapProgressStoryText');
+    if (sBar) sBar.style.width = `${c.storyTotal > 0 ? Math.round((c.storyDone / c.storyTotal) * 100) : 0}%`;
+    if (sTxt) sTxt.textContent = `Đã nghe ${c.storyDone}/${c.storyTotal} bài`;
+  }
+
+  // --- SHARED LESSON LIST SCREEN (29 Chữ / 38 Ngày Từ Vựng / 14 Ngày Đánh Vần) ---
+  openLessonList(moduleType = 'alphabet') {
+    this.currentLessonListModule = moduleType;
+    this.showScreen('lesson-list');
+  }
+
+  renderLessonListScreen() {
+    const mod = this.currentLessonListModule || 'alphabet';
+    const titleEl = document.getElementById('lessonListTitle');
+    const countEl = document.getElementById('lessonListProgressCount');
+    const gridEl = document.getElementById('lessonListGrid');
+    if (!gridEl) return;
+
+    gridEl.innerHTML = '';
+    const counts = this.getModuleCounts();
+    let markedNextUp = false;
+
+    const createTile = (title, sub, status, statusLabel, onClick) => {
+      const tile = document.createElement('div');
+      const statusClass = status === 'done' ? 'status-done' : (status === 'in_progress' ? 'status-in-progress' : 'status-todo');
+      const isNext = status !== 'done' && !markedNextUp;
+      if (isNext) markedNextUp = true;
+
+      tile.className = `lesson-tile ${statusClass} ${isNext ? 'is-next-up' : ''}`;
+      tile.innerHTML = `
+        <div class="lesson-tile-title">${title}</div>
+        <div class="lesson-tile-sub">${sub}</div>
+        <div class="lesson-tile-status">${statusLabel}</div>
+      `;
+      tile.addEventListener('click', () => {
+        this.audio.playPop();
+        onClick();
+      });
+      gridEl.appendChild(tile);
+    };
+
+    if (mod === 'alphabet') {
+      if (titleEl) titleEl.textContent = '🌲 Rừng Chữ Lung Linh';
+      if (countEl) countEl.textContent = `Đã học ${counts.alphaDone}/${counts.alphaTotal} chữ`;
+
+      this.alphabetData.forEach((letter, idx) => {
+        const status = this.progress.getLessonStatus('alphabet', letter.id, 1);
+        const statusLabel = status === 'done' ? '✓ ⭐ Đã học' : '🌱 Chưa học';
+        createTile(
+          `${letter.lower} ${letter.upper}`,
+          `${letter.emoji || '✨'} ${letter.word}`,
+          status,
+          statusLabel,
+          () => {
+            this.alphabetIndex = idx;
+            this.showScreen('alphabet');
+          }
+        );
+      });
+    } else if (mod === 'vocab') {
+      if (titleEl) titleEl.textContent = '🏞️ Thung Lũng Từ Vựng';
+      if (countEl) countEl.textContent = `Đã học ${counts.vocabDone}/${counts.vocabTotal} ngày`;
+
+      const days = Object.keys(this.vocabDaysData).map(k => parseInt(k, 10)).sort((a, b) => a - b);
+      days.forEach(day => {
+        const words = this.vocabDaysData[day] || [];
+        const firstW = words[0] || {};
+        const prog = this.progress.getVocabDayProgress(day);
+        const readCount = (prog.completedWords || []).length;
+        const status = this.progress.getLessonStatus('vocab', day, words.length);
+        const statusLabel = status === 'done'
+          ? '✓ ⭐ Đã học'
+          : (status === 'in_progress' ? `💎 ${readCount}/${words.length}` : '🌱 Chưa học');
+
+        createTile(
+          `Ngày ${day}`,
+          firstW.group || firstW.topic || `${words.length} từ`,
+          status,
+          statusLabel,
+          () => {
+            this.vocabDay = day;
+            this.vocabWordIndex = 0;
+            this.showScreen('vocab');
+          }
+        );
+      });
+    } else if (mod === 'spelling') {
+      if (titleEl) titleEl.textContent = '🏰 Lâu Đài Đánh Vần';
+      if (countEl) countEl.textContent = `Đã học ${counts.spellDone}/${counts.spellTotal} ngày`;
+
+      this.spellingDaysData.forEach(d => {
+        const prog = this.progress.getSpellingDayProgress(d.day);
+        const readCount = (prog.completedWords || []).length;
+        const status = this.progress.getLessonStatus('spelling', d.day, d.words.length);
+        const statusLabel = status === 'done'
+          ? '✓ ⭐ Đã học'
+          : (status === 'in_progress' ? `💎 ${readCount}/${d.words.length}` : '🌱 Chưa học');
+
+        createTile(
+          `Ngày ${d.day}`,
+          d.title,
+          status,
+          statusLabel,
+          () => {
+            this.spellingDay = d.day;
+            this.spellingWordIndex = 0;
+            this.showScreen('spelling');
+          }
+        );
+      });
+    }
+  }
+
+  // --- STORY & BEDTIME LIST SCREEN (Góc Kể Chuyện) ---
+  renderStoryListScreen() {
+    const stories = window.MagicWorld.Stories || [];
+    const listened = this.progress.data.listenedStories || [];
+    const countEl = document.getElementById('storyListProgressCount');
+    const gridEl = document.getElementById('storyListGrid');
+    if (!gridEl) return;
+
+    const doneCount = stories.filter(s => listened.includes(s.id)).length;
+    if (countEl) countEl.textContent = `Đã nghe ${doneCount}/${stories.length} bài`;
+
+    gridEl.innerHTML = '';
+    const artMap = (window.MagicWorld.StoryArtEmoji && window.MagicWorld.StoryArtEmoji.art) || {};
+
+    stories.forEach(s => {
+      const isBedtime = s.mood === 'calm';
+      const isListened = listened.includes(s.id);
+      const lineCount = (s.scenes || []).reduce((acc, sc) => acc + (sc.lines ? sc.lines.length : 0), 0);
+      const artStr = artMap[s.art] || (isBedtime ? '🌙⭐' : '🌠📖');
+      const iconChar = Array.from(artStr)[0] || (isBedtime ? '🌙' : '📖');
+
+      const card = document.createElement('div');
+      card.className = `story-list-card ${isListened ? 'is-listened' : ''}`;
+      card.innerHTML = `
+        <div class="story-list-icon">${iconChar}</div>
+        <div class="story-list-meta">
+          <div class="story-list-title">${s.title}</div>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <span class="story-type-badge ${isBedtime ? 'bedtime' : ''}">${isBedtime ? '🌙 Ru ngủ' : '📖 Truyện'}</span>
+            <span style="font-size:12px; font-weight:700; color:#64748B;">${lineCount} đoạn</span>
+            ${isListened ? '<span style="font-size:12px; font-weight:800; color:#15803D;">✓ Đã nghe</span>' : ''}
+          </div>
+        </div>
+      `;
+      card.addEventListener('click', () => {
+        this.audio.playPop();
+        this.openStory(s.id);
+      });
+      gridEl.appendChild(card);
+    });
   }
 
   // --- MODULE 1: ALPHABET ---
@@ -169,7 +368,7 @@ class MagicWorldApp {
     document.getElementById('alphabetLower').textContent = letter.lower;
     document.getElementById('alphabetEmoji').textContent = letter.emoji || '✨';
     document.getElementById('alphabetWord').textContent = letter.word;
-    document.getElementById('alphabetSentence').textContent = letter.sentence;
+    document.getElementById('alphabetSentence').textContent = this.audio ? this.audio.replaceTokens(letter.sentence) : letter.sentence;
 
     // Auto read letter on enter
     if (this.audio) {
@@ -230,7 +429,7 @@ class MagicWorldApp {
     // Word display
     document.getElementById('vocabEmoji').textContent = currentWord.emoji || '✨';
     document.getElementById('vocabText').textContent = currentWord.text;
-    document.getElementById('vocabSentence').textContent = currentWord.example;
+    document.getElementById('vocabSentence').textContent = this.audio ? this.audio.replaceTokens(currentWord.example) : currentWord.example;
 
     // Show end-of-lesson popup button on the last word
     const vocabEndBtn = document.getElementById('btnVocabEndModal');
@@ -337,7 +536,7 @@ class MagicWorldApp {
     // Displays
     document.getElementById('spellingEmoji').textContent = currentWord.emoji || '✨';
     document.getElementById('spellingText').textContent = currentWord.text;
-    document.getElementById('spellingSentence').textContent = currentWord.example;
+    document.getElementById('spellingSentence').textContent = this.audio ? this.audio.replaceTokens(currentWord.example) : currentWord.example;
 
     // Render 3-Group Karaoke Chips
     const chipsContainer = document.getElementById('spellingChipsContainer');
@@ -1154,11 +1353,14 @@ class MagicWorldApp {
       document.addEventListener(evt, unlockHandler, { passive: true });
     });
 
-    // Bottom Navigation Bar tabs (only shown on World Map -> instant 1-tap)
+    // Bottom Navigation Bar tabs (instant 1-tap; opens Lesson List for Chữ Cái / Từ Vựng / Đánh Vần)
     document.querySelectorAll('.nav-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         const screen = tab.getAttribute('data-screen');
-        if (screen === 'exercise') {
+        if (screen === 'alphabet' || screen === 'vocab' || screen === 'spelling') {
+          this.audio.playPop();
+          this.openLessonList(screen);
+        } else if (screen === 'exercise') {
           this.audio.playPop();
           const words = this.vocabDaysData[this.vocabDay] || [];
           this.openExerciseHub('vocab', this.vocabDay, words);
@@ -1172,28 +1374,29 @@ class MagicWorldApp {
     // Top Header: Castle Back (3s hold), Crown Stickers (3s hold), Parent Settings (3s hold)
     this.HoldButton(document.getElementById('headerHomeBtn'), HOLD_BACK_MS, () => {
       this.audio.playPop();
-      this.showScreen('world-map');
+      if (this.currentScreen === 'alphabet' || this.currentScreen === 'vocab' || this.currentScreen === 'spelling') {
+        this.openLessonList(this.currentScreen);
+      } else if (this.currentScreen === 'handwriting') {
+        this.showScreen('alphabet');
+      } else if (this.currentScreen === 'story') {
+        this.story.stop();
+        this.showScreen('story-list');
+      } else {
+        this.showScreen('world-map');
+      }
     });
     this.HoldButton(document.getElementById('headerParentBtn'), HOLD_BACK_MS, () => this.openParentModal());
     this.HoldButton(document.getElementById('headerStickersBtn'), HOLD_BACK_MS, () => this.openStickersModal());
 
-    // Story Prologue button on map
-    const prologueBtn = document.getElementById('mapStoryBtn');
-    if (prologueBtn) {
-      prologueBtn.addEventListener('click', () => this.openStory('story-prologue'));
-    }
-
-    // World Map Zones
+    // World Map Zones (1-tap -> opens Lesson List / Story List / Exercise Hub)
     document.querySelectorAll('.zone-card').forEach(card => {
       card.addEventListener('click', () => {
         const target = card.getAttribute('data-target');
         this.audio.playPop();
-        if (target === 'alphabet') {
-          this.showScreen('alphabet');
-        } else if (target === 'vocab') {
-          this.showScreen('vocab');
-        } else if (target === 'spelling') {
-          this.showScreen('spelling');
+        if (target === 'alphabet' || target === 'vocab' || target === 'spelling') {
+          this.openLessonList(target);
+        } else if (target === 'story-list') {
+          this.showScreen('story-list');
         } else if (target === 'matching') {
           this.showScreen('matching');
         } else if (target === 'exercise') {
@@ -1340,10 +1543,10 @@ class MagicWorldApp {
     });
     this.HoldButton(document.getElementById('hwBackBtn'), HOLD_ACTION_MS, () => this.showScreen('alphabet'));
 
-    // Story Controls
-    document.getElementById('storyCloseBtn').addEventListener('click', () => {
+    // Story Controls (Back to Story List uses 3s hold)
+    this.HoldButton(document.getElementById('storyCloseBtn'), HOLD_BACK_MS, () => {
       this.story.stop();
-      this.showScreen('world-map');
+      this.showScreen('story-list');
     });
     document.getElementById('storyRepeatBtn').addEventListener('click', () => this.story.repeatScene());
     document.getElementById('storyPlayPauseBtn').addEventListener('click', () => {
@@ -1361,18 +1564,51 @@ class MagicWorldApp {
     // Parent Modal handlers
     document.getElementById('parentCloseBtn').addEventListener('click', () => this.closeParentModal());
     document.getElementById('parentSaveBtn').addEventListener('click', () => this.saveParentSettings());
-    document.getElementById('parentResetBtn').addEventListener('click', () => {
-      if (confirm('Bé Mây có chắc chắn muốn đặt lại toàn bộ tiến độ không?')) {
+    this.HoldButton(document.getElementById('parentResetBtn'), HOLD_BACK_MS, () => {
+      if (confirm('Bạn có chắc chắn muốn đặt lại toàn bộ tiến độ không?')) {
         this.progress.reset();
         this.updateHeaderStats();
+        this.renderParentProgressList();
+        if (this.currentScreen === 'world-map') this.renderWorldMap();
+        if (this.currentScreen === 'lesson-list') this.renderLessonListScreen();
         this.closeParentModal();
         alert('Đã đặt lại tiến độ ban đầu!');
       }
     });
     document.getElementById('parentTestVoiceBtn').addEventListener('click', () => {
       const input = document.getElementById('parentChildNameInput');
-      const testName = input.value || "Bé Mây";
-      this.audio.speak(`Chào ${testName}! Cô Sao Băng và Lumi chúc ${testName} học thật vui nhé!`);
+      const testName = this.progress.normalizeChildName(input ? input.value : '');
+      if (input) input.value = testName;
+      if (this.audio) {
+        const prevName = this.audio.childName;
+        this.audio.setChildName(testName);
+        this.audio.speak(`Xin chào ${testName}!`, { forceSpeechSynthesis: testName !== 'Bé Mây' }).finally(() => {
+          this.audio.setChildName(prevName);
+        });
+      }
+    });
+
+    // Parent Progress 3-Tab Switcher & Bulk Actions
+    document.querySelectorAll('.parent-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.parentProgressTab = btn.getAttribute('data-p-tab') || 'alphabet';
+        document.querySelectorAll('.parent-tab-btn').forEach(b => b.classList.toggle('active', b === btn));
+        this.renderParentProgressList();
+      });
+    });
+    document.getElementById('parentMarkAllBtn')?.addEventListener('click', () => {
+      const keys = this.getKeysForModule(this.parentProgressTab);
+      this.progress.setAllManualStatus(this.parentProgressTab, keys, true);
+      this.renderParentProgressList();
+      if (this.currentScreen === 'world-map') this.renderWorldMap();
+      if (this.currentScreen === 'lesson-list') this.renderLessonListScreen();
+    });
+    document.getElementById('parentUnmarkAllBtn')?.addEventListener('click', () => {
+      const keys = this.getKeysForModule(this.parentProgressTab);
+      this.progress.setAllManualStatus(this.parentProgressTab, keys, false);
+      this.renderParentProgressList();
+      if (this.currentScreen === 'world-map') this.renderWorldMap();
+      if (this.currentScreen === 'lesson-list') this.renderLessonListScreen();
     });
 
     // Matching Game Buttons
@@ -1416,7 +1652,8 @@ class MagicWorldApp {
     if (choiceMap) {
       choiceMap.addEventListener('click', () => {
         document.getElementById('gameChoiceModal').style.display = 'none';
-        this.showScreen('world-map');
+        const s = this.currentQuizSession || { module: 'vocab' };
+        this.openLessonList(s.module || 'vocab');
       });
     }
 
@@ -1558,19 +1795,72 @@ class MagicWorldApp {
   }
 
   // Parent Settings Modal
+  getKeysForModule(mod) {
+    if (mod === 'alphabet') return this.alphabetData.map(l => l.id);
+    if (mod === 'vocab') return Object.keys(this.vocabDaysData).map(k => parseInt(k, 10)).sort((a, b) => a - b);
+    if (mod === 'spelling') return this.spellingDaysData.map(d => d.day);
+    return [];
+  }
+
   openParentModal() {
     const modal = document.getElementById('parentModal');
     if (!modal) return;
     document.getElementById('parentChildNameInput').value = this.progress.getChildName();
+    this.renderParentProgressList();
     modal.style.display = 'flex';
   }
 
-  saveParentSettings() {
-    const name = document.getElementById('parentChildNameInput').value;
-    if (name && name.trim()) {
-      this.progress.setChildName(name.trim());
-      if (this.audio) this.audio.setChildName(name.trim());
+  renderParentProgressList() {
+    const listEl = document.getElementById('parentProgressList');
+    if (!listEl) return;
+    listEl.innerHTML = '';
+    const mod = this.parentProgressTab || 'alphabet';
+
+    const addRow = (label, isDone, onToggle) => {
+      const row = document.createElement('label');
+      row.className = 'parent-progress-row';
+      row.innerHTML = `<span>${label}</span><input type="checkbox" ${isDone ? 'checked' : ''}>`;
+      const cb = row.querySelector('input');
+      cb.addEventListener('change', () => {
+        onToggle(cb.checked);
+        if (this.currentScreen === 'world-map') this.renderWorldMap();
+        if (this.currentScreen === 'lesson-list') this.renderLessonListScreen();
+      });
+      listEl.appendChild(row);
+    };
+
+    if (mod === 'alphabet') {
+      this.alphabetData.forEach(l => {
+        const isDone = this.progress.getLessonStatus('alphabet', l.id, 1) === 'done';
+        addRow(`Chữ ${l.lower} (${l.upper}) — ${l.word}`, isDone, (checked) => {
+          this.progress.setManualStatus('alphabet', l.id, checked);
+        });
+      });
+    } else if (mod === 'vocab') {
+      const days = this.getKeysForModule('vocab');
+      days.forEach(day => {
+        const words = this.vocabDaysData[day] || [];
+        const firstW = words[0] || {};
+        const isDone = this.progress.getLessonStatus('vocab', day, words.length) === 'done';
+        addRow(`Ngày ${day} (${firstW.group || firstW.topic || ''})`, isDone, (checked) => {
+          this.progress.setManualStatus('vocab', day, checked);
+        });
+      });
+    } else if (mod === 'spelling') {
+      this.spellingDaysData.forEach(d => {
+        const isDone = this.progress.getLessonStatus('spelling', d.day, d.words.length) === 'done';
+        addRow(`Ngày ${d.day}: ${d.title}`, isDone, (checked) => {
+          this.progress.setManualStatus('spelling', d.day, checked);
+        });
+      });
     }
+  }
+
+  saveParentSettings() {
+    const rawName = document.getElementById('parentChildNameInput').value;
+    const savedName = this.progress.setChildName(rawName);
+    if (this.audio) this.audio.setChildName(savedName);
+    if (this.currentScreen === 'world-map') this.renderWorldMap();
     this.closeParentModal();
   }
 

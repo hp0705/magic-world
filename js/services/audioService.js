@@ -128,8 +128,11 @@ class AudioService {
   }
 
   setChildName(name) {
-    if (name && name.trim()) {
-      this.childName = name.trim();
+    if (name && typeof name === 'string') {
+      let cleaned = name.trim();
+      if (cleaned.normalize) cleaned = cleaned.normalize('NFC');
+      if (cleaned.length > 20) cleaned = cleaned.slice(0, 20).trim();
+      this.childName = cleaned || 'Bé Mây';
     }
   }
 
@@ -147,8 +150,12 @@ class AudioService {
     this.unlockAudio();
     this.stopSpeaking();
 
+    const rawTrimmed = (text || '').trim();
     let processedText = this.replaceTokens(text).trim();
     if (!processedText) return Promise.resolve();
+
+    // If a custom child name was substituted into this phrase, do NOT play the pre-recorded "Bé Mây" MP3
+    const hasCustomNameReplaced = (this.childName !== 'Bé Mây' && processedText !== rawTrimmed) || !!options.forceSpeechSynthesis;
 
     const lower = processedText.toLowerCase();
     if (this.ttsOverrides[lower]) {
@@ -157,7 +164,9 @@ class AudioService {
 
     // 1. Direct Static Audio Manifest Lookup (100% works on GitHub Pages, iPad, Localhost, Offline!)
     const manifest = (window.MagicWorld && window.MagicWorld.AudioManifest) || {};
-    const staticAudioPath = manifest[processedText] || manifest[text] || manifest[text.trim()] || manifest[lower];
+    const staticAudioPath = hasCustomNameReplaced
+      ? manifest[processedText]
+      : (manifest[processedText] || manifest[text] || manifest[rawTrimmed] || manifest[lower]);
 
     if (staticAudioPath) {
       return new Promise((resolve) => {
@@ -176,12 +185,7 @@ class AudioService {
 
         audio.onerror = () => {
           this.currentAudioElement = null;
-          // Fallback to SpeechSynthesis ONLY if Vietnamese voice exists
-          if (this.hasVietnameseSpeechVoice) {
-            this.speakWithSpeechSynthesis(processedText, options).then(resolve);
-          } else {
-            resolve();
-          }
+          this.speakWithSpeechSynthesis(processedText, options).then(resolve);
         };
 
         audio.src = staticAudioPath;
@@ -191,11 +195,7 @@ class AudioService {
           playPromise.catch((err) => {
             if (err.name === 'AbortError') return;
             console.warn('Playback error:', err);
-            if (this.hasVietnameseSpeechVoice) {
-              this.speakWithSpeechSynthesis(processedText, options).then(resolve);
-            } else {
-              resolve();
-            }
+            this.speakWithSpeechSynthesis(processedText, options).then(resolve);
           });
         }
       });
@@ -223,11 +223,7 @@ class AudioService {
 
         audio.onerror = () => {
           this.currentAudioElement = null;
-          if (this.hasVietnameseSpeechVoice) {
-            this.speakWithSpeechSynthesis(processedText, options).then(resolve);
-          } else {
-            resolve();
-          }
+          this.speakWithSpeechSynthesis(processedText, options).then(resolve);
         };
 
         audio.src = audioUrl;
@@ -236,27 +232,43 @@ class AudioService {
         if (playPromise !== undefined) {
           playPromise.catch((err) => {
             if (err.name === 'AbortError') return;
-            if (this.hasVietnameseSpeechVoice) {
-              this.speakWithSpeechSynthesis(processedText, options).then(resolve);
-            } else {
-              resolve();
-            }
+            this.speakWithSpeechSynthesis(processedText, options).then(resolve);
           });
         }
       });
     }
 
-    // 3. Fallback: only use speech synthesis if real Vietnamese voice exists
-    if (this.hasVietnameseSpeechVoice) {
-      return this.speakWithSpeechSynthesis(processedText, options);
-    }
-
-    // Never speak foreign language (Japanese/English) for Vietnamese words
-    return Promise.resolve();
+    // 3. Fallback: Web Speech API (prefers Vietnamese voice; falls back to device default with vi-VN lang)
+    return this.speakWithSpeechSynthesis(processedText, options);
   }
 
-  speakWithSpeechSynthesis(processedText, options = {}) {
-    if (!this.synth || !this.hasVietnameseSpeechVoice) return Promise.resolve();
+  async ensureVoicesLoaded() {
+    if (!this.synth) return;
+    this.loadVoices();
+    if (this.voices && this.voices.length > 0) return;
+    await new Promise((resolve) => {
+      let done = false;
+      const finish = () => {
+        if (done) return;
+        done = true;
+        this.loadVoices();
+        resolve();
+      };
+      this.synth.onvoiceschanged = finish;
+      setTimeout(finish, 450);
+    });
+  }
+
+  async speakWithSpeechSynthesis(processedText, options = {}) {
+    if (!this.synth) return Promise.resolve();
+    await this.ensureVoicesLoaded();
+
+    if (!this.hasVietnameseSpeechVoice && !this._warnedNoViVoice) {
+      this._warnedNoViVoice = true;
+      if (window.MagicWorldAppInstance && window.MagicWorldAppInstance.showHoldHint) {
+        window.MagicWorldAppInstance.showHoldHint('🔊 Thiết bị chưa cài giọng tiếng Việt, đang đọc bằng giọng mặc định.');
+      }
+    }
 
     return new Promise((resolve) => {
       const utterance = new SpeechSynthesisUtterance(processedText);

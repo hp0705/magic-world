@@ -1845,6 +1845,334 @@ h1, h2, h3, .letter-hero-text, .word-hero-text, .zone-title, .quiz-target-word, 
   }
 }
 
+/* ========================================================
+   WORLD MAP 5-CARD COMPACT LAYOUT & PROGRESS BARS
+   ======================================================== */
+.map-zones-5 {
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 12px !important;
+  align-content: center;
+}
+
+.map-zones-5 .zone-card {
+  justify-content: center;
+  padding: 14px 10px;
+  gap: 6px;
+}
+
+.zone-progress-wrap {
+  width: 100%;
+  margin: 4px 0 6px 0;
+}
+
+.zone-progress-track {
+  width: 100%;
+  height: 10px;
+  background: #E0F2FE;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid #BAE6FD;
+}
+
+.zone-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22C55E, #16A34A);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.zone-progress-text {
+  font-size: 12px;
+  font-weight: 800;
+  color: #0369A1;
+  margin-top: 4px;
+}
+
+@media (max-width: 980px) {
+  .map-zones-5 {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+  }
+}
+
+.lesson-top-bar-end {
+  justify-content: flex-end !important;
+}
+
+/* ========================================================
+   SHARED LESSON LIST & STORY LIST SCREENS
+   ======================================================== */
+.list-screen-container {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  background: var(--color-card-bg);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-magic);
+  border: 1.5px solid var(--color-card-border);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: hidden;
+}
+
+.list-screen-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.list-progress-pill {
+  background: #E0F2FE;
+  color: #0369A1;
+  font-size: 15px;
+  font-weight: 800;
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 2px solid #7DD3FC;
+}
+
+.lesson-list-grid {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+  gap: 12px;
+  padding: 4px;
+  align-content: start;
+}
+
+.lesson-tile {
+  border-radius: 20px;
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 4px;
+  cursor: pointer;
+  border: 2.5px solid #BAE6FD;
+  background: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  min-height: 106px;
+}
+
+.lesson-tile:active {
+  transform: scale(0.96);
+}
+
+.lesson-tile.status-todo {
+  background: #FFFFFF;
+  border-color: #BAE6FD;
+}
+
+.lesson-tile.status-in-progress {
+  background: #FEF9C3;
+  border-color: #FACC15;
+}
+
+.lesson-tile.status-done {
+  background: #DCFCE7;
+  border-color: #22C55E;
+}
+
+.lesson-tile.is-next-up {
+  animation: nextUpPulse 1.6s ease-in-out infinite;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.45), 0 8px 18px rgba(2, 132, 199, 0.18);
+}
+
+@keyframes nextUpPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+.lesson-tile-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 900;
+  color: #1E293B;
+}
+
+.lesson-tile-sub {
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.lesson-tile-status {
+  font-size: 12px;
+  font-weight: 800;
+  margin-top: 2px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.story-list-grid {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+  padding: 4px;
+  align-content: start;
+}
+
+.story-list-card {
+  background: #FFFFFF;
+  border: 2.5px solid #BAE6FD;
+  border-radius: 20px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.08);
+  transition: transform 0.15s ease;
+}
+
+.story-list-card:active {
+  transform: scale(0.97);
+}
+
+.story-list-card.is-listened {
+  background: #DCFCE7;
+  border-color: #22C55E;
+}
+
+.story-list-icon {
+  font-size: 42px;
+  flex-shrink: 0;
+}
+
+.story-list-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.story-list-title {
+  font-size: 18px;
+  font-weight: 900;
+  color: #1E293B;
+  margin-bottom: 4px;
+}
+
+.story-type-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #E0F2FE;
+  color: #0369A1;
+}
+
+.story-type-badge.bedtime {
+  background: #EDE9FE;
+  color: #6D28D9;
+}
+
+/* ========================================================
+   PARENT MODAL 3-TAB PROGRESS MANAGER
+   ======================================================== */
+.parent-modal-wide {
+  width: min(680px, 95vw) !important;
+  max-height: 90dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.parent-progress-section {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+  margin-top: 8px;
+}
+
+.parent-tabs-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.parent-tab-btn {
+  padding: 8px 6px;
+  border-radius: 12px;
+  border: 2px solid #BAE6FD;
+  background: #F0F9FF;
+  color: #0369A1;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.parent-tab-btn.active {
+  background: #0284C7;
+  border-color: #0284C7;
+  color: #FFFFFF;
+}
+
+.parent-progress-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border: 2px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #F8FAFC;
+}
+
+.parent-progress-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #FFFFFF;
+  border-radius: 10px;
+  border: 1px solid #E2E8F0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1E293B;
+  cursor: pointer;
+}
+
+.parent-progress-row input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  accent-color: #16A34A;
+  cursor: pointer;
+}
+
+.parent-mini-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.parent-mini-green {
+  background: #DCFCE7;
+  color: #15803D;
+}
+
+.parent-mini-gray {
+  background: #F1F5F9;
+  color: #475569;
+}
+
 .hold-hint-toast {
   position: fixed;
   top: 72px;

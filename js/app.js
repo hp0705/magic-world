@@ -466,7 +466,7 @@ class MagicWorldApp {
       promptHeader.textContent = "Bé Mây hãy tự đọc chữ và chọn đúng hình nhé:";
       targetWord.textContent = q.targetText;
       targetWord.style.display = 'block';
-      targetSoundBtn.style.display = 'none';
+      targetSoundBtn.style.display = 'inline-flex';
     } else if (q.type === 'listen-pick-emoji') {
       promptHeader.textContent = "Bé Mây hãy lắng nghe và chọn đúng hình nhé:";
       targetWord.textContent = '🔊 ???';

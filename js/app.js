@@ -876,7 +876,8 @@ class MagicWorldApp {
       el.classList.remove('is-holding');
       bar.style.width = '0%';
       if (showHintIfShort && !completed && elapsed < 350) {
-        this.showHoldHint('👆 Nhấn giữ liền 3 giây để chọn nhé!');
+        const secTotal = Math.max(1, Math.round(durationMs / 1000));
+        this.showHoldHint(`👆 Nhấn giữ liền ${secTotal} giây để chọn nhé!`);
       }
     };
 
@@ -996,9 +997,9 @@ class MagicWorldApp {
       });
     });
 
-    // Alphabet Buttons (Audio buttons stay 1-tap; nav/jump buttons require 3s hold)
-    this.bindHoldAction(document.getElementById('alphaPrevBtn'), () => this.prevLetter(), 3000);
-    this.bindHoldAction(document.getElementById('alphaNextBtn'), () => this.nextLetter(), 3000);
+    // Alphabet Buttons (Audio buttons stay 1-tap; prev/next 1s hold; other nav/jump buttons 3s hold)
+    this.bindHoldAction(document.getElementById('alphaPrevBtn'), () => this.prevLetter(), 1000);
+    this.bindHoldAction(document.getElementById('alphaNextBtn'), () => this.nextLetter(), 1000);
     this.bindHoldAction(document.getElementById('alphaPrevLetterStepBtn'), () => this.prevLetter(), 3000);
     this.bindHoldAction(document.getElementById('alphaNextLetterStepBtn'), () => this.nextLetter(), 3000);
     this.bindHoldAction(document.getElementById('alphaPickerBtn'), () => this.openDaySelectorModal('alphabet'), 3000);
@@ -1019,9 +1020,9 @@ class MagicWorldApp {
       if (letter) this.audio.speak(letter.sentence);
     });
 
-    // Vocab Buttons (Audio buttons stay 1-tap; nav/confirm/modal buttons require 3s hold)
-    this.bindHoldAction(document.getElementById('vocabPrevBtn'), () => this.prevVocabWord(), 3000);
-    this.bindHoldAction(document.getElementById('vocabNextBtn'), () => this.nextVocabWord(), 3000);
+    // Vocab Buttons (Audio buttons stay 1-tap; prev/next/done 1s hold; day/modal buttons 3s hold)
+    this.bindHoldAction(document.getElementById('vocabPrevBtn'), () => this.prevVocabWord(), 1000);
+    this.bindHoldAction(document.getElementById('vocabNextBtn'), () => this.nextVocabWord(), 1000);
     this.bindHoldAction(document.getElementById('vocabPrevDayBtn'), () => this.prevVocabDay(), 3000);
     this.bindHoldAction(document.getElementById('vocabNextDayBtn'), () => this.nextVocabDay(), 3000);
 
@@ -1043,16 +1044,16 @@ class MagicWorldApp {
       const currentWord = words[this.vocabWordIndex];
       if (currentWord) this.audio.speak(currentWord.example);
     });
-    this.bindHoldAction(document.getElementById('btnVocabDone'), () => this.onVocabReadConfirmed(), 3000);
+    this.bindHoldAction(document.getElementById('btnVocabDone'), () => this.onVocabReadConfirmed(), 1000);
     this.bindHoldAction(document.getElementById('btnVocabEndModal'), () => {
       const words = this.vocabDaysData[this.vocabDay] || [];
       this.openGameChoiceModal('vocab', this.vocabDay, words);
     }, 3000);
     this.bindHoldAction(document.getElementById('vocabDayBadge'), () => this.openDaySelectorModal('vocab'), 3000);
 
-    // Spelling Buttons (Audio buttons stay 1-tap; nav/confirm/modal buttons require 3s hold)
-    this.bindHoldAction(document.getElementById('spellingPrevBtn'), () => this.prevSpellingWord(), 3000);
-    this.bindHoldAction(document.getElementById('spellingNextBtn'), () => this.nextSpellingWord(), 3000);
+    // Spelling Buttons (Audio buttons stay 1-tap; prev/next/done 1s hold; day/modal buttons 3s hold)
+    this.bindHoldAction(document.getElementById('spellingPrevBtn'), () => this.prevSpellingWord(), 1000);
+    this.bindHoldAction(document.getElementById('spellingNextBtn'), () => this.nextSpellingWord(), 1000);
     this.bindHoldAction(document.getElementById('spellingPrevDayBtn'), () => this.prevSpellingDay(), 3000);
     this.bindHoldAction(document.getElementById('spellingNextDayBtn'), () => this.nextSpellingDay(), 3000);
 
@@ -1066,7 +1067,7 @@ class MagicWorldApp {
     this.bindHoldAction(document.getElementById('btnSpellingPlayMatching'), () => {
       this.showScreen('matching');
     }, 3000);
-    this.bindHoldAction(document.getElementById('btnSpellingDone'), () => this.onSpellingReadConfirmed(), 3000);
+    this.bindHoldAction(document.getElementById('btnSpellingDone'), () => this.onSpellingReadConfirmed(), 1000);
     this.bindHoldAction(document.getElementById('btnSpellingEndModal'), () => {
       const dayObj = this.spellingDaysData.find(d => d.day === this.spellingDay);
       this.openGameChoiceModal('spelling', this.spellingDay, dayObj ? dayObj.words : []);

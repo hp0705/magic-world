@@ -125,33 +125,37 @@
               <div class="crystals-bar" id="alphabetCrystals"></div>
             </div>
 
-            <div class="letter-title-row">
-              <span class="letter-hero-text" id="alphabetLower">a</span>
-              <span class="letter-hero-text" style="color:#0284C7;" id="alphabetUpper">A</span>
+            <!-- Block 1: Letter + Round Speaker -->
+            <div class="lesson-grid-row">
+              <span class="lesson-grid-spacer"></span>
+              <div class="letter-title-row lesson-tap-read" id="alphaHeroTap">
+                <span class="letter-hero-text" id="alphabetLower">a</span>
+                <span class="letter-hero-text" style="color:#0284C7;" id="alphabetUpper">A</span>
+              </div>
+              <button id="btnListenLetter" class="round-speaker-btn" title="Đọc chữ">🔊</button>
             </div>
 
-            <div class="word-hero-text" id="alphabetWord">áo</div>
-
-            <div class="example-sentence-box" id="alphabetSentence" title="Chạm để nghe câu">
-              Bé Mây mặc chiếc áo ấm. 🔊
+            <!-- Block 2: Example Word + Round Speaker -->
+            <div class="lesson-grid-row">
+              <span class="lesson-grid-spacer"></span>
+              <div class="word-hero-text lesson-tap-read" id="alphabetWord">áo</div>
+              <button id="btnListenAlphaWord" class="round-speaker-btn" title="Đọc từ ví dụ">🔊</button>
             </div>
 
-            <!-- Action buttons -->
-            <div class="action-buttons-grid">
-              <button id="btnListenLetter" class="action-btn btn-blue">🔊 Đọc chữ</button>
-              <button id="btnListenExample" class="action-btn btn-gold">📖 Đọc ví dụ</button>
-              <button id="btnWriteLetter" class="action-btn btn-purple">✍️ Tập viết</button>
+            <!-- Block 3: Example Sentence Card with internal Round Speaker -->
+            <div class="example-sentence-card" id="alphabetSentenceBox" title="Chạm để nghe câu">
+              <span class="example-sentence-text" id="alphabetSentence">Bé Mây mặc chiếc áo ấm.</span>
+              <button id="btnListenExample" class="round-speaker-btn" title="Đọc ví dụ">🔊</button>
             </div>
 
-            <!-- Primary Confirmation Button (matching Vocab & Spelling) -->
-            <button id="btnAlphabetDone" class="btn-primary-read">
-              <span>Con đã đọc</span>
-              <span>✓</span>
-            </button>
-
-            <!-- Arrow Navigation -->
-            <div class="nav-arrows-row">
+            <!-- Bottom Single-Row Bar -->
+            <div class="lesson-bottom-bar">
               <button id="alphaPrevBtn" class="nav-arrow-btn">◀</button>
+              <button id="btnWriteLetter" class="action-btn btn-purple lesson-mid-btn">✍️ Tập viết</button>
+              <button id="btnAlphabetDone" class="btn-primary-read lesson-done-btn">
+                <span>Con đã đọc</span>
+                <span>✓</span>
+              </button>
               <button id="alphaNextBtn" class="nav-arrow-btn">▶</button>
             </div>
           </div>
@@ -183,35 +187,29 @@
               <div class="crystals-bar" id="vocabCrystals"></div>
             </div>
 
-            <div style="text-align:center; font-weight:700; color:#64748B;" id="vocabTopicBadge">Gia đình</div>
+            <div class="vocab-topic-label" id="vocabTopicBadge">Gia đình</div>
 
-            <div class="word-hero-text" id="vocabText">ba</div>
-
-            <div class="example-sentence-box" id="vocabSentence" title="Chạm để nghe câu">
-              Ba đọc sách cho Bé Mây. 🔊
+            <!-- Block 1: Word + Round Speaker -->
+            <div class="lesson-grid-row">
+              <span class="lesson-grid-spacer"></span>
+              <div class="word-hero-text lesson-tap-read" id="vocabText">ba</div>
+              <button id="btnVocabListen" class="round-speaker-btn" title="Nghe từ">🔊</button>
             </div>
 
-            <!-- Action buttons grid -->
-            <div class="action-buttons-grid">
-              <button id="btnVocabListen" class="action-btn btn-blue">🔊 Nghe từ</button>
-              <button id="btnVocabListenSentence" class="action-btn btn-gold">📖 Nghe câu</button>
-              <button id="btnVocabPlayMatching" class="action-btn btn-purple">📝 Bài tập</button>
+            <!-- Block 3: Example Sentence Card with internal Round Speaker -->
+            <div class="example-sentence-card" id="vocabSentenceBox" title="Chạm để nghe câu">
+              <span class="example-sentence-text" id="vocabSentence">Ba đọc sách cho Bé Mây.</span>
+              <button id="btnVocabListenSentence" class="round-speaker-btn" title="Nghe câu">🔊</button>
             </div>
 
-            <!-- Primary Confirmation Button -->
-            <button id="btnVocabDone" class="btn-primary-read">
-              <span>Con đã đọc</span>
-              <span>✓</span>
-            </button>
-
-            <!-- End-of-day Popup Trigger (shown on last word) -->
-            <button id="btnVocabEndModal" class="action-btn btn-purple" style="display:none; width:100%; max-width:420px; min-height:48px;">
-              🎉 Chốt Buổi Học & Chọn Trò Chơi
-            </button>
-
-            <!-- Arrow Navigation -->
-            <div class="nav-arrows-row">
+            <!-- Bottom Single-Row Bar -->
+            <div class="lesson-bottom-bar">
               <button id="vocabPrevBtn" class="nav-arrow-btn">◀</button>
+              <button id="btnVocabPlayMatching" class="action-btn btn-purple lesson-mid-btn">📝 Bài tập</button>
+              <button id="btnVocabDone" class="btn-primary-read lesson-done-btn">
+                <span>Con đã đọc</span>
+                <span>✓</span>
+              </button>
               <button id="vocabNextBtn" class="nav-arrow-btn">▶</button>
             </div>
           </div>
@@ -243,36 +241,34 @@
               <div class="crystals-bar" id="spellingCrystals"></div>
             </div>
 
-            <div class="word-hero-text" id="spellingText">cá</div>
-
-            <!-- 3-Group Karaoke Chips -->
-            <div class="spelling-chips-row" id="spellingChipsContainer"></div>
-
-            <div class="example-sentence-box" id="spellingSentence" title="Chạm để nghe câu">
-              Bé Mây xem chú cá bơi. 🔊
+            <!-- Block 1: Word + Round Speaker (Đọc trơn) -->
+            <div class="lesson-grid-row">
+              <span class="lesson-grid-spacer"></span>
+              <div class="word-hero-text lesson-tap-read" id="spellingText">cá</div>
+              <button id="btnSpellingListen" class="round-speaker-btn" title="Đọc trơn">🔊</button>
             </div>
 
-            <!-- Buttons -->
-            <div class="action-buttons-grid">
-              <button id="btnSpellingListen" class="action-btn btn-blue">🔊 Đọc trơn</button>
-              <button id="btnSpellingSpell" class="action-btn btn-green">🎵 Đánh vần</button>
-              <button id="btnSpellingPlayMatching" class="action-btn btn-purple">📝 Bài tập</button>
+            <!-- Block 2: Spelling Chips + Round Speaker (Đánh vần) -->
+            <div class="lesson-grid-row">
+              <span class="lesson-grid-spacer"></span>
+              <div class="spelling-chips-row" id="spellingChipsContainer"></div>
+              <button id="btnSpellingSpell" class="round-speaker-btn" title="Đánh vần">🔊</button>
             </div>
 
-            <!-- Primary Confirmation Button -->
-            <button id="btnSpellingDone" class="btn-primary-read">
-              <span>Con đã đọc</span>
-              <span>✓</span>
-            </button>
+            <!-- Block 3: Example Sentence Card with internal Round Speaker -->
+            <div class="example-sentence-card" id="spellingSentenceBox" title="Chạm để nghe câu">
+              <span class="example-sentence-text" id="spellingSentence">Bé Mây xem chú cá bơi.</span>
+              <button id="btnSpellingSentence" class="round-speaker-btn" title="Đọc câu">🔊</button>
+            </div>
 
-            <!-- End-of-day Popup Trigger (shown on last word) -->
-            <button id="btnSpellingEndModal" class="action-btn btn-purple" style="display:none; width:100%; max-width:420px; min-height:48px;">
-              🎉 Chốt Buổi Học & Chọn Trò Chơi
-            </button>
-
-            <!-- Arrow Navigation -->
-            <div class="nav-arrows-row">
+            <!-- Bottom Single-Row Bar -->
+            <div class="lesson-bottom-bar">
               <button id="spellingPrevBtn" class="nav-arrow-btn">◀</button>
+              <button id="btnSpellingPlayMatching" class="action-btn btn-purple lesson-mid-btn">📝 Bài tập</button>
+              <button id="btnSpellingDone" class="btn-primary-read lesson-done-btn">
+                <span>Con đã đọc</span>
+                <span>✓</span>
+              </button>
               <button id="spellingNextBtn" class="nav-arrow-btn">▶</button>
             </div>
           </div>

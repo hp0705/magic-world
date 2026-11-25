@@ -1467,3 +1467,60 @@ h1, h2, h3, .letter-hero-text, .word-hero-text, .zone-title, .quiz-target-word, 
   box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25);
 }
 
+/* ========================================================
+   3-SECOND HOLD-TO-CONFIRM ANTI-MISCLICK PROTECTION
+   ======================================================== */
+.hold-btn {
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+
+.hold-progress-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0%;
+  background: rgba(14, 165, 233, 0.28);
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+}
+
+.btn-primary-read .hold-progress-bar,
+.action-btn .hold-progress-bar {
+  background: rgba(255, 255, 255, 0.36);
+}
+
+.hold-btn > *:not(.hold-progress-bar) {
+  position: relative;
+  z-index: 1;
+}
+
+.hold-btn.is-holding {
+  transform: scale(0.97);
+}
+
+.hold-hint-toast {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.88);
+  color: #FFFFFF;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 800;
+  z-index: 9999;
+  pointer-events: none;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.22);
+  display: none;
+  white-space: nowrap;
+}
+
+

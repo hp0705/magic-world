@@ -138,15 +138,15 @@ class ProgressService {
 
   // Quiz completion and star calculation
   recordQuizResult(moduleName, day, score, totalQuestions, firstTryCount) {
-    // Star logic per SPEC-07:
+    // Star logic:
     // ⭐: read all 8 words
     // ⭐⭐: finished quiz
-    // ⭐⭐⭐: right on first try >= 8 / 10
+    // ⭐⭐⭐: right on first try >= 80% (e.g. 7/8 or 8/8)
     let stars = 1;
     if (score >= totalQuestions) {
       stars = 2;
     }
-    if (firstTryCount >= 8) {
+    if (firstTryCount >= Math.ceil(totalQuestions * 0.8)) {
       stars = 3;
     }
 

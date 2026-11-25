@@ -1,4 +1,4 @@
-// Magic World Quiz Engine (SPEC-07: 10 Questions, Type A/B/C, Lumi Hints, Star Calculation)
+// Magic World Quiz Engine (8 Questions for the 8 learned words, Reading-first Type A)
 window.MagicWorld = window.MagicWorld || {};
 
 class QuizService {
@@ -22,7 +22,7 @@ class QuizService {
     return arr;
   }
 
-  // Generate 10 questions for the session
+  // Generate questions ONLY for the learned words in the session (up to 8 words)
   buildFinalGame(sessionWords, allWordsPool = []) {
     this.currentIndex = 0;
     this.correctCount = 0;
@@ -34,33 +34,33 @@ class QuizService {
     const questions = [];
     const pool = (allWordsPool.length > 0) ? allWordsPool : sessionWords;
 
-    // 1. Take up to 8 words from current session
+    // Take ONLY the words from the current session (e.g. 8 learned words, no unlearned words added)
     const targetWords = this.shuffle(sessionWords).slice(0, 8);
 
-    // 2. Add 2 review words from the pool or repeat from session
-    const remainingNeeded = 10 - targetWords.length;
-    const reviewCandidates = pool.filter(w => !targetWords.some(tw => tw.text === w.text));
-    const reviewWords = this.shuffle(reviewCandidates.length >= remainingNeeded ? reviewCandidates : pool).slice(0, remainingNeeded);
-    
-    const combined10 = [...targetWords, ...reviewWords];
-
     // Build each question
-    combined10.forEach((item, idx) => {
-      // Determine question type:
-      // If item has no clear emoji (quiz === false or emoji === '✨'), must be Type C: 'listen-pick-word'
-      // Otherwise: 70% Type A ('word-pick-emoji'), 30% Type B ('listen-pick-emoji')
+    targetWords.forEach((item, idx) => {
+      // Reading-first: show the word text so the child practices reading and picks the matching emoji
       let qType = 'word-pick-emoji';
-      if (!item.quiz || item.emoji === '✨' || !item.emoji) {
+      if (!item.emoji || item.emoji === '✨') {
         qType = 'listen-pick-word';
-      } else {
-        qType = Math.random() < 0.3 ? 'listen-pick-emoji' : 'word-pick-emoji';
       }
 
-      // Pick 2 distractor options (no duplicate emoji or text with target)
-      const distractors = pool.filter(p => p.text !== item.text && (qType === 'listen-pick-word' || (p.emoji && p.emoji !== item.emoji)));
-      const shuffledDistractors = this.shuffle(distractors).slice(0, 2);
+      // Prefer distractors from the learned sessionWords first; fallback to pool only if needed
+      const sameSessionDistractors = sessionWords.filter(
+        p => p.text !== item.text && (qType === 'listen-pick-word' || (p.emoji && p.emoji !== item.emoji))
+      );
+      let shuffledDistractors = this.shuffle(sameSessionDistractors).slice(0, 2);
 
-      // If we don't have enough distinct distractors, fallback to generic safe words
+      if (shuffledDistractors.length < 2) {
+        const extraPool = pool.filter(
+          p => p.text !== item.text &&
+               !shuffledDistractors.some(d => d.text === p.text) &&
+               (qType === 'listen-pick-word' || (p.emoji && p.emoji !== item.emoji))
+        );
+        shuffledDistractors = shuffledDistractors.concat(this.shuffle(extraPool).slice(0, 2 - shuffledDistractors.length));
+      }
+
+      // If still not enough distinct distractors, fallback to generic safe words
       while (shuffledDistractors.length < 2) {
         shuffledDistractors.push({ text: 'hoa', emoji: '🌸', quiz: true });
       }
@@ -82,7 +82,7 @@ class QuizService {
         example: item.example || '',
         options: options,
         correctIndex: correctIndex,
-        isReview: idx >= targetWords.length
+        isReview: false
       });
     });
 

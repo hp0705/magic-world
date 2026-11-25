@@ -468,8 +468,8 @@ class MagicWorldApp {
       this.vocabWordIndex++;
       this.renderVocabScreen();
     } else {
-      // Smoothly advance to Next Day!
-      this.nextVocabDay();
+      // Finished today's words -> prompt child to do end-of-lesson exercises!
+      this.openGameChoiceModal('vocab', this.vocabDay, words);
     }
   }
 
@@ -478,13 +478,8 @@ class MagicWorldApp {
       this.vocabWordIndex--;
       this.renderVocabScreen();
     } else {
-      // Step back to Previous Day (last word)
-      const totalDays = Object.keys(this.vocabDaysData).length;
-      this.vocabDay = this.vocabDay > 1 ? this.vocabDay - 1 : totalDays;
-      const prevWords = this.vocabDaysData[this.vocabDay] || [];
-      this.vocabWordIndex = Math.max(0, prevWords.length - 1);
       this.audio.playPop();
-      this.renderVocabScreen();
+      this.showHoldHint('📌 Đây là từ đầu tiên của bài hôm nay rồi nhé!');
     }
   }
 
@@ -664,8 +659,8 @@ class MagicWorldApp {
       this.spellingWordIndex++;
       this.renderSpellingScreen();
     } else {
-      // Smoothly advance to Next Day!
-      this.nextSpellingDay();
+      // Finished today's words -> prompt child to do end-of-lesson exercises!
+      this.openGameChoiceModal('spelling', this.spellingDay, dayObj.words);
     }
   }
 
@@ -674,13 +669,8 @@ class MagicWorldApp {
       this.spellingWordIndex--;
       this.renderSpellingScreen();
     } else {
-      // Step back to previous Day (last word)
-      const totalDays = this.spellingDaysData.length;
-      this.spellingDay = this.spellingDay > 1 ? this.spellingDay - 1 : totalDays;
-      const prevDayObj = this.spellingDaysData.find(d => d.day === this.spellingDay);
-      this.spellingWordIndex = prevDayObj && prevDayObj.words ? prevDayObj.words.length - 1 : 0;
       this.audio.playPop();
-      this.renderSpellingScreen();
+      this.showHoldHint('📌 Đây là từ đầu tiên của bài hôm nay rồi nhé!');
     }
   }
 

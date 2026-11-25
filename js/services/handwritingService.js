@@ -9,19 +9,25 @@ class HandwritingService {
     this.strokesGuide = [];
     this.currentStrokeIndex = 0;
     this.isDrawing = false;
+    this.activePointerId = null;
+    this.activePointers = new Set();
     this.userPoints = [];
     this.sparkles = [];
     this.animationId = null;
     this.onComplete = null;
+    this.onReset = null;
     this.demoRunning = false;
+    this.wrongShakeUntil = 0;
     this.width = 0;
     this.height = 0;
   }
 
-  init(canvasElement, onCompleteCallback) {
+  init(canvasElement, onCompleteCallback, onResetCallback) {
     this.canvas = canvasElement;
+    this.canvas.style.touchAction = 'none';
     this.ctx = this.canvas.getContext('2d');
     this.onComplete = onCompleteCallback;
+    this.onReset = onResetCallback || null;
     this.setupResolution();
     this.setupEvents();
     this.startSparkleLoop();
@@ -56,8 +62,36 @@ class HandwritingService {
     this.currentStrokeIndex = 0;
     this.userPoints = [];
     this.demoRunning = false;
+    this.wrongShakeUntil = 0;
+    this.updateStrokeBadge();
+    if (this.onReset) this.onReset();
     this.setupResolution();
     this.redraw();
+  }
+
+  updateStrokeBadge() {
+    const badge = document.getElementById('hwStrokeBadge');
+    const textEl = document.getElementById('hwStrokeBadgeText');
+    if (!badge || !textEl) return;
+    const st = this.strokesGuide && this.strokesGuide[this.currentStrokeIndex];
+    if (st) {
+      textEl.textContent = `Nét ${st.order}: ${st.label}`;
+      badge.style.display = 'inline-flex';
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
+  getCurrentStrokeLabel() {
+    const st = this.strokesGuide && this.strokesGuide[this.currentStrokeIndex];
+    return st ? st.label : '';
+  }
+
+  isPalmOrMultiTouch(e) {
+    if (e.pointerType === 'pen') return false;
+    // Reject large palm contact area (width/height in CSS px)
+    if ((e.width && e.width > 42) || (e.height && e.height > 42)) return true;
+    return false;
   }
 
   setupEvents() {
@@ -73,6 +107,20 @@ class HandwritingService {
 
     this.canvas.addEventListener('pointerdown', (e) => {
       e.preventDefault();
+      if (this.demoRunning) return;
+      if (this.isPalmOrMultiTouch(e)) return;
+
+      this.activePointers.add(e.pointerId);
+      // Only allow 1 active pointer at a time (anti-palm / multi-finger)
+      if (this.activePointers.size > 1) {
+        this.isDrawing = false;
+        this.activePointerId = null;
+        this.userPoints = [];
+        this.redraw();
+        return;
+      }
+
+      this.activePointerId = e.pointerId;
       this.setupResolution();
       this.isDrawing = true;
       const pos = getPos(e);
@@ -85,25 +133,37 @@ class HandwritingService {
     });
 
     this.canvas.addEventListener('pointermove', (e) => {
-      if (!this.isDrawing) return;
+      if (!this.isDrawing || e.pointerId !== this.activePointerId) return;
+      if (this.activePointers.size > 1 || this.isPalmOrMultiTouch(e)) {
+        this.isDrawing = false;
+        this.userPoints = [];
+        this.redraw();
+        return;
+      }
       e.preventDefault();
       const pos = getPos(e);
-      this.userPoints.push(pos);
-      this.addSparkle(pos.x, pos.y);
-      this.redraw();
+      const last = this.userPoints[this.userPoints.length - 1];
+      if (!last || Math.hypot(pos.x - last.x, pos.y - last.y) >= 2.5) {
+        this.userPoints.push(pos);
+        this.addSparkle(pos.x, pos.y);
+        this.redraw();
+      }
     });
 
     const endDraw = (e) => {
-      if (!this.isDrawing) return;
+      this.activePointers.delete(e.pointerId);
+      if (!this.isDrawing || e.pointerId !== this.activePointerId) return;
       this.isDrawing = false;
+      this.activePointerId = null;
       this.evaluateStroke();
     };
 
     this.canvas.addEventListener('pointerup', endDraw);
     this.canvas.addEventListener('pointercancel', endDraw);
+    this.canvas.addEventListener('contextmenu', (e) => e.preventDefault());
   }
 
-  // Draw 4-line primary school ruling grid (Vở 4 ô li chuẩn Bộ GD&ĐT)
+  // Draw clean 3-line ruling grid (Đáy đậm, Giữa, Trên; bỏ nhãn & lưới dọc)
   drawRulingGrid() {
     const ctx = this.ctx;
     const w = this.width;
@@ -111,172 +171,98 @@ class HandwritingService {
     if (!w || !h) return;
 
     ctx.save();
-    // Warm notebook paper background
     ctx.fillStyle = "#FAFDFE";
     ctx.fillRect(0, 0, w, h);
 
-    // Primary school 4-oli ruling proportion (vở ô ly chuẩn tiểu học):
-    // 1 oli = ~h * 0.155 (around 42px - 64px, neat and comfortable for kids)
-    const oliSize = Math.max(42, Math.min(Math.round(h * 0.155), 64));
-    
-    // Position Baseline (Dòng 1 - đáy chữ) comfortably at ~66% of canvas height
-    const line1Y = Math.round(h * 0.66);
-    const line2Y = line1Y - oliSize; // Dòng 2 (1 ô ly)
-    const line3Y = line1Y - (2 * oliSize); // Dòng 3 (2 ô ly - đỉnh chữ thấp: a, c, e, o, m, n...)
-    const line4Y = line1Y - (3 * oliSize); // Dòng 4 (3 ô ly - đỉnh chữ d, đ, t...)
-    const line5Y = line1Y - (4 * oliSize); // Dòng 5 (4 ô ly - đỉnh chữ b, l, h, k...)
-    const lineUnderY = line1Y + Math.round(1.5 * oliSize); // Chân chữ g, y, p, q
-    const marginX = Math.max(92, Math.round(w * 0.12));
+    const oliSize = Math.max(46, Math.min(Math.round(h * 0.165), 68));
+    const line1Y = Math.round(h * 0.66);      // Đáy (đậm)
+    const line2Y = line1Y - oliSize;          // Giữa
+    const line3Y = line1Y - (2 * oliSize);    // Trên
+    const marginX = 24;
 
-    // Vertical ruling lines (lưới ô vuông nhỏ - mỗi ô vuông = 1 ô li x 1 ô li)
-    ctx.strokeStyle = '#E0F2FE';
-    ctx.lineWidth = 1;
-    ctx.setLineDash([]);
-    const centerX = Math.round(w / 2);
-    // Left of center
-    for (let x = centerX - oliSize; x > marginX; x -= oliSize) {
-      ctx.beginPath();
-      ctx.moveTo(x, 15);
-      ctx.lineTo(x, h - 15);
-      ctx.stroke();
-    }
-    // Center and right
-    for (let x = centerX; x < w - 20; x += oliSize) {
-      ctx.beginPath();
-      ctx.moveTo(x, 15);
-      ctx.lineTo(x, h - 15);
-      ctx.stroke();
-    }
-
-    // Horizontal ruling lines:
-    // Line 5 (nếu vừa trong canvas)
-    if (line5Y > 15) {
-      ctx.beginPath();
-      ctx.strokeStyle = '#E2E8F0';
-      ctx.lineWidth = 1;
-      ctx.setLineDash([3, 4]);
-      ctx.moveTo(marginX, line5Y);
-      ctx.lineTo(w - 20, line5Y);
-      ctx.stroke();
-    }
-
-    // Line 4 (3 ô li)
-    if (line4Y > 15) {
-      ctx.beginPath();
-      ctx.strokeStyle = '#CBD5E1';
-      ctx.lineWidth = 1;
-      ctx.setLineDash([4, 4]);
-      ctx.moveTo(marginX, line4Y);
-      ctx.lineTo(w - 20, line4Y);
-      ctx.stroke();
-    }
-
-    // Line 3 (ĐỈNH CHỮ THẤP: a, ă, â, o, e, c, n, m...)
+    // Line 3 (Trên)
     ctx.beginPath();
-    ctx.strokeStyle = '#38BDF8';
+    ctx.strokeStyle = '#BAE6FD';
     ctx.lineWidth = 2;
-    ctx.setLineDash([6, 5]);
+    ctx.setLineDash([7, 6]);
     ctx.moveTo(marginX, line3Y);
-    ctx.lineTo(w - 20, line3Y);
+    ctx.lineTo(w - marginX, line3Y);
     ctx.stroke();
 
-    // Line 2 (ĐƯỜNG KẺ GIỮA - 1 Ô LI)
+    // Line 2 (Giữa)
     ctx.beginPath();
-    ctx.strokeStyle = '#7DD3FC';
-    ctx.lineWidth = 1.4;
-    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = '#E0F2FE';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([5, 5]);
     ctx.moveTo(marginX, line2Y);
-    ctx.lineTo(w - 20, line2Y);
+    ctx.lineTo(w - marginX, line2Y);
     ctx.stroke();
 
-    // Line 1 (BASE LINE - ĐƯỜNG KẺ ĐẬM ĐÁY CHỮ)
+    // Line 1 (Đáy - đậm hơn)
     ctx.beginPath();
     ctx.strokeStyle = '#0284C7';
     ctx.lineWidth = 3.5;
     ctx.setLineDash([]);
     ctx.moveTo(marginX, line1Y);
-    ctx.lineTo(w - 20, line1Y);
+    ctx.lineTo(w - marginX, line1Y);
     ctx.stroke();
-
-    // Line Under (Chân chữ g, y)
-    if (lineUnderY < h - 15) {
-      ctx.beginPath();
-      ctx.strokeStyle = '#E2E8F0';
-      ctx.lineWidth = 1;
-      ctx.setLineDash([4, 4]);
-      ctx.moveTo(marginX, lineUnderY);
-      ctx.lineTo(w - 20, lineUnderY);
-      ctx.stroke();
-    }
-
-    // Red margin line (Đường kẻ lề vở học sinh)
-    ctx.beginPath();
-    ctx.strokeStyle = '#F87171';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([]);
-    ctx.moveTo(marginX, 15);
-    ctx.lineTo(marginX, h - 15);
-    ctx.stroke();
-
-    // Ruling line labels on the left margin
-    ctx.font = 'bold 12px "Quicksand", "Nunito", system-ui';
-    ctx.textAlign = 'right';
-    ctx.textBaseline = 'middle';
-    
-    ctx.fillStyle = '#0284C7';
-    ctx.fillText('Dòng 1 (Đáy)', marginX - 10, line1Y);
-
-    ctx.fillStyle = '#0284C7';
-    ctx.fillText('Dòng 2', marginX - 10, line2Y);
-
-    ctx.fillStyle = '#0284C7';
-    ctx.fillText('Dòng 3', marginX - 10, line3Y);
-
-    if (line4Y > 35) {
-      ctx.fillStyle = '#64748B';
-      ctx.fillText('Dòng 4', marginX - 10, line4Y);
-    }
-    if (line5Y > 35) {
-      ctx.fillStyle = '#64748B';
-      ctx.fillText('Dòng 5', marginX - 10, line5Y);
-    }
 
     ctx.restore();
   }
 
-  // Draw Stroke Guidelines (Uniform Isotropic Scaling Centered Vertically on Ruling Grid)
-  drawGuides() {
-    if (!this.strokesGuide || !this.ctx || !this.width || !this.height) return;
-    const ctx = this.ctx;
+  getLetterTransform() {
     const w = this.width;
     const h = this.height;
-
-    // Scale calculation:
-    // In stroke data: baseline y=112, Line 3 y=64 (height 48 units = 2 ô li).
-    const oliSize = Math.max(42, Math.min(Math.round(h * 0.155), 64));
+    const oliSize = Math.max(46, Math.min(Math.round(h * 0.165), 68));
     const line1Y = Math.round(h * 0.66);
     const uniformScale = (oliSize * 2) / 48;
-
-    // Center letter horizontally around x = 54 in stroke data
     const centerX = Math.round(w / 2);
     const offsetX = Math.round(centerX - (54 * uniformScale));
     const offsetY = Math.round(line1Y - (112 * uniformScale));
+    return { w, h, oliSize, line1Y, uniformScale, offsetX, offsetY };
+  }
+
+  // Sample points along an SVG path in canvas coordinates for forgiving stroke check
+  getGuideSamplePoints(svgPathD, transform, count = 20) {
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const pathEl = document.createElementNS(svgNS, 'path');
+    pathEl.setAttribute('d', svgPathD);
+    const totalLen = pathEl.getTotalLength();
+    const pts = [];
+    for (let i = 0; i <= count; i++) {
+      const pt = pathEl.getPointAtLength((totalLen * i) / count);
+      pts.push({
+        x: transform.offsetX + pt.x * transform.uniformScale,
+        y: transform.offsetY + pt.y * transform.uniformScale
+      });
+    }
+    return { pts, totalLen: totalLen * transform.uniformScale };
+  }
+
+  // Draw Stroke Guidelines (Uniform Isotropic Scaling Centered on 3-Line Grid)
+  drawGuides() {
+    if (!this.strokesGuide || !this.ctx || !this.width || !this.height) return;
+    const ctx = this.ctx;
+    const tr = this.getLetterTransform();
+    const now = performance.now();
+    const shakeX = (this.wrongShakeUntil > now) ? Math.sin(now * 0.055) * 7 : 0;
 
     ctx.save();
     this.strokesGuide.forEach((st, idx) => {
       const isCurrent = (idx === this.currentStrokeIndex);
       const isDone = (idx < this.currentStrokeIndex);
+      const curShake = isCurrent ? shakeX : 0;
 
       ctx.save();
-      ctx.translate(offsetX, offsetY);
-      ctx.scale(uniformScale, uniformScale);
+      ctx.translate(tr.offsetX + curShake, tr.offsetY);
+      ctx.scale(tr.uniformScale, tr.uniformScale);
 
       const p = new Path2D(st.d);
 
-      // 1. Soft glowing background track for toddler finger guidance
+      // Soft glowing background track for active stroke
       if (isCurrent) {
         ctx.strokeStyle = '#BAE6FD';
-        ctx.lineWidth = 22 / uniformScale;
+        ctx.lineWidth = 24 / tr.uniformScale;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
         ctx.setLineDash([]);
@@ -284,75 +270,57 @@ class HandwritingService {
       }
 
       if (isDone) {
-        // Solid vivid blue ink for completed strokes
-        ctx.strokeStyle = '#1D4ED8';
-        ctx.lineWidth = 14 / uniformScale;
+        // Completed stroke turns vivid green!
+        ctx.strokeStyle = '#16A34A';
+        ctx.lineWidth = 15 / tr.uniformScale;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
         ctx.setLineDash([]);
         ctx.stroke(p);
       } else {
-        // Guide dashed line
-        ctx.strokeStyle = isCurrent ? '#0284C7' : '#94A3B8';
-        ctx.lineWidth = (isCurrent ? 14 : 8) / uniformScale;
+        // Thicker dashed guide path
+        ctx.strokeStyle = isCurrent ? '#0284C7' : '#CBD5E1';
+        ctx.lineWidth = (isCurrent ? 16 : 9) / tr.uniformScale;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
-        ctx.setLineDash(isCurrent ? [7, 5] : [4, 4]);
+        ctx.setLineDash(isCurrent ? [8, 6] : [5, 5]);
         ctx.stroke(p);
       }
       ctx.restore();
 
-      // Starting point dot & order number for current active stroke
+      // Blinking green starting point dot & big order number for active stroke
       if (isCurrent && st.start) {
-        const sx = offsetX + st.start.x * uniformScale;
-        const sy = offsetY + st.start.y * uniformScale;
+        const sx = tr.offsetX + curShake + st.start.x * tr.uniformScale;
+        const sy = tr.offsetY + st.start.y * tr.uniformScale;
+        const pulse = (Math.sin(now * 0.006) + 1) * 0.5; // 0..1
 
-        // Big glowing green pulse circle
+        // Outer pulsing halo
         ctx.beginPath();
-        ctx.arc(sx, sy, 16, 0, Math.PI * 2);
-        ctx.fillStyle = '#16A34A';
-        ctx.shadowColor = '#22C55E';
-        ctx.shadowBlur = 14;
+        ctx.arc(sx, sy, 20 + pulse * 7, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(34, 197, 94, ${0.35 - pulse * 0.22})`;
         ctx.fill();
-        ctx.shadowBlur = 0;
+
+        // Main green circle
+        ctx.beginPath();
+        ctx.arc(sx, sy, 18, 0, Math.PI * 2);
+        ctx.fillStyle = '#16A34A';
+        ctx.fill();
         ctx.strokeStyle = '#FFFFFF';
         ctx.lineWidth = 3.5;
         ctx.stroke();
 
-        // Stroke number tag inside dot
+        // Big crisp stroke order number
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 15px "Quicksand", "Nunito", system-ui';
+        ctx.font = 'bold 18px "Quicksand", "Nunito", system-ui';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(st.order, sx, sy);
-
-        // Friendly guide badge at the top
-        ctx.save();
-        const badgeText = `Nét ${st.order}: ${st.label}`;
-        ctx.font = 'bold 15px "Quicksand", "Nunito", system-ui';
-        const textWidth = ctx.measureText(badgeText).width;
-        const badgeX = w / 2;
-        const badgeY = 28;
-
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
-        ctx.strokeStyle = '#38BDF8';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.roundRect(badgeX - textWidth / 2 - 20, badgeY - 16, textWidth + 40, 32, 16);
-        ctx.fill();
-        ctx.stroke();
-
-        ctx.fillStyle = '#0369A1';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(badgeText, badgeX, badgeY);
-        ctx.restore();
+        ctx.fillText(st.order, sx, sy + 1);
       }
     });
     ctx.restore();
   }
 
-  // Draw user's live drawing line
+  // Smooth thick user stroke (>= 10px) using quadratic midpoint smoothing
   drawUserStroke() {
     if (this.userPoints.length < 2) return;
     const ctx = this.ctx;
@@ -360,9 +328,14 @@ class HandwritingService {
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(this.userPoints[0].x, this.userPoints[0].y);
-    for (let i = 1; i < this.userPoints.length; i++) {
-      ctx.lineTo(this.userPoints[i].x, this.userPoints[i].y);
+    for (let i = 1; i < this.userPoints.length - 1; i++) {
+      const midX = (this.userPoints[i].x + this.userPoints[i + 1].x) / 2;
+      const midY = (this.userPoints[i].y + this.userPoints[i + 1].y) / 2;
+      ctx.quadraticCurveTo(this.userPoints[i].x, this.userPoints[i].y, midX, midY);
     }
+    const last = this.userPoints[this.userPoints.length - 1];
+    ctx.lineTo(last.x, last.y);
+
     ctx.strokeStyle = '#1E40AF';
     ctx.lineWidth = 14;
     ctx.lineCap = 'round';
@@ -371,25 +344,76 @@ class HandwritingService {
     ctx.restore();
   }
 
-  // Check stroke completion (forgiving kid-friendly tolerance)
+  // Forgiving stroke validation: wide tolerance, checks direction & guide checkpoints
   evaluateStroke() {
-    if (this.userPoints.length < 5) return; // Too short to be intentional
-
-    this.currentStrokeIndex++;
-    this.userPoints = [];
-
-    if (window.MagicWorld.AudioService) {
-      window.MagicWorld.AudioService.playSparkle();
+    if (this.userPoints.length < 4) {
+      this.userPoints = [];
+      this.redraw();
+      return;
     }
 
-    if (this.currentStrokeIndex >= this.strokesGuide.length) {
-      // Completed all strokes of the letter!
-      if (window.MagicWorld.AudioService) {
-        window.MagicWorld.AudioService.playChime();
+    const st = this.strokesGuide && this.strokesGuide[this.currentStrokeIndex];
+    if (!st) return;
+
+    const tr = this.getLetterTransform();
+    const { pts: guidePts, totalLen } = this.getGuideSamplePoints(st.d, tr, 16);
+    const tolerance = Math.max(60, tr.oliSize * 1.15);
+
+    // 1. Check user stroke length isn't just a tiny dot
+    let userLen = 0;
+    for (let i = 1; i < this.userPoints.length; i++) {
+      userLen += Math.hypot(
+        this.userPoints[i].x - this.userPoints[i - 1].x,
+        this.userPoints[i].y - this.userPoints[i - 1].y
+      );
+    }
+
+    // 2. Check start point proximity to start/early part of guide
+    const startPt = this.userPoints[0];
+    const nearStart = guidePts.slice(0, 6).some(
+      gp => Math.hypot(startPt.x - gp.x, startPt.y - gp.y) <= tolerance * 1.25
+    );
+
+    // 3. Check sequential checkpoints along the guide
+    let matchedIdx = 0;
+    let userSearchStart = 0;
+    for (let g = 0; g < guidePts.length; g++) {
+      const gp = guidePts[g];
+      for (let u = userSearchStart; u < this.userPoints.length; u++) {
+        if (Math.hypot(this.userPoints[u].x - gp.x, this.userPoints[u].y - gp.y) <= tolerance) {
+          matchedIdx++;
+          userSearchStart = u;
+          break;
+        }
       }
-      this.explodeSparkles();
-      if (this.onComplete) {
-        this.onComplete();
+    }
+    const coverage = matchedIdx / guidePts.length;
+    const isValid = nearStart && userLen >= totalLen * 0.25 && coverage >= 0.55;
+
+    if (isValid) {
+      this.currentStrokeIndex++;
+      this.userPoints = [];
+      this.updateStrokeBadge();
+
+      if (window.MagicWorld.AudioService) {
+        window.MagicWorld.AudioService.playSparkle();
+      }
+
+      if (this.currentStrokeIndex >= this.strokesGuide.length) {
+        if (window.MagicWorld.AudioService) {
+          window.MagicWorld.AudioService.playChime();
+        }
+        this.explodeSparkles();
+        if (this.onComplete) {
+          this.onComplete();
+        }
+      }
+    } else {
+      // Gentle shake feedback — no penalty, no red error text
+      this.wrongShakeUntil = performance.now() + 450;
+      this.userPoints = [];
+      if (window.MagicWorld.AudioService) {
+        window.MagicWorld.AudioService.playPop();
       }
     }
     this.redraw();
@@ -398,11 +422,15 @@ class HandwritingService {
   clear() {
     this.currentStrokeIndex = 0;
     this.userPoints = [];
+    this.wrongShakeUntil = 0;
+    this.updateStrokeBadge();
+    if (this.onReset) this.onReset();
     this.redraw();
   }
 
   skip() {
     this.currentStrokeIndex = this.strokesGuide.length;
+    this.updateStrokeBadge();
     this.redraw();
     if (this.onComplete) {
       this.onComplete();
@@ -415,16 +443,20 @@ class HandwritingService {
     this.demoRunning = true;
     this.currentStrokeIndex = 0;
     this.userPoints = [];
+    this.updateStrokeBadge();
+    if (this.onReset) this.onReset();
 
     let currentIdx = 0;
     const runStroke = () => {
       if (currentIdx >= this.strokesGuide.length) {
         this.demoRunning = false;
         this.currentStrokeIndex = 0;
+        this.updateStrokeBadge();
         this.redraw();
         return;
       }
       this.currentStrokeIndex = currentIdx;
+      this.updateStrokeBadge();
       this.redraw();
 
       setTimeout(() => {
@@ -474,7 +506,9 @@ class HandwritingService {
 
   startSparkleLoop() {
     const loop = () => {
-      if (this.sparkles.length > 0) {
+      const isHwVisible = this.canvas && this.canvas.offsetParent !== null;
+      const hasActivePulse = isHwVisible && this.strokesGuide && this.currentStrokeIndex < this.strokesGuide.length;
+      if (this.sparkles.length > 0 || this.wrongShakeUntil > performance.now() || hasActivePulse) {
         this.redraw();
       }
       this.animationId = requestAnimationFrame(loop);

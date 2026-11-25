@@ -431,6 +431,26 @@ class AudioService {
     osc.stop(now + 0.09);
   }
 
+  playTick() {
+    if (!this.audioCtx) return;
+    const now = this.audioCtx.currentTime;
+    const osc = this.audioCtx.createOscillator();
+    const gain = this.audioCtx.createGain();
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(920, now);
+    osc.frequency.exponentialRampToValueAtTime(1240, now + 0.045);
+
+    gain.gain.setValueAtTime(0.14 * this.sfxVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+
+    osc.connect(gain);
+    gain.connect(this.audioCtx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.055);
+  }
+
   playFanfare() {
     if (!this.audioCtx) return;
     this.unlockAudio();

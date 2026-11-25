@@ -1,4 +1,7 @@
 // Magic World — Master Game App Controller & Router
+const HOLD_BACK_MS = 3000;   // Back (lâu đài), vương miện, cài đặt
+const HOLD_ACTION_MS = 1000; // Tập viết, Bài tập, Con đã đọc ✓, ◀ ▶ lớn dưới cùng
+
 window.MagicWorld = window.MagicWorld || {};
 
 class MagicWorldApp {
@@ -13,6 +16,7 @@ class MagicWorldApp {
     this.spellingDay = 1;
     this.spellingWordIndex = 0;
     this.currentQuizSession = null;
+    this.currentExerciseContext = null;
 
     // Services
     this.audio = window.MagicWorld.AudioService;
@@ -40,7 +44,11 @@ class MagicWorldApp {
     // Init handwriting canvas when element available
     const hwCanvas = document.getElementById('handwritingCanvas');
     if (hwCanvas) {
-      this.handwriting.init(hwCanvas, () => this.onHandwritingCompleted());
+      this.handwriting.init(
+        hwCanvas,
+        () => this.onHandwritingCompleted(),
+        () => this.onHandwritingReset()
+      );
     }
 
     // Auto set child name to audio service
@@ -56,6 +64,12 @@ class MagicWorldApp {
 
     // Stop ongoing speech when switching screens
     if (this.audio) this.audio.stopSpeaking();
+
+    // Hide bottom navbar in all lesson/game/handwriting screens; show ONLY on world-map
+    const appContainer = document.getElementById('appContainer');
+    if (appContainer) {
+      appContainer.classList.toggle('hide-navbar', screenId !== 'world-map');
+    }
 
     // Toggle active class on screen divs
     document.querySelectorAll('.screen-view').forEach(view => {
@@ -102,6 +116,9 @@ class MagicWorldApp {
         break;
       case 'matching':
         this.renderMatchingGameScreen();
+        break;
+      case 'exercise':
+        this.renderExerciseHub();
         break;
     }
 
@@ -168,6 +185,15 @@ class MagicWorldApp {
   prevLetter() {
     this.alphabetIndex = (this.alphabetIndex - 1 + this.alphabetData.length) % this.alphabetData.length;
     this.renderAlphabetScreen();
+  }
+
+  onAlphabetReadConfirmed() {
+    const letter = this.alphabetData[this.alphabetIndex];
+    if (!letter) return;
+    this.progress.markLetterRead(letter.id);
+    this.audio.playChime();
+    this.showRandomPraise();
+    this.nextLetter();
   }
 
   // --- MODULE 2: VOCABULARY ---
@@ -598,21 +624,22 @@ class MagicWorldApp {
     const letter = this.alphabetData[this.alphabetIndex] || this.alphabetData[0];
     const wordEl = document.getElementById('hwLetterWord');
     if (wordEl) wordEl.textContent = `Ví dụ: ${letter.word} (${letter.emoji})`;
-    
-    // Render authentic cursive preview SVG
+
+    // Hide "Đã viết xong" until all strokes are traced
+    this.onHandwritingReset();
+
+    // Render bigger cursive preview SVG with 3 clean ruling lines
     const svgContainer = document.getElementById('hwLetterSvgPreview');
     if (svgContainer) {
       const strokesData = window.MagicWorld.Strokes || {};
       const guides = strokesData[letter.id] || strokesData['a'] || [];
-      const pathsHtml = guides.map(st => `<path d="${st.d}" fill="none" stroke="#2563EB" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />`).join('');
+      const pathsHtml = guides.map(st => `<path d="${st.d}" fill="none" stroke="#2563EB" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />`).join('');
       svgContainer.innerHTML = `
-        <svg viewBox="0 0 100 160" width="84" height="116" style="background:#FAFDFE; border-radius:12px; border:1px solid #BAE6FD; box-shadow:inset 0 1px 4px rgba(0,0,0,0.05);">
-          <!-- 5 ruling lines -->
-          <line x1="0" y1="20" x2="100" y2="20" stroke="#E2E8F0" stroke-width="0.8" stroke-dasharray="2,2" />
-          <line x1="0" y1="40" x2="100" y2="40" stroke="#E2E8F0" stroke-width="0.8" stroke-dasharray="2,2" />
+        <svg viewBox="0 0 100 160" width="112" height="148" style="background:#FAFDFE; border-radius:14px; border:1.5px solid #BAE6FD; box-shadow:inset 0 1px 4px rgba(0,0,0,0.05);">
+          <!-- 3 clean ruling lines (trên, giữa, đáy) -->
           <line x1="0" y1="64" x2="100" y2="64" stroke="#7DD3FC" stroke-width="1.2" stroke-dasharray="3,2" />
-          <line x1="0" y1="88" x2="100" y2="88" stroke="#BAE6FD" stroke-width="0.8" stroke-dasharray="2,2" />
-          <line x1="0" y1="112" x2="100" y2="112" stroke="#0284C7" stroke-width="2.2" />
+          <line x1="0" y1="88" x2="100" y2="88" stroke="#BAE6FD" stroke-width="0.9" stroke-dasharray="2,2" />
+          <line x1="0" y1="112" x2="100" y2="112" stroke="#0284C7" stroke-width="2.4" />
           ${pathsHtml}
         </svg>
       `;
@@ -627,17 +654,64 @@ class MagicWorldApp {
     });
   }
 
+  onHandwritingReset() {
+    const doneBtn = document.getElementById('hwSkipBtn');
+    if (doneBtn) {
+      doneBtn.style.display = 'none';
+    }
+  }
+
   onHandwritingCompleted() {
     const letter = this.alphabetData[this.alphabetIndex];
     if (letter) {
       this.progress.markLetterWritten(letter.id);
     }
     this.showRandomPraise();
+    // Auto-reveal celebratory "✓ Đã viết xong" button
+    const doneBtn = document.getElementById('hwSkipBtn');
+    if (doneBtn) {
+      doneBtn.style.display = 'flex';
+    }
   }
 
-  // --- MODULE: MATCHING PUZZLE GAME (Game Ghép Hình) ---
+  // --- MODULE: EXERCISE HUB (Bài Tập) ---
+  openExerciseHub(moduleName, dayNumber, sessionWords) {
+    this.currentExerciseContext = {
+      module: moduleName,
+      day: dayNumber,
+      words: sessionWords
+    };
+    this.currentQuizSession = this.currentExerciseContext;
+    this.showScreen('exercise');
+  }
+
+  renderExerciseHub() {
+    if (!this.currentExerciseContext) {
+      const words = this.vocabDaysData[this.vocabDay] || [];
+      this.currentExerciseContext = {
+        module: 'vocab',
+        day: this.vocabDay,
+        words: words
+      };
+    }
+    const ctx = this.currentExerciseContext;
+    const subEl = document.getElementById('exerciseHubSubtitle');
+    if (subEl) {
+      if (ctx.module === 'spelling') {
+        const dayObj = this.spellingDaysData.find(d => d.day === ctx.day);
+        subEl.textContent = dayObj ? `Đánh Vần — Ngày ${ctx.day}: ${dayObj.title}` : `Đánh Vần — Ngày ${ctx.day}`;
+      } else {
+        const firstW = ctx.words && ctx.words[0];
+        subEl.textContent = firstW ? `Từ Vựng — Ngày ${ctx.day} (${firstW.group})` : `Từ Vựng — Ngày ${ctx.day}`;
+      }
+    }
+  }
+
+  // --- MODULE: MATCHING PUZZLE GAME (Thử Thách Ghép Hình) ---
   renderMatchingGameScreen() {
-    const dayWords = this.vocabDaysData[this.vocabDay] || [];
+    const ctxWords = (this.currentExerciseContext && this.currentExerciseContext.words)
+      || (this.currentQuizSession && this.currentQuizSession.words);
+    const dayWords = (ctxWords && ctxWords.length >= 4) ? ctxWords : (this.vocabDaysData[this.vocabDay] || []);
     const pool = dayWords.length >= 4 ? dayWords : (window.MagicWorld.VocabList || []);
     const cards = this.matching.startNewGame(pool, 4);
 
@@ -849,52 +923,119 @@ class MagicWorldApp {
     }, 1500);
   }
 
-  bindHoldAction(el, callback, durationMs = 3000) {
+  // Shared HoldButton(el, durationMs, onComplete)
+  HoldButton(el, durationMs, onComplete) {
     if (!el) return;
+
+    // If durationMs <= 0, act as instant tap with 400ms double-tap guard
+    if (durationMs <= 0) {
+      let lockedUntil = 0;
+      el.addEventListener('click', () => {
+        const now = performance.now();
+        if (now < lockedUntil) return;
+        lockedUntil = now + 400;
+        onComplete();
+      });
+      return;
+    }
+
     el.classList.add('hold-btn');
+    const isCircular = el.classList.contains('icon-btn') || el.classList.contains('nav-arrow-btn');
 
     let bar = el.querySelector('.hold-progress-bar');
-    if (!bar) {
+    if (!bar && !isCircular) {
       bar = document.createElement('span');
       bar.className = 'hold-progress-bar';
       el.insertBefore(bar, el.firstChild);
+    }
+
+    let ringCircle = null;
+    let ringCircumference = 0;
+    if (isCircular) {
+      let svg = el.querySelector('.hold-ring-svg');
+      if (!svg) {
+        const svgNS = 'http://www.w3.org/2000/svg';
+        svg = document.createElementNS(svgNS, 'svg');
+        svg.setAttribute('class', 'hold-ring-svg');
+        svg.setAttribute('viewBox', '0 0 60 60');
+        ringCircle = document.createElementNS(svgNS, 'circle');
+        ringCircle.setAttribute('class', 'hold-ring-circle');
+        ringCircle.setAttribute('cx', '30');
+        ringCircle.setAttribute('cy', '30');
+        ringCircle.setAttribute('r', '27');
+        ringCircumference = 2 * Math.PI * 27;
+        ringCircle.style.strokeDasharray = `${ringCircumference}`;
+        ringCircle.style.strokeDashoffset = `${ringCircumference}`;
+        svg.appendChild(ringCircle);
+        el.appendChild(svg);
+      } else {
+        ringCircle = svg.querySelector('.hold-ring-circle');
+        ringCircumference = 2 * Math.PI * 27;
+      }
     }
 
     let rafId = null;
     let startTime = 0;
     let completed = false;
     let holding = false;
+    let lockedUntil = 0;
+    const activePointers = new Set();
 
-    const resetHold = (showHintIfShort) => {
+    const setProgress = (pct) => {
+      if (bar) bar.style.width = `${pct}%`;
+      if (ringCircle) {
+        ringCircle.style.strokeDashoffset = `${ringCircumference * (1 - pct / 100)}`;
+      }
+    };
+
+    const resetHold = (triggerShake) => {
       if (!holding) return;
       holding = false;
-      const elapsed = performance.now() - startTime;
       if (rafId) {
         cancelAnimationFrame(rafId);
         rafId = null;
       }
       el.classList.remove('is-holding');
-      bar.style.width = '0%';
-      if (showHintIfShort && !completed && elapsed < 350) {
+      setProgress(0);
+
+      if (triggerShake && !completed) {
+        el.classList.remove('hold-shake');
+        void el.offsetWidth;
+        el.classList.add('hold-shake');
+        setTimeout(() => el.classList.remove('hold-shake'), 360);
+
         const secTotal = Math.max(1, Math.round(durationMs / 1000));
-        this.showHoldHint(`👆 Nhấn giữ liền ${secTotal} giây để chọn nhé!`);
+        this.showHoldHint(`👆 Giữ ${secTotal} giây để chọn nhé!`);
       }
     };
 
     const tick = (now) => {
       if (!holding) return;
+      if (activePointers.size > 1) {
+        resetHold(false);
+        return;
+      }
       const elapsed = now - startTime;
       const pct = Math.min(100, (elapsed / durationMs) * 100);
-      bar.style.width = `${pct}%`;
+      setProgress(pct);
 
       if (elapsed >= durationMs) {
         completed = true;
         holding = false;
+        lockedUntil = performance.now() + 400; // 400ms double-tap guard
         el.classList.remove('is-holding');
-        bar.style.width = '0%';
+        setProgress(0);
+
         const toast = document.getElementById('holdHintToast');
         if (toast) toast.style.display = 'none';
-        callback();
+
+        if (navigator.vibrate) {
+          try { navigator.vibrate(30); } catch (_) {}
+        }
+        if (this.audio && this.audio.playTick) {
+          this.audio.playTick();
+        }
+        onComplete();
         return;
       }
 
@@ -905,18 +1046,63 @@ class MagicWorldApp {
 
     el.addEventListener('pointerdown', (e) => {
       if (e.button !== undefined && e.button !== 0 && e.pointerType === 'mouse') return;
+      if (performance.now() < lockedUntil) return;
+
+      activePointers.add(e.pointerId);
+      if (activePointers.size > 1) {
+        resetHold(false);
+        return;
+      }
+
       completed = false;
       holding = true;
       startTime = performance.now();
       el.classList.add('is-holding');
-      bar.style.width = '0%';
+      setProgress(0);
       rafId = requestAnimationFrame(tick);
     });
 
-    el.addEventListener('pointerup', () => resetHold(true));
-    el.addEventListener('pointercancel', () => resetHold(false));
-    el.addEventListener('pointerleave', () => resetHold(false));
+    const onPointerEnd = (e, isRelease) => {
+      activePointers.delete(e.pointerId);
+      resetHold(isRelease);
+    };
+
+    el.addEventListener('pointerup', (e) => onPointerEnd(e, true));
+    el.addEventListener('pointercancel', (e) => onPointerEnd(e, false));
+    el.addEventListener('pointerleave', (e) => onPointerEnd(e, false));
     el.addEventListener('contextmenu', (e) => e.preventDefault());
+  }
+
+  bindHoldAction(el, callback, durationMs = HOLD_BACK_MS) {
+    this.HoldButton(el, durationMs, callback);
+  }
+
+  // Swipe left/right (>60px) on lesson content pane
+  bindSwipeNav(paneEl, onSwipeLeft, onSwipeRight) {
+    if (!paneEl) return;
+    let startX = 0;
+    let startY = 0;
+    let tracking = false;
+
+    paneEl.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('button')) return;
+      tracking = true;
+      startX = e.clientX;
+      startY = e.clientY;
+    });
+
+    paneEl.addEventListener('pointerup', (e) => {
+      if (!tracking) return;
+      tracking = false;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+        if (dx < 0) onSwipeLeft();
+        else onSwipeRight();
+      }
+    });
+
+    paneEl.addEventListener('pointercancel', () => { tracking = false; });
   }
 
   // --- EVENT LISTENERS ---
@@ -929,48 +1115,28 @@ class MagicWorldApp {
       document.addEventListener(evt, unlockHandler, { passive: true });
     });
 
-    // Bottom Navigation Bar tabs (3s hold to prevent accidental taps)
+    // Bottom Navigation Bar tabs (only shown on World Map -> instant 1-tap)
     document.querySelectorAll('.nav-tab').forEach(tab => {
-      this.bindHoldAction(tab, () => {
+      tab.addEventListener('click', () => {
         const screen = tab.getAttribute('data-screen');
-        if (screen === 'matching') {
+        if (screen === 'exercise') {
           this.audio.playPop();
-          if (this.currentScreen === 'vocab') {
-            const words = this.vocabDaysData[this.vocabDay] || [];
-            this.openGameChoiceModal('vocab', this.vocabDay, words);
-          } else if (this.currentScreen === 'spelling') {
-            const dayObj = this.spellingDaysData.find(d => d.day === this.spellingDay);
-            this.openGameChoiceModal('spelling', this.spellingDay, dayObj ? dayObj.words : []);
-          } else {
-            this.showScreen('matching');
-          }
+          const words = this.vocabDaysData[this.vocabDay] || [];
+          this.openExerciseHub('vocab', this.vocabDay, words);
         } else if (screen) {
           this.audio.playPop();
           this.showScreen(screen);
         }
-      }, 3000);
+      });
     });
 
-    // Home / Map button (3s hold)
-    const homeBtn = document.getElementById('headerHomeBtn');
-    if (homeBtn) {
-      this.bindHoldAction(homeBtn, () => {
-        this.audio.playPop();
-        this.showScreen('world-map');
-      }, 3000);
-    }
-
-    // Parent Settings Button (3s hold)
-    const parentBtn = document.getElementById('headerParentBtn');
-    if (parentBtn) {
-      this.bindHoldAction(parentBtn, () => this.openParentModal(), 3000);
-    }
-
-    // Stickers Collection Button (3s hold)
-    const stickersBtn = document.getElementById('headerStickersBtn');
-    if (stickersBtn) {
-      this.bindHoldAction(stickersBtn, () => this.openStickersModal(), 3000);
-    }
+    // Top Header: Castle Back (3s hold), Crown Stickers (3s hold), Parent Settings (3s hold)
+    this.HoldButton(document.getElementById('headerHomeBtn'), HOLD_BACK_MS, () => {
+      this.audio.playPop();
+      this.showScreen('world-map');
+    });
+    this.HoldButton(document.getElementById('headerParentBtn'), HOLD_BACK_MS, () => this.openParentModal());
+    this.HoldButton(document.getElementById('headerStickersBtn'), HOLD_BACK_MS, () => this.openStickersModal());
 
     // Story Prologue button on map
     const prologueBtn = document.getElementById('mapStoryBtn');
@@ -991,19 +1157,18 @@ class MagicWorldApp {
           this.showScreen('spelling');
         } else if (target === 'matching') {
           this.showScreen('matching');
+        } else if (target === 'exercise') {
+          const words = this.vocabDaysData[this.vocabDay] || [];
+          this.openExerciseHub('vocab', this.vocabDay, words);
         } else if (target === 'story-bedtime') {
           this.openStory('story-bedtime');
         }
       });
     });
 
-    // Alphabet Buttons (Audio buttons stay 1-tap; prev/next 1s hold; other nav/jump buttons 3s hold)
-    this.bindHoldAction(document.getElementById('alphaPrevBtn'), () => this.prevLetter(), 1000);
-    this.bindHoldAction(document.getElementById('alphaNextBtn'), () => this.nextLetter(), 1000);
-    this.bindHoldAction(document.getElementById('alphaPrevLetterStepBtn'), () => this.prevLetter(), 3000);
-    this.bindHoldAction(document.getElementById('alphaNextLetterStepBtn'), () => this.nextLetter(), 3000);
-    this.bindHoldAction(document.getElementById('alphaPickerBtn'), () => this.openDaySelectorModal('alphabet'), 3000);
-
+    // Alphabet Buttons
+    // Instant 1-tap: picker, Đọc chữ, Đọc ví dụ, câu ví dụ
+    document.getElementById('alphaPickerBtn')?.addEventListener('click', () => this.openDaySelectorModal('alphabet'));
     document.getElementById('btnListenLetter').addEventListener('click', () => {
       const letter = this.alphabetData[this.alphabetIndex];
       if (letter) this.audio.speak(letter.lower);
@@ -1012,20 +1177,19 @@ class MagicWorldApp {
       const letter = this.alphabetData[this.alphabetIndex];
       if (letter) this.audio.speak(letter.sentence);
     });
-    this.bindHoldAction(document.getElementById('btnWriteLetter'), () => {
-      this.showScreen('handwriting');
-    }, 3000);
     document.getElementById('alphabetSentence').addEventListener('click', () => {
       const letter = this.alphabetData[this.alphabetIndex];
       if (letter) this.audio.speak(letter.sentence);
     });
+    // Hold 1s (HOLD_ACTION_MS): Tập viết, Con đã đọc ✓, ◀ ▶
+    this.HoldButton(document.getElementById('btnWriteLetter'), HOLD_ACTION_MS, () => this.showScreen('handwriting'));
+    this.HoldButton(document.getElementById('btnAlphabetDone'), HOLD_ACTION_MS, () => this.onAlphabetReadConfirmed());
+    this.HoldButton(document.getElementById('alphaPrevBtn'), HOLD_ACTION_MS, () => this.prevLetter());
+    this.HoldButton(document.getElementById('alphaNextBtn'), HOLD_ACTION_MS, () => this.nextLetter());
 
-    // Vocab Buttons (Audio buttons stay 1-tap; prev/next/done 1s hold; day/modal buttons 3s hold)
-    this.bindHoldAction(document.getElementById('vocabPrevBtn'), () => this.prevVocabWord(), 1000);
-    this.bindHoldAction(document.getElementById('vocabNextBtn'), () => this.nextVocabWord(), 1000);
-    this.bindHoldAction(document.getElementById('vocabPrevDayBtn'), () => this.prevVocabDay(), 3000);
-    this.bindHoldAction(document.getElementById('vocabNextDayBtn'), () => this.nextVocabDay(), 3000);
-
+    // Vocab Buttons
+    // Instant 1-tap: picker, Nghe từ, Nghe câu, câu ví dụ
+    document.getElementById('vocabDayBadge')?.addEventListener('click', () => this.openDaySelectorModal('vocab'));
     document.getElementById('btnVocabListen').addEventListener('click', () => {
       const words = this.vocabDaysData[this.vocabDay] || [];
       const currentWord = words[this.vocabWordIndex];
@@ -1036,27 +1200,27 @@ class MagicWorldApp {
       const currentWord = words[this.vocabWordIndex];
       if (currentWord) this.audio.speak(currentWord.example);
     });
-    this.bindHoldAction(document.getElementById('btnVocabPlayMatching'), () => {
-      this.showScreen('matching');
-    }, 3000);
     document.getElementById('vocabSentence').addEventListener('click', () => {
       const words = this.vocabDaysData[this.vocabDay] || [];
       const currentWord = words[this.vocabWordIndex];
       if (currentWord) this.audio.speak(currentWord.example);
     });
-    this.bindHoldAction(document.getElementById('btnVocabDone'), () => this.onVocabReadConfirmed(), 1000);
-    this.bindHoldAction(document.getElementById('btnVocabEndModal'), () => {
+    // Hold 1s (HOLD_ACTION_MS): Bài tập, Con đã đọc ✓, Chốt buổi học, ◀ ▶
+    this.HoldButton(document.getElementById('btnVocabPlayMatching'), HOLD_ACTION_MS, () => {
+      const words = this.vocabDaysData[this.vocabDay] || [];
+      this.openExerciseHub('vocab', this.vocabDay, words);
+    });
+    this.HoldButton(document.getElementById('btnVocabDone'), HOLD_ACTION_MS, () => this.onVocabReadConfirmed());
+    this.HoldButton(document.getElementById('btnVocabEndModal'), HOLD_ACTION_MS, () => {
       const words = this.vocabDaysData[this.vocabDay] || [];
       this.openGameChoiceModal('vocab', this.vocabDay, words);
-    }, 3000);
-    this.bindHoldAction(document.getElementById('vocabDayBadge'), () => this.openDaySelectorModal('vocab'), 3000);
+    });
+    this.HoldButton(document.getElementById('vocabPrevBtn'), HOLD_ACTION_MS, () => this.prevVocabWord());
+    this.HoldButton(document.getElementById('vocabNextBtn'), HOLD_ACTION_MS, () => this.nextVocabWord());
 
-    // Spelling Buttons (Audio buttons stay 1-tap; prev/next/done 1s hold; day/modal buttons 3s hold)
-    this.bindHoldAction(document.getElementById('spellingPrevBtn'), () => this.prevSpellingWord(), 1000);
-    this.bindHoldAction(document.getElementById('spellingNextBtn'), () => this.nextSpellingWord(), 1000);
-    this.bindHoldAction(document.getElementById('spellingPrevDayBtn'), () => this.prevSpellingDay(), 3000);
-    this.bindHoldAction(document.getElementById('spellingNextDayBtn'), () => this.nextSpellingDay(), 3000);
-
+    // Spelling Buttons
+    // Instant 1-tap: picker, Đọc trơn, Đánh vần, câu ví dụ
+    document.getElementById('spellingDayBadge')?.addEventListener('click', () => this.openDaySelectorModal('spelling'));
     document.getElementById('btnSpellingListen').addEventListener('click', () => {
       const dayObj = this.spellingDaysData.find(d => d.day === this.spellingDay);
       if (dayObj && dayObj.words[this.spellingWordIndex]) {
@@ -1064,20 +1228,37 @@ class MagicWorldApp {
       }
     });
     document.getElementById('btnSpellingSpell').addEventListener('click', () => this.playSpellingKaraoke());
-    this.bindHoldAction(document.getElementById('btnSpellingPlayMatching'), () => {
-      this.showScreen('matching');
-    }, 3000);
-    this.bindHoldAction(document.getElementById('btnSpellingDone'), () => this.onSpellingReadConfirmed(), 1000);
-    this.bindHoldAction(document.getElementById('btnSpellingEndModal'), () => {
-      const dayObj = this.spellingDaysData.find(d => d.day === this.spellingDay);
-      this.openGameChoiceModal('spelling', this.spellingDay, dayObj ? dayObj.words : []);
-    }, 3000);
-    this.bindHoldAction(document.getElementById('spellingDayBadge'), () => this.openDaySelectorModal('spelling'), 3000);
     document.getElementById('spellingSentence').addEventListener('click', () => {
       const dayObj = this.spellingDaysData.find(d => d.day === this.spellingDay);
       if (dayObj && dayObj.words[this.spellingWordIndex]) {
         this.audio.speak(dayObj.words[this.spellingWordIndex].example);
       }
+    });
+    // Hold 1s (HOLD_ACTION_MS): Bài tập, Con đã đọc ✓, Chốt buổi học, ◀ ▶
+    this.HoldButton(document.getElementById('btnSpellingPlayMatching'), HOLD_ACTION_MS, () => {
+      const dayObj = this.spellingDaysData.find(d => d.day === this.spellingDay);
+      this.openExerciseHub('spelling', this.spellingDay, dayObj ? dayObj.words : []);
+    });
+    this.HoldButton(document.getElementById('btnSpellingDone'), HOLD_ACTION_MS, () => this.onSpellingReadConfirmed());
+    this.HoldButton(document.getElementById('btnSpellingEndModal'), HOLD_ACTION_MS, () => {
+      const dayObj = this.spellingDaysData.find(d => d.day === this.spellingDay);
+      this.openGameChoiceModal('spelling', this.spellingDay, dayObj ? dayObj.words : []);
+    });
+    this.HoldButton(document.getElementById('spellingPrevBtn'), HOLD_ACTION_MS, () => this.prevSpellingWord());
+    this.HoldButton(document.getElementById('spellingNextBtn'), HOLD_ACTION_MS, () => this.nextSpellingWord());
+
+    // Swipe Left / Right (>60px) on lesson content panes
+    this.bindSwipeNav(document.querySelector('#screen-alphabet .lesson-content-pane'), () => this.nextLetter(), () => this.prevLetter());
+    this.bindSwipeNav(document.querySelector('#screen-vocab .lesson-content-pane'), () => this.nextVocabWord(), () => this.prevVocabWord());
+    this.bindSwipeNav(document.querySelector('#screen-spelling .lesson-content-pane'), () => this.nextSpellingWord(), () => this.prevSpellingWord());
+
+    // Exercise Hub Buttons (instant 1-tap)
+    document.getElementById('exQuizBtn')?.addEventListener('click', () => {
+      const ctx = this.currentExerciseContext || { module: 'vocab', day: this.vocabDay, words: this.vocabDaysData[this.vocabDay] };
+      this.startQuizForSession(ctx.module, ctx.day, ctx.words);
+    });
+    document.getElementById('exMatchingBtn')?.addEventListener('click', () => {
+      this.showScreen('matching');
     });
 
     // Quiz Buttons
@@ -1085,21 +1266,27 @@ class MagicWorldApp {
       const q = this.quiz.getCurrentQuestion();
       if (q && this.audio) this.audio.speak(q.spellingRead || q.targetText);
     });
-    this.bindHoldAction(document.getElementById('quizSkipBtn'), () => {
+    this.HoldButton(document.getElementById('quizSkipBtn'), HOLD_BACK_MS, () => {
       this.quiz.skipCurrent();
       this.renderQuizQuestion();
-    }, 3000);
+    });
     document.getElementById('quizNextBtn').addEventListener('click', () => this.advanceQuiz());
-    this.bindHoldAction(document.getElementById('quizExitBtn'), () => this.showScreen('world-map'), 3000);
+    this.HoldButton(document.getElementById('quizExitBtn'), HOLD_BACK_MS, () => this.showScreen('world-map'));
 
     // Handwriting Buttons
-    document.getElementById('hwClearBtn').addEventListener('click', () => this.handwriting.clear());
+    // Xem mẫu & loa tên nét: instant 1-tap
     document.getElementById('hwDemoBtn').addEventListener('click', () => this.handwriting.playDemo());
-    this.bindHoldAction(document.getElementById('hwSkipBtn'), () => {
+    document.getElementById('hwStrokeBadge')?.addEventListener('click', () => {
+      const label = this.handwriting.getCurrentStrokeLabel();
+      if (label && this.audio) this.audio.speak(label);
+    });
+    // Xóa lại, Quay lại, Đã viết xong: Hold 1s (HOLD_ACTION_MS)
+    this.HoldButton(document.getElementById('hwClearBtn'), HOLD_ACTION_MS, () => this.handwriting.clear());
+    this.HoldButton(document.getElementById('hwSkipBtn'), HOLD_ACTION_MS, () => {
       this.handwriting.skip();
       this.showScreen('alphabet');
-    }, 3000);
-    this.bindHoldAction(document.getElementById('hwBackBtn'), () => this.showScreen('alphabet'), 3000);
+    });
+    this.HoldButton(document.getElementById('hwBackBtn'), HOLD_ACTION_MS, () => this.showScreen('alphabet'));
 
     // Story Controls
     document.getElementById('storyCloseBtn').addEventListener('click', () => {

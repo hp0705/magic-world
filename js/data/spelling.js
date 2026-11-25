@@ -837,7 +837,7 @@ window.MagicWorld.SpellingDays = [
         "quiz": true,
         "chips": [
           {
-            "text": "ớ",
+            "text": "â",
             "role": "onset",
             "group": 1
           },
@@ -882,7 +882,7 @@ window.MagicWorld.SpellingDays = [
         "quiz": true,
         "chips": [
           {
-            "text": "ớ",
+            "text": "â",
             "role": "onset",
             "group": 1
           },
@@ -1192,7 +1192,7 @@ window.MagicWorld.SpellingDays = [
         "quiz": true,
         "chips": [
           {
-            "text": "ớ",
+            "text": "â",
             "role": "onset",
             "group": 1
           },
@@ -1247,7 +1247,7 @@ window.MagicWorld.SpellingDays = [
         "quiz": true,
         "chips": [
           {
-            "text": "ớ",
+            "text": "â",
             "role": "onset",
             "group": 1
           },
@@ -1628,7 +1628,7 @@ window.MagicWorld.SpellingDays = [
         "quiz": true,
         "chips": [
           {
-            "text": "á",
+            "text": "ă",
             "role": "onset",
             "group": 1
           },
@@ -1683,7 +1683,7 @@ window.MagicWorld.SpellingDays = [
         "quiz": true,
         "chips": [
           {
-            "text": "ớ",
+            "text": "â",
             "role": "onset",
             "group": 1
           },
@@ -2049,7 +2049,7 @@ window.MagicWorld.SpellingDays = [
         "quiz": true,
         "chips": [
           {
-            "text": "á",
+            "text": "ă",
             "role": "onset",
             "group": 1
           },
@@ -2094,7 +2094,7 @@ window.MagicWorld.SpellingDays = [
         "quiz": true,
         "chips": [
           {
-            "text": "ớ",
+            "text": "â",
             "role": "onset",
             "group": 1
           },
@@ -2475,7 +2475,7 @@ window.MagicWorld.SpellingDays = [
         "quiz": true,
         "chips": [
           {
-            "text": "á",
+            "text": "ă",
             "role": "onset",
             "group": 1
           },
@@ -3348,7 +3348,7 @@ window.MagicWorld.SpellingDays = [
         "quiz": true,
         "chips": [
           {
-            "text": "á",
+            "text": "ă",
             "role": "onset",
             "group": 1
           },
@@ -3809,7 +3809,7 @@ window.MagicWorld.SpellingDays = [
         "quiz": true,
         "chips": [
           {
-            "text": "á",
+            "text": "ă",
             "role": "onset",
             "group": 1
           },
@@ -3864,7 +3864,7 @@ window.MagicWorld.SpellingDays = [
         "quiz": true,
         "chips": [
           {
-            "text": "ớ",
+            "text": "â",
             "role": "onset",
             "group": 1
           },
@@ -4265,7 +4265,7 @@ window.MagicWorld.SpellingDays = [
         "quiz": true,
         "chips": [
           {
-            "text": "á",
+            "text": "ă",
             "role": "onset",
             "group": 1
           },
@@ -4320,7 +4320,7 @@ window.MagicWorld.SpellingDays = [
         "quiz": true,
         "chips": [
           {
-            "text": "ớ",
+            "text": "â",
             "role": "onset",
             "group": 1
           },
@@ -5754,7 +5754,7 @@ window.MagicWorld.SpellingDays = [
             "group": 1
           },
           {
-            "text": "ớ",
+            "text": "â",
             "role": "rime",
             "group": 1
           },
@@ -5814,7 +5814,7 @@ window.MagicWorld.SpellingDays = [
             "group": 1
           },
           {
-            "text": "á",
+            "text": "ă",
             "role": "rime",
             "group": 1
           },

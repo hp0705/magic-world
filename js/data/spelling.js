@@ -126,7 +126,7 @@ window.MagicWorld.SpellingDays = [
         "tone": "ngang",
         "spellingRead": "bờ - i - bi",
         "example": "Bé Mây có viên bi tròn.",
-        "emoji": "✨",
+        "emoji": "🔮",
         "quiz": true,
         "chips": [
           {
@@ -2031,7 +2031,7 @@ window.MagicWorld.SpellingDays = [
         "tone": "huyền",
         "spellingRead": "a - nờ - an | bờ - an - ban | huyền - bàn",
         "example": "Bé Mây vẽ tranh trên bàn.",
-        "emoji": "✨",
+        "emoji": "🍽️",
         "quiz": true,
         "chips": [
           {
@@ -4754,7 +4754,7 @@ window.MagicWorld.SpellingDays = [
         "tone": "sắc",
         "spellingRead": "i - a - ia | mờ - ia - mia | sắc - mía",
         "example": "Bé Mây thấy cây mía ngọt.",
-        "emoji": "✨",
+        "emoji": "🎋",
         "quiz": false,
         "chips": [
           {
@@ -5431,7 +5431,7 @@ window.MagicWorld.SpellingDays = [
         "tone": "nặng",
         "spellingRead": "u - ê - uê | hờ - uê - huê | nặng - huệ",
         "example": "Bé Mây ngửi bông hoa huệ trắng.",
-        "emoji": "✨",
+        "emoji": "🪷",
         "quiz": true,
         "chips": [
           {

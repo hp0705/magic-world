@@ -119,7 +119,7 @@ window.MagicWorld.Alphabet = [
     "sound": "i",
     "word": "bi",
     "sentence": "Bé Mây có viên bi tròn.",
-    "emoji": "✨"
+    "emoji": "🔮"
   },
   {
     "id": "k",

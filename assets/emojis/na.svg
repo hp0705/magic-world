@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="naG" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#B9EC6A"/>
+      <stop offset="60%" stop-color="#76C43B"/>
+      <stop offset="100%" stop-color="#4A8E22"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="60" cy="108" rx="34" ry="6" fill="#000" opacity="0.1"/>
+  <!-- Stem & leaf -->
+  <path d="M60 28 Q58 14 64 10" stroke="#7A4E28" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M62 20 Q82 10 92 22 Q78 30 62 24 Z" fill="#52B638" stroke="#3B8C26" stroke-width="1.5"/>
+  <!-- Custard apple (quả na) body -->
+  <path d="M60 25 C86 25, 98 46, 94 72 C90 92, 74 104, 60 104 C46 104, 30 92, 26 72 C22 46, 34 25, 60 25 Z" fill="url(#naG)" stroke="#3D7A1B" stroke-width="2.5"/>
+  <!-- Signature bumpy scales (mắt na) -->
+  <g fill="none" stroke="#3D7A1B" stroke-width="2.2" stroke-linecap="round" opacity="0.75">
+    <path d="M40 40 Q48 48 56 40"/>
+    <path d="M64 40 Q72 48 80 40"/>
+    <path d="M30 56 Q40 65 50 56"/>
+    <path d="M51 55 Q60 65 69 55"/>
+    <path d="M70 56 Q80 65 90 56"/>
+    <path d="M32 74 Q42 84 52 74"/>
+    <path d="M52 73 Q60 83 68 73"/>
+    <path d="M68 74 Q78 84 88 74"/>
+    <path d="M44 90 Q52 98 60 90"/>
+    <path d="M60 90 Q68 98 76 90"/>
+  </g>
+  <!-- Soft glossy highlights on scales -->
+  <g fill="#E5FFB8" opacity="0.55">
+    <ellipse cx="46" cy="36" rx="4.5" ry="2.5"/>
+    <ellipse cx="40" cy="52" rx="5" ry="2.5"/>
+    <ellipse cx="59" cy="51" rx="5" ry="2.5"/>
+    <ellipse cx="42" cy="69" rx="4.5" ry="2.5"/>
+  </g>
+</svg>

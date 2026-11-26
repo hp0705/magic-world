@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="oiSkin" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#B8F068"/>
+      <stop offset="65%" stop-color="#6CC43B"/>
+      <stop offset="100%" stop-color="#459424"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="60" cy="107" rx="44" ry="7" fill="#000" opacity="0.1"/>
+  <!-- Whole guava (left/back) -->
+  <path d="M46 28 Q44 16 50 12" stroke="#7A4E28" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+  <path d="M48 20 Q30 10 20 22 Q34 30 48 24 Z" fill="#4DB336" stroke="#358522" stroke-width="1.5"/>
+  <ellipse cx="47" cy="64" rx="31" ry="36" fill="url(#oiSkin)" stroke="#387E1C" stroke-width="2.5"/>
+  <!-- Calyx at bottom of guava -->
+  <path d="M42 99 L47 103 L52 99" stroke="#4D3319" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <!-- Glossy shine -->
+  <ellipse cx="35" cy="46" rx="7" ry="13" transform="rotate(-20 35 46)" fill="#ECFFD0" opacity="0.5"/>
+  <!-- Cut guava half (right/front) showing crisp skin + creamy-pink core & seeds -->
+  <g transform="translate(76, 74) rotate(10)">
+    <ellipse cx="0" cy="0" rx="24" ry="28" fill="#5DBB36" stroke="#387E1C" stroke-width="2.5"/>
+    <ellipse cx="0" cy="0" rx="20" ry="24" fill="#F2FFE0"/>
+    <ellipse cx="0" cy="1" rx="11" ry="14" fill="#FF9AA8"/>
+    <!-- Tiny guava seeds -->
+    <g fill="#FFE484">
+      <circle cx="-4" cy="-5" r="1.6"/>
+      <circle cx="4" cy="-4" r="1.6"/>
+      <circle cx="-5" cy="2" r="1.6"/>
+      <circle cx="5" cy="3" r="1.6"/>
+      <circle cx="0" cy="7" r="1.6"/>
+      <circle cx="0" cy="-1" r="1.6"/>
+    </g>
+  </g>
+</svg>

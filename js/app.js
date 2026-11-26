@@ -277,7 +277,7 @@ class MagicWorldApp {
         const statusLabel = status === 'done' ? '✓ ⭐ Đã học' : '🌱 Chưa học';
         createTile(
           `${letter.lower} ${letter.upper}`,
-          `${letter.emoji || '✨'} ${letter.word}`,
+          `${this.renderEmojiHtml(letter.emoji)} ${letter.word}`,
           status,
           statusLabel,
           () => {
@@ -921,7 +921,7 @@ class MagicWorldApp {
   renderHandwritingScreen() {
     const letter = this.alphabetData[this.alphabetIndex] || this.alphabetData[0];
     const wordEl = document.getElementById('hwLetterWord');
-    if (wordEl) wordEl.textContent = `Ví dụ: ${letter.word} (${letter.emoji})`;
+    if (wordEl) wordEl.innerHTML = `Ví dụ: ${letter.word} (${this.renderEmojiHtml(letter.emoji)})`;
 
     // Hide "Đã viết xong" until all strokes are traced
     this.onHandwritingReset();
@@ -1877,7 +1877,7 @@ class MagicWorldApp {
         card.className = `day-card-item ${isActive ? 'active' : ''}`;
         card.innerHTML = `
           <div class="day-card-badge" style="font-size:22px;">${letter.lower} <span style="font-size:16px; opacity:0.8;">${letter.upper}</span></div>
-          <div class="day-card-topic">${letter.emoji || '✨'} ${letter.word}</div>
+          <div class="day-card-topic">${this.renderEmojiHtml(letter.emoji)} ${letter.word}</div>
           <div class="day-card-sub">Âm "${letter.name}"</div>
           <div class="day-card-status">${isComplete ? '💎 Đã học' : '🌱 Mới'}</div>
         `;

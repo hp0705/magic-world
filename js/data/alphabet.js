@@ -159,7 +159,7 @@ window.MagicWorld.Alphabet = [
     "sound": "nờ",
     "word": "na",
     "sentence": "Mẹ gọt quả na cho Bé Mây.",
-    "emoji": "🍈"
+    "emoji": "assets/emojis/na.svg"
   },
   {
     "id": "o",

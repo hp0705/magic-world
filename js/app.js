@@ -53,10 +53,44 @@ class MagicWorldApp {
       );
     }
 
-    // Auto set child name to audio service
+    // Auto set child name & handwriting difficulty
     if (this.audio && this.progress) {
       this.audio.setChildName(this.progress.getChildName());
     }
+    if (this.handwriting && this.progress) {
+      this.handwriting.setDifficulty(this.progress.getHandwritingDifficulty());
+    }
+
+    // Trap browser/hardware Back button so kids don't accidentally exit the app
+    this.setupBackTrap();
+  }
+
+  setupBackTrap() {
+    if (!window.history || !window.history.pushState) return;
+    this._lastMapBackAt = 0;
+    this._exitingBack = false;
+    window.history.pushState({ app: true }, '', window.location.href);
+
+    window.addEventListener('popstate', () => {
+      if (this._exitingBack) return;
+      if (this.currentScreen !== 'world-map') {
+        window.history.pushState({ app: true }, '', window.location.href);
+        this.showHoldHint('Giữ 🏰 3 giây để quay lại');
+        return;
+      }
+
+      const now = Date.now();
+      if (now - this._lastMapBackAt <= 2000) {
+        this._lastMapBackAt = 0;
+        this._exitingBack = true;
+        window.history.back(); // Leave initial entry so Back actually exits
+        return;
+      }
+
+      this._lastMapBackAt = now;
+      window.history.pushState({ app: true }, '', window.location.href);
+      this.showHoldHint('Vuốt Back lần nữa để thoát');
+    });
   }
 
   // --- SCREEN NAVIGATION ---
@@ -377,7 +411,11 @@ class MagicWorldApp {
   }
 
   nextLetter() {
-    this.alphabetIndex = (this.alphabetIndex + 1) % this.alphabetData.length;
+    if (this.alphabetIndex >= this.alphabetData.length - 1) {
+      this.openGameChoiceModal('alphabet', this.alphabetData.length, this.alphabetData);
+      return;
+    }
+    this.alphabetIndex++;
     this.renderAlphabetScreen();
   }
 
@@ -819,6 +857,19 @@ class MagicWorldApp {
     this.showVictoryModal(outcome.stars, res.correct, outcome.newSticker, res.total);
   }
 
+  openModalWithGuard(modal) {
+    if (!modal) return;
+    modal.dataset.guardUntil = String(performance.now() + 600);
+    modal.style.display = 'flex';
+  }
+
+  isEndOfCourse(moduleName, dayNumber) {
+    if (moduleName === 'alphabet') return true;
+    if (moduleName === 'vocab') return dayNumber >= Object.keys(this.vocabDaysData).length;
+    if (moduleName === 'spelling') return dayNumber >= this.spellingDaysData.length;
+    return false;
+  }
+
   showVictoryModal(stars, correctCount, sticker, totalCount = 8) {
     const modal = document.getElementById('victoryModal');
     if (!modal) return;
@@ -827,8 +878,19 @@ class MagicWorldApp {
     if (stars === 2) starEmojis = '⭐⭐';
     if (stars === 3) starEmojis = '⭐⭐⭐';
 
+    const s = this.currentQuizSession || { module: 'vocab', day: this.vocabDay };
+    const isLast = this.isEndOfCourse(s.module, s.day);
+
+    const titleEl = document.getElementById('victoryTitle');
+    if (titleEl) titleEl.textContent = isLast ? 'Bé đã học hết rồi! 🎉' : 'Bé Tuyệt Vời Quá!';
+
+    const nextBtn = document.getElementById('victoryNextDayBtn');
+    const restartBtn = document.getElementById('victoryRestartBtn');
+    if (nextBtn) nextBtn.style.display = isLast ? 'none' : 'flex';
+    if (restartBtn) restartBtn.style.display = isLast ? 'flex' : 'none';
+
     document.getElementById('victoryStarsDisplay').textContent = starEmojis;
-    document.getElementById('victoryScoreText').textContent = `Bé Mây đã trả lời đúng ${correctCount}/${totalCount} câu hỏi!`;
+    document.getElementById('victoryScoreText').textContent = `Bé đã trả lời đúng ${correctCount}/${totalCount} câu hỏi!`;
 
     const stickerBox = document.getElementById('victoryStickerBox');
     if (sticker) {
@@ -839,7 +901,7 @@ class MagicWorldApp {
       stickerBox.style.display = 'none';
     }
 
-    modal.style.display = 'flex';
+    this.openModalWithGuard(modal);
   }
 
   closeVictoryModal() {
@@ -1014,7 +1076,40 @@ class MagicWorldApp {
   openGameChoiceModal(moduleName, dayNumber, sessionWords) {
     this.currentQuizSession = { module: moduleName, day: dayNumber, words: sessionWords };
     const modal = document.getElementById('gameChoiceModal');
-    if (modal) modal.style.display = 'flex';
+    if (!modal) return;
+
+    const isLast = this.isEndOfCourse(moduleName, dayNumber);
+    const titleEl = document.getElementById('gameChoiceTitle');
+    const subEl = document.getElementById('gameChoiceSub');
+    const exBtn = document.getElementById('choiceExerciseBtn');
+    const nextBtn = document.getElementById('choiceNextDayBtn');
+    const restartBtn = document.getElementById('choiceRestartBtn');
+    const mapBtn = document.getElementById('choiceMapBtn');
+
+    if (moduleName === 'alphabet') {
+      if (titleEl) titleEl.textContent = 'Bé đã học hết rồi! 🎉';
+      if (subEl) subEl.textContent = 'Bé đã hoàn thành cả 29 chữ cái! Giữ nút để chọn nhé:';
+      if (exBtn) exBtn.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
+      if (restartBtn) restartBtn.style.display = 'flex';
+      if (mapBtn) mapBtn.textContent = '📋 Về danh sách chữ';
+    } else if (isLast) {
+      if (titleEl) titleEl.textContent = 'Bé đã học hết rồi! 🎉';
+      if (subEl) subEl.textContent = 'Bé đã hoàn thành hết khóa học! Giữ nút để chọn nhé:';
+      if (exBtn) exBtn.style.display = 'flex';
+      if (nextBtn) nextBtn.style.display = 'none';
+      if (restartBtn) restartBtn.style.display = 'flex';
+      if (mapBtn) mapBtn.textContent = '📋 Về danh sách bài';
+    } else {
+      if (titleEl) titleEl.textContent = 'Bé Đã Đọc Xong Bài Hôm Nay!';
+      if (subEl) subEl.textContent = 'Giữ nút bên dưới để chọn bước tiếp theo nhé:';
+      if (exBtn) exBtn.style.display = 'flex';
+      if (nextBtn) nextBtn.style.display = 'flex';
+      if (restartBtn) restartBtn.style.display = 'none';
+      if (mapBtn) mapBtn.textContent = '📋 Về danh sách bài';
+    }
+
+    this.openModalWithGuard(modal);
   }
 
   // --- STORY THEATER SCREEN ---
@@ -1274,6 +1369,8 @@ class MagicWorldApp {
 
     el.addEventListener('pointerdown', (e) => {
       if (e.button !== undefined && e.button !== 0 && e.pointerType === 'mouse') return;
+      const modalBackdrop = el.closest('.victory-modal-backdrop');
+      if (modalBackdrop && Number(modalBackdrop.dataset.guardUntil || 0) > performance.now()) return;
       if (performance.now() < lockedUntil) return;
 
       activePointers.add(e.pointerId);
@@ -1548,8 +1645,8 @@ class MagicWorldApp {
     });
     document.getElementById('storyNextBtn').addEventListener('click', () => this.story.nextScene());
 
-    // Victory Modal close
-    document.getElementById('victoryCloseBtn').addEventListener('click', () => this.closeVictoryModal());
+    // Victory Modal close (Hold 3s)
+    this.HoldButton(document.getElementById('victoryCloseBtn'), HOLD_BACK_MS, () => this.closeVictoryModal());
 
     // Parent Modal handlers
     document.getElementById('parentCloseBtn').addEventListener('click', () => this.closeParentModal());
@@ -1607,61 +1704,74 @@ class MagicWorldApp {
     const matchReset = document.getElementById('matchingResetBtn');
     if (matchReset) matchReset.addEventListener('click', () => this.renderMatchingGameScreen());
 
-    // Game Choice Modal Buttons
-    const choiceNext = document.getElementById('choiceNextDayBtn');
-    if (choiceNext) {
-      choiceNext.addEventListener('click', () => {
-        document.getElementById('gameChoiceModal').style.display = 'none';
-        const s = this.currentQuizSession || { module: 'vocab', day: this.vocabDay };
-        if (s.module === 'vocab') {
-          this.nextVocabDay();
-          this.showScreen('vocab');
-        } else {
-          this.nextSpellingDay();
-          this.showScreen('spelling');
-        }
-      });
-    }
+    // Game Choice Modal Buttons (HoldButton 1s / 3s, no direct click)
+    this.HoldButton(document.getElementById('choiceExerciseBtn'), HOLD_ACTION_MS, () => {
+      document.getElementById('gameChoiceModal').style.display = 'none';
+      const s = this.currentQuizSession || { module: 'vocab', day: this.vocabDay, words: this.vocabDaysData[this.vocabDay] };
+      this.openExerciseHub(s.module, s.day, s.words || this.vocabDaysData[this.vocabDay]);
+    });
 
-    const choiceMatch = document.getElementById('choiceMatchingBtn');
-    if (choiceMatch) {
-      choiceMatch.addEventListener('click', () => {
-        document.getElementById('gameChoiceModal').style.display = 'none';
-        this.showScreen('matching');
-      });
-    }
-    const choiceQuiz = document.getElementById('choiceQuizBtn');
-    if (choiceQuiz) {
-      choiceQuiz.addEventListener('click', () => {
-        document.getElementById('gameChoiceModal').style.display = 'none';
-        const s = this.currentQuizSession || { module: 'vocab', day: this.vocabDay, words: this.vocabDaysData[this.vocabDay] };
-        this.startQuizForSession(s.module, s.day, s.words || this.vocabDaysData[this.vocabDay]);
-      });
-    }
-    const choiceMap = document.getElementById('choiceMapBtn');
-    if (choiceMap) {
-      choiceMap.addEventListener('click', () => {
-        document.getElementById('gameChoiceModal').style.display = 'none';
-        const s = this.currentQuizSession || { module: 'vocab' };
-        this.openLessonList(s.module || 'vocab');
-      });
-    }
+    this.HoldButton(document.getElementById('choiceNextDayBtn'), HOLD_ACTION_MS, () => {
+      document.getElementById('gameChoiceModal').style.display = 'none';
+      const s = this.currentQuizSession || { module: 'vocab', day: this.vocabDay };
+      if (s.module === 'vocab') {
+        this.nextVocabDay();
+        this.showScreen('vocab');
+      } else {
+        this.nextSpellingDay();
+        this.showScreen('spelling');
+      }
+    });
 
-    // Victory Next Day button
-    const victoryNext = document.getElementById('victoryNextDayBtn');
-    if (victoryNext) {
-      victoryNext.addEventListener('click', () => {
-        document.getElementById('victoryModal').style.display = 'none';
-        const s = this.currentQuizSession || { module: 'vocab', day: this.vocabDay };
-        if (s.module === 'vocab') {
-          this.nextVocabDay();
-          this.showScreen('vocab');
-        } else {
-          this.nextSpellingDay();
-          this.showScreen('spelling');
-        }
-      });
-    }
+    this.HoldButton(document.getElementById('choiceRestartBtn'), HOLD_ACTION_MS, () => {
+      document.getElementById('gameChoiceModal').style.display = 'none';
+      const s = this.currentQuizSession || { module: 'vocab' };
+      if (s.module === 'alphabet') {
+        this.alphabetIndex = 0;
+        this.showScreen('alphabet');
+      } else if (s.module === 'vocab') {
+        this.vocabDay = 1;
+        this.vocabWordIndex = 0;
+        this.showScreen('vocab');
+      } else {
+        this.spellingDay = 1;
+        this.spellingWordIndex = 0;
+        this.showScreen('spelling');
+      }
+    });
+
+    this.HoldButton(document.getElementById('choiceMapBtn'), HOLD_BACK_MS, () => {
+      document.getElementById('gameChoiceModal').style.display = 'none';
+      const s = this.currentQuizSession || { module: 'vocab' };
+      this.openLessonList(s.module || 'vocab');
+    });
+
+    // Victory Next Day & Restart buttons (HoldButton 1s)
+    this.HoldButton(document.getElementById('victoryNextDayBtn'), HOLD_ACTION_MS, () => {
+      document.getElementById('victoryModal').style.display = 'none';
+      const s = this.currentQuizSession || { module: 'vocab', day: this.vocabDay };
+      if (s.module === 'vocab') {
+        this.nextVocabDay();
+        this.showScreen('vocab');
+      } else {
+        this.nextSpellingDay();
+        this.showScreen('spelling');
+      }
+    });
+
+    this.HoldButton(document.getElementById('victoryRestartBtn'), HOLD_ACTION_MS, () => {
+      document.getElementById('victoryModal').style.display = 'none';
+      const s = this.currentQuizSession || { module: 'vocab' };
+      if (s.module === 'vocab') {
+        this.vocabDay = 1;
+        this.vocabWordIndex = 0;
+        this.showScreen('vocab');
+      } else {
+        this.spellingDay = 1;
+        this.spellingWordIndex = 0;
+        this.showScreen('spelling');
+      }
+    });
 
     // Day Selector Modal Close buttons
     const dayModal = document.getElementById('daySelectorModal');
@@ -1720,7 +1830,7 @@ class MagicWorldApp {
         gridEl.appendChild(card);
       });
     } else if (moduleType === 'spelling') {
-      titleEl.textContent = '🏰 Lâu Đài Đánh Vần — 14 Ngày Học';
+      titleEl.textContent = '🏰 Lâu Đài Đánh Vần — 15 Ngày Học';
       subEl.textContent = 'Chạm vào ngày bất kỳ để cùng Bé Mây ghép vần diệu kỳ';
 
       this.spellingDaysData.forEach(d => {
@@ -1796,6 +1906,8 @@ class MagicWorldApp {
     const modal = document.getElementById('parentModal');
     if (!modal) return;
     document.getElementById('parentChildNameInput').value = this.progress.getChildName();
+    const hwSel = document.getElementById('parentHwDifficulty');
+    if (hwSel) hwSel.value = this.progress.getHandwritingDifficulty();
     this.renderParentProgressList();
     modal.style.display = 'flex';
   }
@@ -1850,6 +1962,11 @@ class MagicWorldApp {
     const rawName = document.getElementById('parentChildNameInput').value;
     const savedName = this.progress.setChildName(rawName);
     if (this.audio) this.audio.setChildName(savedName);
+    const hwSel = document.getElementById('parentHwDifficulty');
+    if (hwSel) {
+      const diff = this.progress.setHandwritingDifficulty(hwSel.value);
+      if (this.handwriting) this.handwriting.setDifficulty(diff);
+    }
     if (this.currentScreen === 'world-map') this.renderWorldMap();
     this.closeParentModal();
   }

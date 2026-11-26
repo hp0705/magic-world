@@ -6,14 +6,19 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#4CC9F0">
-  <title>Bé Mây — Vương quốc Băng Lam</title>
+  <title>Bé Mây — Vương quốc Băng Giá</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=2026112608">
+  <link rel="stylesheet" href="css/style.css?v=2026112611">
 </head>
 <body>
+  <!-- Portrait Phone Rotate Overlay -->
+  <div id="rotateOverlay" class="rotate-overlay" role="dialog" aria-live="polite">
+    <div class="rotate-overlay-icon">📱↻</div>
+    <div class="rotate-overlay-text">Xoay ngang màn hình để học nhé 📱↻</div>
+  </div>
   <!-- Background Snowfall -->
   <canvas id="snowCanvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:1;"></canvas>
 
@@ -44,7 +49,7 @@
       <section id="screen-world-map" class="screen-view active">
         <div class="map-container">
           <div class="map-header-banner">
-            <h1>🏰 Vương quốc Băng Lam</h1>
+            <h1>🏰 Vương quốc Băng Giá</h1>
             <p id="mapGreeting">Xin chào Bé Mây! Hãy cùng Lumi đánh thức các bạn chữ nhé!</p>
           </div>
 
@@ -77,10 +82,10 @@
             <div class="zone-card" data-target="spelling">
               <div class="zone-icon">🏰✨</div>
               <div class="zone-title">Lâu Đài Đánh Vần</div>
-              <div class="zone-sub">14 Ngày (112 Nhóm Vần)</div>
+              <div class="zone-sub">15 Ngày (120 Nhóm Vần)</div>
               <div class="zone-progress-wrap">
                 <div class="zone-progress-track"><div class="zone-progress-fill" id="mapProgressSpellingBar" style="width:0%"></div></div>
-                <div class="zone-progress-text" id="mapProgressSpellingText">Đã học 0/14 ngày</div>
+                <div class="zone-progress-text" id="mapProgressSpellingText">Đã học 0/15 ngày</div>
               </div>
               <button class="zone-btn">Chọn bài ▶</button>
             </div>
@@ -468,21 +473,22 @@
   <!-- SESSION GAME CHOICE MODAL -->
   <div id="gameChoiceModal" class="victory-modal-backdrop" style="display:none;">
     <div class="victory-card">
-      <div style="font-size:64px;">🎉💎✨</div>
-      <h2 style="font-size:28px; color:#0A6FC2; margin-top:8px;">Bé Mây Đã Đọc Xong 8 Từ!</h2>
-      <p style="font-size:18px; font-weight:700; color:#475569; margin:8px 0 16px 0;">Bé Mây hãy chọn trò chơi yêu thích cuối buổi nhé:</p>
-      
-      <div style="display:flex; flex-direction:column; gap:12px;">
-        <button id="choiceNextDayBtn" class="action-btn btn-green" style="min-height:64px; font-size:22px;">
-          🌟 Học Ngày Tiếp Theo ▶
+      <div class="modal-scroll-body">
+        <div style="font-size:clamp(36px, 7vh, 58px);">🎉💎✨</div>
+        <h2 id="gameChoiceTitle" style="font-size:clamp(20px, 3.8vh, 28px); color:#0A6FC2; margin-top:6px;">Bé Đã Đọc Xong Bài Hôm Nay!</h2>
+        <p id="gameChoiceSub" style="font-size:clamp(14px, 2.5vh, 18px); font-weight:700; color:#475569; margin:6px 0 12px 0;">Giữ nút bên dưới để chọn bước tiếp theo nhé:</p>
+      </div>
+      <div class="modal-actions-fixed">
+        <button id="choiceExerciseBtn" class="action-btn btn-purple" style="font-size:clamp(16px, 2.6vh, 20px);">
+          📝 Làm bài tập
         </button>
-        <button id="choiceMatchingBtn" class="action-btn btn-purple" style="min-height:64px; font-size:20px;">
-          🧩 Trò Chơi Ghép Hình (Tranh & Chữ)
+        <button id="choiceNextDayBtn" class="action-btn btn-green" style="font-size:clamp(16px, 2.6vh, 20px);">
+          🌟 Học ngày tiếp theo ▶
         </button>
-        <button id="choiceQuizBtn" class="action-btn btn-blue" style="min-height:64px; font-size:20px;">
-          🎯 Chốt Buổi Học (8 Câu Đọc Chữ)
+        <button id="choiceRestartBtn" class="action-btn btn-blue" style="display:none; font-size:clamp(16px, 2.6vh, 20px);">
+          🔁 Ôn lại từ đầu
         </button>
-        <button id="choiceMapBtn" class="btn-skip" style="width:100%; margin-top:4px;">
+        <button id="choiceMapBtn" class="btn-skip" style="width:100%;">
           📋 Về danh sách bài
         </button>
       </div>
@@ -492,23 +498,30 @@
   <!-- VICTORY MODAL -->
   <div id="victoryModal" class="victory-modal-backdrop" style="display:none;">
     <div class="victory-card">
-      <div style="font-size:72px;">🎉❄️👑</div>
-      <h2 style="font-size:32px; color:#0A6FC2; margin-top:8px;">Bé Mây Tuyệt Vời Quá!</h2>
-      <div class="victory-stars-row" id="victoryStarsDisplay">⭐⭐⭐</div>
-      <p id="victoryScoreText" style="font-size:20px; font-weight:700; color:#334155;">Bé Mây đã hoàn thành xuất sắc!</p>
+      <div class="modal-scroll-body">
+        <div style="font-size:clamp(40px, 8vh, 66px);">🎉❄️👑</div>
+        <h2 id="victoryTitle" style="font-size:clamp(22px, 4vh, 30px); color:#0A6FC2; margin-top:6px;">Bé Tuyệt Vời Quá!</h2>
+        <div class="victory-stars-row" id="victoryStarsDisplay">⭐⭐⭐</div>
+        <p id="victoryScoreText" style="font-size:clamp(15px, 2.6vh, 20px); font-weight:700; color:#334155;">Bé đã hoàn thành xuất sắc!</p>
 
-      <div class="victory-sticker-reward" id="victoryStickerBox">
-        <div style="font-size:15px; font-weight:800; color:#0369A1; margin-bottom:4px;">PHẦN THƯỞNG STICKER MỚI:</div>
-        <div class="sticker-emoji" id="victoryStickerEmoji">🦄</div>
-        <div style="font-weight:800; color:#1E293B;" id="victoryStickerName">Linh thú Lumi</div>
+        <div class="victory-sticker-reward" id="victoryStickerBox">
+          <div style="font-size:14px; font-weight:800; color:#0369A1; margin-bottom:4px;">PHẦN THƯỞNG STICKER MỚI:</div>
+          <div class="sticker-emoji" id="victoryStickerEmoji">🦄</div>
+          <div style="font-weight:800; color:#1E293B;" id="victoryStickerName">Linh thú Lumi</div>
+        </div>
       </div>
 
-      <button id="victoryNextDayBtn" class="btn-primary-read" style="width:100%; margin-top:16px;">
-        🌟 Học Ngày Tiếp Theo ▶
-      </button>
-      <button id="victoryCloseBtn" class="btn-skip" style="width:100%; margin-top:8px;">
-        Về bản đồ 🏰
-      </button>
+      <div class="modal-actions-fixed">
+        <button id="victoryNextDayBtn" class="btn-primary-read" style="width:100%;">
+          🌟 Học ngày tiếp theo ▶
+        </button>
+        <button id="victoryRestartBtn" class="action-btn btn-blue" style="display:none; width:100%;">
+          🔁 Ôn lại từ đầu
+        </button>
+        <button id="victoryCloseBtn" class="btn-skip" style="width:100%;">
+          Về bản đồ 🏰
+        </button>
+      </div>
     </div>
   </div>
 
@@ -540,6 +553,15 @@
           <input type="text" id="parentChildNameInput" value="Bé Mây" maxlength="20" style="flex:1;">
           <button id="parentTestVoiceBtn" class="action-btn btn-blue" style="min-height:48px; padding:0 16px;">🔊 Thử</button>
         </div>
+      </div>
+
+      <div class="parent-form-group">
+        <label for="parentHwDifficulty">✍️ Độ khó tập viết:</label>
+        <select id="parentHwDifficulty">
+          <option value="easy">Dễ (Mặc định cho bé 4–6 tuổi)</option>
+          <option value="medium">Vừa</option>
+          <option value="hard">Khó</option>
+        </select>
       </div>
 
       <!-- Tiến độ học (3 tabs: Chữ Cái / Từ Vựng / Đánh Vần) -->
@@ -586,22 +608,22 @@
   <audio id="sharedGameAudio" preload="auto" playsinline style="display:none;"></audio>
 
   <!-- SCRIPTS LOAD ORDER -->
-  <script src="js/data/emojiMap.js?v=2026112608"></script>
-  <script src="js/data/alphabet.js?v=2026112608"></script>
-  <script src="js/data/vocab.js?v=2026112608"></script>
-  <script src="js/data/spelling.js?v=2026112608"></script>
+  <script src="js/data/emojiMap.js?v=2026112614"></script>
+  <script src="js/data/alphabet.js?v=2026112614"></script>
+  <script src="js/data/vocab.js?v=2026112614"></script>
+  <script src="js/data/spelling.js?v=2026112614"></script>
   <script src="js/data/feedback.js?v=2026112608"></script>
   <script src="js/data/stories.js?v=2026112608"></script>
   <script src="js/data/strokes.js?v=2026112608"></script>
-  <script src="js/data/audioManifest.js?v=2026112608"></script>
+  <script src="js/data/audioManifest.js?v=2026112614"></script>
 
   <script src="js/services/audioService.js?v=2026112608"></script>
-  <script src="js/services/progressService.js?v=2026112608"></script>
-  <script src="js/services/quizService.js?v=2026112608"></script>
-  <script src="js/services/handwritingService.js?v=2026112608"></script>
+  <script src="js/services/progressService.js?v=2026112615"></script>
+  <script src="js/services/quizService.js?v=2026112613"></script>
+  <script src="js/services/handwritingService.js?v=2026112612"></script>
   <script src="js/services/storyService.js?v=2026112608"></script>
-  <script src="js/services/matchingGameService.js?v=2026112608"></script>
+  <script src="js/services/matchingGameService.js?v=2026112613"></script>
 
-  <script src="js/app.js?v=2026112609"></script>
+  <script src="js/app.js?v=2026112614"></script>
 </body>
 </html>

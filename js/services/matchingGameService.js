@@ -27,8 +27,12 @@ class MatchingGameService {
     this.matchedPairs = 0;
     this.isLocked = false;
 
-    // Filter words that have clear emojis
-    const validWords = wordsPool.filter(w => w.emoji && w.emoji !== '✨');
+    // Filter words that have clear emojis and are allowed in picture matching
+    const validWords = wordsPool.filter(w => {
+      if (!w.emoji || w.emoji === '✨' || w.noPictureQuiz) return false;
+      const emEntry = window.MagicWorld.EmojiMap && window.MagicWorld.EmojiMap[w.text];
+      return !(emEntry && emEntry.quiz === false);
+    });
     const selectedWords = this.shuffle(validWords.length >= pairCount ? validWords : wordsPool).slice(0, pairCount);
     this.totalPairs = selectedWords.length;
 

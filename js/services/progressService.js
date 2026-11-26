@@ -11,7 +11,7 @@ class ProgressService {
       { id: 'stk_crystal', name: 'Khối băng ngọc', emoji: '💎' },
       { id: 'stk_snow', name: 'Bông tuyết trắng', emoji: '❄️' },
       { id: 'stk_flower', name: 'Hoa tuyết mùa xuân', emoji: '🌸' },
-      { id: 'stk_castle', name: 'Lâu đài Băng Lam', emoji: '🏰' },
+      { id: 'stk_castle', name: 'Lâu đài Băng Giá', emoji: '🏰' },
       { id: 'stk_rainbow', name: 'Cầu vồng cực quang', emoji: '🌈' },
       { id: 'stk_fairy', name: 'Cô Sao Băng', emoji: '🧚' },
       { id: 'stk_heart', name: 'Trái tim ấm áp', emoji: '💖' },
@@ -37,7 +37,8 @@ class ProgressService {
         voiceRate: 0.9,
         voicePitch: 1.0,
         sfxVolume: 0.9,
-        bgmEnabled: false
+        bgmEnabled: false,
+        handwritingDifficulty: 'easy'
       }
     };
   }
@@ -46,12 +47,31 @@ class ProgressService {
     try {
       const raw = localStorage.getItem(this.storageKey);
       if (raw) {
-        return { ...this.getDefaultData(), ...JSON.parse(raw) };
+        const parsed = { ...this.getDefaultData(), ...JSON.parse(raw) };
+        this.migrateSpellingProgress(parsed);
+        return parsed;
       }
     } catch (e) {
       console.warn("Could not load from localStorage:", e);
     }
     return this.getDefaultData();
+  }
+
+  // Preserve Day 1 (8->9 words) and Day 12 (replaced words) completion across data update
+  migrateSpellingProgress(data) {
+    if (!data || data.spellingMigrationV15) return;
+    const sp = data.spellingProgress || {};
+    if (sp['1'] && Array.isArray(sp['1'].completedWords) && sp['1'].completedWords.length >= 8) {
+      sp['1'].completedLegacy = true;
+    }
+    if (sp['12'] && Array.isArray(sp['12'].completedWords)) {
+      if (sp['12'].completedWords.length >= 8) {
+        sp['12'].completedLegacy = true;
+      }
+      const keptDay12Ids = new Set(['spell_d12_3', 'spell_d12_5', 'spell_d12_7']);
+      sp['12'].completedWords = sp['12'].completedWords.filter(id => keptDay12Ids.has(id));
+    }
+    data.spellingMigrationV15 = true;
   }
 
   save() {
@@ -65,6 +85,19 @@ class ProgressService {
   reset() {
     this.data = this.getDefaultData();
     this.save();
+  }
+
+  getHandwritingDifficulty() {
+    const val = this.data.settings && this.data.settings.handwritingDifficulty;
+    return ['easy', 'medium', 'hard'].includes(val) ? val : 'easy';
+  }
+
+  setHandwritingDifficulty(level) {
+    const valid = ['easy', 'medium', 'hard'].includes(level) ? level : 'easy';
+    this.data.settings = this.data.settings || {};
+    this.data.settings.handwritingDifficulty = valid;
+    this.save();
+    return valid;
   }
 
   normalizeChildName(name) {
@@ -169,6 +202,7 @@ class ProgressService {
       return (this.data.letters[key] && (this.data.letters[key].read || this.data.letters[key].written)) ? 'done' : 'todo';
     }
     const prog = module === 'vocab' ? this.getVocabDayProgress(key) : this.getSpellingDayProgress(key);
+    if (module === 'spelling' && prog.completedLegacy) return 'done';
     const count = (prog.completedWords || []).length;
     if (count >= totalItems && totalItems > 0) return 'done';
     if (count > 0) return 'in_progress';

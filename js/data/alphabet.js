@@ -19,7 +19,7 @@ window.MagicWorld.Alphabet = [
     "sound": "á",
     "word": "ăn",
     "sentence": "Bé Mây ăn cơm thật ngon.",
-    "emoji": "🍚"
+    "emoji": "🍽️"
   },
   {
     "id": "aa",
@@ -79,7 +79,7 @@ window.MagicWorld.Alphabet = [
     "sound": "e",
     "word": "em",
     "sentence": "Bé Mây chơi cùng em nhỏ.",
-    "emoji": "👶"
+    "emoji": "🧒"
   },
   {
     "id": "ee",
@@ -119,7 +119,7 @@ window.MagicWorld.Alphabet = [
     "sound": "i",
     "word": "bi",
     "sentence": "Bé Mây có viên bi tròn.",
-    "emoji": "⚪"
+    "emoji": "✨"
   },
   {
     "id": "k",
@@ -249,7 +249,7 @@ window.MagicWorld.Alphabet = [
     "sound": "u",
     "word": "tủ",
     "sentence": "Bé Mây cất quần áo vào tủ.",
-    "emoji": "🚪"
+    "emoji": "🗄️"
   },
   {
     "id": "uw",
@@ -279,7 +279,7 @@ window.MagicWorld.Alphabet = [
     "sound": "xờ",
     "word": "xe",
     "sentence": "Bé Mây ngồi xe đi dạo phố.",
-    "emoji": "🚲"
+    "emoji": "🚗"
   },
   {
     "id": "y",
@@ -289,6 +289,6 @@ window.MagicWorld.Alphabet = [
     "sound": "i",
     "word": "y tá",
     "sentence": "Cô y tá khen Bé Mây ngoan.",
-    "emoji": "🧑‍⚕️"
+    "emoji": "👩‍⚕️"
   }
 ];

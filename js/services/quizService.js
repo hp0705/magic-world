@@ -40,8 +40,9 @@ class QuizService {
     // Build each question
     targetWords.forEach((item, idx) => {
       // Reading-first: show the word text so the child practices reading and picks the matching emoji
+      const emEntry = window.MagicWorld.EmojiMap && window.MagicWorld.EmojiMap[item.text];
       let qType = 'word-pick-emoji';
-      if (!item.emoji || item.emoji === '✨') {
+      if (!item.emoji || item.emoji === '✨' || item.noPictureQuiz || (emEntry && emEntry.quiz === false)) {
         qType = 'listen-pick-word';
       }
 

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <ellipse cx="60" cy="110" rx="28" ry="6" fill="#000" opacity="0.08"/>
+  <!-- Shorts -->
+  <path d="M36 86 L84 86 L86 104 L64 104 L60 94 L56 104 L34 104 Z" fill="#3D7CC9"/>
+  <!-- Arms -->
+  <path d="M36 36 Q20 52 34 68" stroke="#FFD1B3" stroke-width="12" stroke-linecap="round" fill="none"/>
+  <path d="M84 36 Q100 52 86 68" stroke="#FFD1B3" stroke-width="12" stroke-linecap="round" fill="none"/>
+  <!-- Shirt top -->
+  <path d="M34 30 Q60 22 86 30 L88 50 L32 50 Z" fill="#63C3FF"/>
+  <!-- Round tummy (bụng) -->
+  <ellipse cx="60" cy="68" rx="27" ry="22" fill="#FFD9BF"/>
+  <path d="M58 68 Q60 72 62 68" stroke="#D99B78" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <!-- Hands patting tummy -->
+  <circle cx="40" cy="68" r="6.5" fill="#FFC8A8"/>
+  <circle cx="80" cy="68" r="6.5" fill="#FFC8A8"/>
+  <!-- Highlight dashed circle on tummy -->
+  <circle cx="60" cy="68" r="18" fill="none" stroke="#FF6B6B" stroke-width="3" stroke-dasharray="5 4"/>
+</svg>

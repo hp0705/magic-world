@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <ellipse cx="60" cy="110" rx="28" ry="6" fill="#000" opacity="0.08"/>
+  <!-- Ears -->
+  <circle cx="24" cy="64" r="8" fill="#FFC4A0"/>
+  <circle cx="96" cy="64" r="8" fill="#FFC4A0"/>
+  <!-- Head -->
+  <circle cx="60" cy="62" r="35" fill="#FFD9BF"/>
+  <!-- Hair pulled back so forehead (trán) is clearly visible -->
+  <path d="M26 52 Q27 20 60 20 Q93 20 94 52 Q86 30 60 30 Q34 30 26 52 Z" fill="#5A3825"/>
+  <!-- Eyebrows, eyes, cheeks, smile -->
+  <path d="M40 56 Q46 53 52 56" stroke="#5A3825" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <path d="M68 56 Q74 53 80 56" stroke="#5A3825" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <circle cx="46" cy="64" r="4" fill="#2B1B12"/>
+  <circle cx="74" cy="64" r="4" fill="#2B1B12"/>
+  <circle cx="47" cy="62.5" r="1.4" fill="#FFF"/>
+  <circle cx="75" cy="62.5" r="1.4" fill="#FFF"/>
+  <ellipse cx="38" cy="73" rx="5.5" ry="3.2" fill="#FF9AA2" opacity="0.7"/>
+  <ellipse cx="82" cy="73" rx="5.5" ry="3.2" fill="#FF9AA2" opacity="0.7"/>
+  <path d="M51 78 Q60 85 69 78" stroke="#D96B52" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- Highlight on forehead (trán) + arrow -->
+  <ellipse cx="60" cy="41" rx="16" ry="7" fill="#FF7A59" opacity="0.22" stroke="#FF6B6B" stroke-width="2.5" stroke-dasharray="4 3"/>
+  <path d="M98 22 L76 37 M77 30 L75 38 L83 38" stroke="#FF6B6B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

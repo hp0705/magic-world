@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <ellipse cx="60" cy="108" rx="28" ry="6" fill="#000" opacity="0.08"/>
+  <!-- Neck & shoulders -->
+  <path d="M36 105 Q36 90 50 88 L70 88 Q84 90 84 105 Z" fill="#56B4F9"/>
+  <rect x="52" y="78" width="16" height="14" rx="6" fill="#FFD1B3"/>
+  <!-- Ears -->
+  <circle cx="28" cy="58" r="8" fill="#FFC4A0"/>
+  <circle cx="92" cy="58" r="8" fill="#FFC4A0"/>
+  <!-- Head -->
+  <circle cx="60" cy="56" r="31" fill="#FFD9BF"/>
+  <!-- Hair -->
+  <path d="M29 52 Q28 22 60 22 Q92 22 91 52 Q82 36 66 40 Q52 43 44 35 Q36 42 29 52 Z" fill="#5A3825"/>
+  <!-- Eyes & rosy cheeks & smile -->
+  <circle cx="48" cy="56" r="4" fill="#2B1B12"/>
+  <circle cx="72" cy="56" r="4" fill="#2B1B12"/>
+  <circle cx="49" cy="54.5" r="1.4" fill="#FFF"/>
+  <circle cx="73" cy="54.5" r="1.4" fill="#FFF"/>
+  <ellipse cx="40" cy="64" rx="5.5" ry="3.2" fill="#FF9AA2" opacity="0.7"/>
+  <ellipse cx="80" cy="64" rx="5.5" ry="3.2" fill="#FF9AA2" opacity="0.7"/>
+  <path d="M52 68 Q60 75 68 68" stroke="#D96B52" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- Highlight ring & arrow pointing to whole head -->
+  <circle cx="60" cy="54" r="37" fill="none" stroke="#FF7A59" stroke-width="3.5" stroke-dasharray="7 5"/>
+  <path d="M60 6 L60 15 M54 11 L60 17 L66 11" stroke="#FF7A59" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

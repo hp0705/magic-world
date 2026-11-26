@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="fanB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7AD7FF"/>
+      <stop offset="100%" stop-color="#2CA4E8"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="60" cy="110" rx="30" ry="6" fill="#000" opacity="0.1"/>
+  <!-- Stand & base -->
+  <rect x="55" y="72" width="10" height="26" rx="4" fill="#B8DDF2"/>
+  <ellipse cx="60" cy="102" rx="28" ry="8" fill="url(#fanB)"/>
+  <circle cx="51" cy="102" r="2.5" fill="#FFF"/>
+  <circle cx="60" cy="102" r="2.5" fill="#FFE066"/>
+  <circle cx="69" cy="102" r="2.5" fill="#FF7A7A"/>
+  <!-- Fan cage -->
+  <circle cx="60" cy="46" r="34" fill="#EBF8FF" stroke="#3BB2F2" stroke-width="5"/>
+  <!-- Blades -->
+  <g transform="translate(60,46)">
+    <path d="M0 0 C-10 -24, 10 -26, 8 -4 Z" fill="url(#fanB)"/>
+    <path d="M0 0 C22 4, 18 22, 2 10 Z" fill="url(#fanB)"/>
+    <path d="M0 0 C-22 10, -20 -10, -4 -2 Z" fill="url(#fanB)"/>
+    <circle cx="0" cy="0" r="8" fill="#1D83C2"/>
+    <circle cx="0" cy="0" r="4" fill="#FFF"/>
+  </g>
+  <!-- Grille rings -->
+  <circle cx="60" cy="46" r="23" fill="none" stroke="#7CCAF5" stroke-width="2"/>
+  <line x1="28" y1="46" x2="92" y2="46" stroke="#7CCAF5" stroke-width="1.5" opacity="0.6"/>
+  <line x1="60" y1="14" x2="60" y2="78" stroke="#7CCAF5" stroke-width="1.5" opacity="0.6"/>
+  <!-- Breeze lines -->
+  <path d="M98 30 Q108 30 110 24" stroke="#56CCF2" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M100 44 Q112 44 114 38" stroke="#56CCF2" stroke-width="3" stroke-linecap="round" fill="none"/>
+</svg>

@@ -35,6 +35,14 @@ class MagicWorldApp {
     this.feedbackData = window.MagicWorld.Feedback || { praise: [], wrong: [] };
   }
 
+  renderEmojiHtml(val) {
+    if (!val) return '✨';
+    if (/\.(svg|png|jpe?g|webp)$/i.test(val)) {
+      return `<img src="${val}" alt="" class="emoji-img" draggable="false">`;
+    }
+    return val;
+  }
+
   init() {
     this.setupSnowCanvas();
     this.bindEvents();
@@ -400,7 +408,7 @@ class MagicWorldApp {
     // Displays
     document.getElementById('alphabetUpper').textContent = letter.upper;
     document.getElementById('alphabetLower').textContent = letter.lower;
-    document.getElementById('alphabetEmoji').textContent = letter.emoji || '✨';
+    document.getElementById('alphabetEmoji').innerHTML = this.renderEmojiHtml(letter.emoji);
     document.getElementById('alphabetWord').textContent = letter.word;
     document.getElementById('alphabetSentence').textContent = this.audio ? this.audio.replaceTokens(letter.sentence) : letter.sentence;
 
@@ -465,7 +473,7 @@ class MagicWorldApp {
     }
 
     // Word display
-    document.getElementById('vocabEmoji').textContent = currentWord.emoji || '✨';
+    document.getElementById('vocabEmoji').innerHTML = this.renderEmojiHtml(currentWord.emoji);
     document.getElementById('vocabText').textContent = currentWord.text;
     document.getElementById('vocabSentence').textContent = this.audio ? this.audio.replaceTokens(currentWord.example) : currentWord.example;
 
@@ -567,7 +575,7 @@ class MagicWorldApp {
     }
 
     // Displays
-    document.getElementById('spellingEmoji').textContent = currentWord.emoji || '✨';
+    document.getElementById('spellingEmoji').innerHTML = this.renderEmojiHtml(currentWord.emoji);
     document.getElementById('spellingText').textContent = currentWord.text;
     document.getElementById('spellingSentence').textContent = this.audio ? this.audio.replaceTokens(currentWord.example) : currentWord.example;
 
@@ -787,7 +795,7 @@ class MagicWorldApp {
       if (q.type === 'listen-pick-word') {
         card.innerHTML = `<span class="card-word">${opt.text}</span>`;
       } else {
-        card.innerHTML = `<span class="card-emoji">${opt.emoji}</span>`;
+        card.innerHTML = `<span class="card-emoji">${this.renderEmojiHtml(opt.emoji)}</span>`;
       }
 
       card.addEventListener('click', () => this.handleQuizAnswer(optIdx, card));
@@ -1021,7 +1029,7 @@ class MagicWorldApp {
           </div>
           <div class="matching-face matching-front">
             ${card.type === 'picture' 
-              ? `<span class="front-emoji">${card.emoji}</span>` 
+              ? `<span class="front-emoji">${this.renderEmojiHtml(card.emoji)}</span>` 
               : `<span class="front-word">${card.text}</span>`}
           </div>
         </div>

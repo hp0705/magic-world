@@ -2031,7 +2031,7 @@ window.MagicWorld.SpellingDays = [
         "tone": "huyền",
         "spellingRead": "a - nờ - an | bờ - an - ban | huyền - bàn",
         "example": "Bé Mây vẽ tranh trên bàn.",
-        "emoji": "🍽️",
+        "emoji": "assets/emojis/ban.svg",
         "quiz": true,
         "chips": [
           {
@@ -2086,7 +2086,7 @@ window.MagicWorld.SpellingDays = [
         "tone": "ngang",
         "spellingRead": "á - nờ - ăn | khờ - ăn - khăn",
         "example": "Bé Mây gấp khăn gọn gàng.",
-        "emoji": "🧣",
+        "emoji": "assets/emojis/ban.svg",
         "quiz": true,
         "chips": [
           {
@@ -4754,7 +4754,7 @@ window.MagicWorld.SpellingDays = [
         "tone": "sắc",
         "spellingRead": "i - a - ia | mờ - ia - mia | sắc - mía",
         "example": "Bé Mây thấy cây mía ngọt.",
-        "emoji": "🎋",
+        "emoji": "assets/emojis/mia.svg",
         "quiz": false,
         "chips": [
           {
@@ -4809,7 +4809,7 @@ window.MagicWorld.SpellingDays = [
         "tone": "ngang",
         "spellingRead": "u - a - ua | cờ - ua - cua",
         "example": "Bé Mây thấy chú cua bò ngang trên cát.",
-        "emoji": "🦀",
+        "emoji": "assets/emojis/mia.svg",
         "quiz": true,
         "chips": [
           {
@@ -5431,7 +5431,7 @@ window.MagicWorld.SpellingDays = [
         "tone": "nặng",
         "spellingRead": "u - ê - uê | hờ - uê - huê | nặng - huệ",
         "example": "Bé Mây ngửi bông hoa huệ trắng.",
-        "emoji": "🪷",
+        "emoji": "assets/emojis/hue.svg",
         "quiz": true,
         "chips": [
           {
@@ -5486,7 +5486,7 @@ window.MagicWorld.SpellingDays = [
         "tone": "ngang",
         "spellingRead": "u - i - uy | khờ - uy - khuy",
         "example": "Bé Mây cài khuy áo ngay ngắn.",
-        "emoji": "🔘",
+        "emoji": "assets/emojis/hue.svg",
         "quiz": true,
         "chips": [
           {

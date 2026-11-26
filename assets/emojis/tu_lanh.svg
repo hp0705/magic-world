@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="fridgeG" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#D9F4FF"/>
+      <stop offset="100%" stop-color="#8BD3F7"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="60" cy="110" rx="32" ry="6" fill="#000" opacity="0.1"/>
+  <!-- Feet -->
+  <rect x="36" y="102" width="10" height="6" rx="2" fill="#5B8FA8"/>
+  <rect x="74" y="102" width="10" height="6" rx="2" fill="#5B8FA8"/>
+  <!-- Fridge body -->
+  <rect x="30" y="12" width="60" height="92" rx="10" fill="url(#fridgeG)" stroke="#48A4D1" stroke-width="3"/>
+  <!-- Door split -->
+  <line x1="31" y1="44" x2="89" y2="44" stroke="#48A4D1" stroke-width="3"/>
+  <!-- Handles -->
+  <rect x="76" y="22" width="5" height="16" rx="2.5" fill="#FFFFFF" stroke="#48A4D1" stroke-width="1.5"/>
+  <rect x="76" y="54" width="5" height="28" rx="2.5" fill="#FFFFFF" stroke="#48A4D1" stroke-width="1.5"/>
+  <!-- Cute snowflake on freezer door -->
+  <g stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round">
+    <line x1="50" y1="21" x2="50" y2="35"/>
+    <line x1="43" y1="28" x2="57" y2="28"/>
+    <line x1="45" y1="23" x2="55" y2="33"/>
+    <line x1="55" y1="23" x2="45" y2="33"/>
+  </g>
+  <!-- Shine -->
+  <line x1="37" y1="18" x2="37" y2="38" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.65"/>
+  <line x1="37" y1="50" x2="37" y2="94" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.65"/>
+</svg>

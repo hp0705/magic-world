@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <ellipse cx="60" cy="110" rx="28" ry="6" fill="#000" opacity="0.08"/>
+  <!-- Shorts from behind -->
+  <path d="M38 86 L82 86 L84 104 L64 104 L60 95 L56 104 L36 104 Z" fill="#3D7CC9"/>
+  <!-- Arms from behind -->
+  <path d="M34 48 L22 74" stroke="#FFD1B3" stroke-width="11" stroke-linecap="round"/>
+  <path d="M86 48 L98 74" stroke="#FFD1B3" stroke-width="11" stroke-linecap="round"/>
+  <!-- Shirt back -->
+  <path d="M32 45 Q60 39 88 45 L84 88 L36 88 Z" fill="#5CB8FF"/>
+  <!-- Neck & Ears & Back of Head -->
+  <rect x="52" y="34" width="16" height="12" rx="5" fill="#FFD1B3"/>
+  <circle cx="38" cy="27" r="5" fill="#FFC4A0"/>
+  <circle cx="82" cy="27" r="5" fill="#FFC4A0"/>
+  <circle cx="60" cy="24" r="19" fill="#5A3825"/>
+  <!-- Highlight ring & arrow pointing to the back (lưng) -->
+  <circle cx="60" cy="66" r="17" fill="#FFFFFF" opacity="0.28"/>
+  <circle cx="60" cy="66" r="17" fill="none" stroke="#FF6B6B" stroke-width="3.5" stroke-dasharray="5 4"/>
+  <path d="M105 66 L83 66 M89 60 L82 66 L89 72" stroke="#FF6B6B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

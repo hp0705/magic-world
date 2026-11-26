@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <ellipse cx="60" cy="106" rx="40" ry="7" fill="#000" opacity="0.08"/>
+  <!-- White chalk stick -->
+  <g transform="rotate(-25 45 60)">
+    <rect x="28" y="20" width="18" height="72" rx="4" fill="#F2F6FA" stroke="#C5D4E6" stroke-width="2"/>
+    <ellipse cx="37" cy="22" rx="9" ry="3.5" fill="#FFFFFF" stroke="#C5D4E6" stroke-width="1.5"/>
+  </g>
+  <!-- Yellow chalk stick -->
+  <g transform="rotate(-8 62 62)">
+    <rect x="52" y="24" width="18" height="72" rx="4" fill="#FFE680" stroke="#E0BE43" stroke-width="2"/>
+    <ellipse cx="61" cy="26" rx="9" ry="3.5" fill="#FFF3B0" stroke="#E0BE43" stroke-width="1.5"/>
+  </g>
+  <!-- Pink/Blue chalk stick -->
+  <g transform="rotate(14 82 66)">
+    <rect x="74" y="28" width="18" height="70" rx="4" fill="#9EE2FF" stroke="#4BAED9" stroke-width="2"/>
+    <ellipse cx="83" cy="30" rx="9" ry="3.5" fill="#D1F2FF" stroke="#4BAED9" stroke-width="1.5"/>
+  </g>
+  <!-- Tiny chalk dust dots -->
+  <circle cx="24" cy="96" r="3" fill="#DDE6F0"/>
+  <circle cx="96" cy="98" r="2.5" fill="#9EE2FF"/>
+  <circle cx="52" cy="102" r="2" fill="#FFE680"/>
+</svg>

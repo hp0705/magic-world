@@ -310,7 +310,7 @@ class HandwritingService {
     if (!w || !h) return;
 
     ctx.save();
-    ctx.fillStyle = "#FAFDFE";
+    ctx.fillStyle = "#FFF8FB";
     ctx.fillRect(0, 0, w, h);
 
     const oliSize = Math.max(46, Math.min(Math.round(h * 0.165), 68));
@@ -321,7 +321,7 @@ class HandwritingService {
 
     // Line 3 (Trên)
     ctx.beginPath();
-    ctx.strokeStyle = '#BAE6FD';
+    ctx.strokeStyle = '#F9A8D4';
     ctx.lineWidth = 2;
     ctx.setLineDash([7, 6]);
     ctx.moveTo(marginX, line3Y);
@@ -330,7 +330,7 @@ class HandwritingService {
 
     // Line 2 (Giữa)
     ctx.beginPath();
-    ctx.strokeStyle = '#E0F2FE';
+    ctx.strokeStyle = '#FCE7F3';
     ctx.lineWidth = 1.5;
     ctx.setLineDash([5, 5]);
     ctx.moveTo(marginX, line2Y);
@@ -339,7 +339,7 @@ class HandwritingService {
 
     // Line 1 (Đáy - đậm hơn)
     ctx.beginPath();
-    ctx.strokeStyle = '#0284C7';
+    ctx.strokeStyle = '#EC4899';
     ctx.lineWidth = 3.5;
     ctx.setLineDash([]);
     ctx.moveTo(marginX, line1Y);
@@ -398,9 +398,9 @@ class HandwritingService {
 
       const p = new Path2D(st.d);
 
-      // Soft glowing background track for active stroke
+      // Soft glowing pink background track for active stroke
       if (isCurrent) {
-        ctx.strokeStyle = '#BAE6FD';
+        ctx.strokeStyle = '#FBCFE8';
         ctx.lineWidth = 24 / tr.uniformScale;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
@@ -418,7 +418,7 @@ class HandwritingService {
         ctx.stroke(p);
       } else {
         // Thicker dashed guide path
-        ctx.strokeStyle = isCurrent ? '#0284C7' : '#CBD5E1';
+        ctx.strokeStyle = isCurrent ? '#EC4899' : '#CBD5E1';
         ctx.lineWidth = (isCurrent ? 16 : 9) / tr.uniformScale;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
@@ -427,7 +427,7 @@ class HandwritingService {
       }
       ctx.restore();
 
-      // Blinking green starting point dot & big order number for active stroke
+      // Blinking pink starting point dot & big order number for active stroke
       if (isCurrent && st.start) {
         const sx = tr.offsetX + curShake + st.start.x * tr.uniformScale;
         const sy = tr.offsetY + st.start.y * tr.uniformScale;
@@ -436,13 +436,13 @@ class HandwritingService {
         // Outer pulsing halo
         ctx.beginPath();
         ctx.arc(sx, sy, 20 + pulse * 7, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(34, 197, 94, ${0.35 - pulse * 0.22})`;
+        ctx.fillStyle = `rgba(236, 72, 153, ${0.35 - pulse * 0.22})`;
         ctx.fill();
 
-        // Main green circle
+        // Main pink circle
         ctx.beginPath();
         ctx.arc(sx, sy, 18, 0, Math.PI * 2);
-        ctx.fillStyle = '#16A34A';
+        ctx.fillStyle = '#EC4899';
         ctx.fill();
         ctx.strokeStyle = '#FFFFFF';
         ctx.lineWidth = 3.5;
@@ -485,13 +485,13 @@ class HandwritingService {
 
   drawUserStroke() {
     for (const item of this.completedUserStrokes) {
-      this.drawSmoothPolyline(item.points, '#16A34A', 13);
+      this.drawSmoothPolyline(item.points, '#6D28D9', 13);
     }
     if (this.lastWrongPoints && this.lastWrongPoints.length >= 2) {
-      this.drawSmoothPolyline(this.lastWrongPoints, '#F97316', 13);
+      this.drawSmoothPolyline(this.lastWrongPoints, '#EA580C', 13);
     }
     if (this.userPoints.length >= 2) {
-      this.drawSmoothPolyline(this.userPoints, '#1E40AF', 14);
+      this.drawSmoothPolyline(this.userPoints, '#4C1D95', 14);
     }
   }
 
@@ -715,7 +715,7 @@ class HandwritingService {
         vy: (Math.random() - 0.5) * 2 - 1,
         size: Math.random() * 5 + 3,
         alpha: 1.0,
-        color: ['#38BDF8', '#818CF8', '#FBBF24', '#34D399'][Math.floor(Math.random() * 4)]
+        color: ['#FF6FAE', '#B388FF', '#FBBF24', '#F472B6'][Math.floor(Math.random() * 4)]
       });
     }
   }

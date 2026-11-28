@@ -93,6 +93,19 @@ class ProgressService {
     return valid;
   }
 
+  getHoldDurationMs() {
+    const val = this.data.settings && Number(this.data.settings.holdDurationMs);
+    return (Number.isFinite(val) && val >= 800 && val <= 2000) ? val : 1200;
+  }
+
+  setHoldDurationMs(ms) {
+    const num = Math.max(800, Math.min(2000, Math.round(Number(ms) || 1200)));
+    this.data.settings = this.data.settings || {};
+    this.data.settings.holdDurationMs = num;
+    this.save();
+    return num;
+  }
+
   normalizeChildName(name) {
     if (!name || typeof name !== 'string') return 'Bé Mây';
     let cleaned = name.trim();

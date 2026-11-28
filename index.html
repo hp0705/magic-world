@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#4CC9F0">
+  <meta name="theme-color" content="#FF6FAE">
   <title>Bé Mây — Vương quốc Băng Giá</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=2026112802">
+  <link rel="stylesheet" href="css/style.css?v=2026112803">
 </head>
 <body>
   <!-- Portrait Phone Rotate Overlay -->
@@ -139,7 +139,7 @@
               <span class="lesson-grid-spacer"></span>
               <div class="letter-title-row lesson-tap-read" id="alphaHeroTap">
                 <span class="letter-hero-text" id="alphabetLower">a</span>
-                <span class="letter-hero-text" style="color:#0284C7;" id="alphabetUpper">A</span>
+                <span class="letter-hero-text" style="color:var(--color-primary-deep);" id="alphabetUpper">A</span>
               </div>
               <button id="btnListenLetter" class="round-speaker-btn" title="Đọc chữ">🔊</button>
             </div>
@@ -277,7 +277,7 @@
           <!-- Top Bar -->
           <div class="quiz-top-bar">
             <button id="quizExitBtn" class="icon-btn">✕</button>
-            <span id="quizProgressTag" style="color:#0284C7;">Câu 1/8</span>
+            <span id="quizProgressTag" style="color:var(--color-primary-deep);">Câu 1/8</span>
             <span id="quizScoreTag" style="color:#15803D;">⭐ Đúng: 0/8</span>
           </div>
 
@@ -320,7 +320,7 @@
             <div class="hw-letter-preview">
               <div id="hwLetterSvgPreview" style="display:flex; justify-content:center; align-items:center; min-height:132px;"></div>
               <p id="hwLetterWord" style="font-size:20px; font-weight:800; color:#1E293B; margin-top:6px;">Ví dụ: áo (🧥)</p>
-              <div style="font-size:12px; font-weight:700; color:#0284C7; margin-top:2px;">Mẫu chữ viết thường lớp 1</div>
+              <div style="font-size:12px; font-weight:700; color:var(--color-primary-deep); margin-top:2px;">Mẫu chữ viết thường lớp 1</div>
             </div>
 
             <!-- Compact icon + short text buttons -->
@@ -379,7 +379,7 @@
         <div class="matching-game-container">
           <div class="matching-top-bar">
             <button id="matchingBackBtn" class="icon-btn">✕</button>
-            <div style="font-size:22px; font-weight:800; color:#0A6FC2;">
+            <div style="font-size:22px; font-weight:800; color:var(--color-primary-deep);">
               🧩 Ghép Đúng: <span id="matchingScoreText">0/4</span> Cặp
             </div>
             <button id="matchingResetBtn" class="action-btn btn-gold" style="min-height:48px; padding:0 18px; font-size:16px;">
@@ -400,7 +400,7 @@
       <section id="screen-exercise" class="screen-view">
         <div class="exercise-hub-container">
           <div class="exercise-hub-header">
-            <h2 style="font-size:28px; color:#0A6FC2; margin:0;">📝 Góc Bài Tập Của Bé Mây</h2>
+            <h2 style="font-size:28px; color:var(--color-primary-deep); margin:0;">📝 Góc Bài Tập Của Bé Mây</h2>
             <p id="exerciseHubSubtitle" style="font-size:18px; font-weight:700; color:#475569; margin:6px 0 0 0;">
               Ngày 1 (2 chữ cái)
             </p>
@@ -426,7 +426,7 @@
       <section id="screen-lesson-list" class="screen-view">
         <div class="list-screen-container">
           <div class="list-screen-header">
-            <h2 id="lessonListTitle" style="font-size:24px; color:#0A6FC2; margin:0;">🌲 Rừng Chữ Lung Linh</h2>
+            <h2 id="lessonListTitle" style="font-size:24px; color:var(--color-primary-deep); margin:0;">🌲 Rừng Chữ Lung Linh</h2>
             <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
               <div id="lessonListModeBar" class="lesson-mode-bar" style="display:none;"></div>
               <span id="lessonListProgressCount" class="list-progress-pill">Đã học 0/29</span>
@@ -440,7 +440,7 @@
       <section id="screen-story-list" class="screen-view">
         <div class="list-screen-container">
           <div class="list-screen-header">
-            <h2 style="font-size:24px; color:#0A6FC2; margin:0;">🌠 Góc Kể Chuyện</h2>
+            <h2 style="font-size:24px; color:var(--color-primary-deep); margin:0;">🌠 Góc Kể Chuyện</h2>
             <span id="storyListProgressCount" class="list-progress-pill">Đã nghe 0/10 bài</span>
           </div>
           <div id="storyListGrid" class="story-list-grid"></div>
@@ -479,7 +479,7 @@
     <div class="victory-card">
       <div class="modal-scroll-body">
         <div style="font-size:clamp(36px, 7vh, 58px);">🎉💎✨</div>
-        <h2 id="gameChoiceTitle" style="font-size:clamp(20px, 3.8vh, 28px); color:#0A6FC2; margin-top:6px;">Bé Đã Đọc Xong Bài Hôm Nay!</h2>
+        <h2 id="gameChoiceTitle" style="font-size:clamp(20px, 3.8vh, 28px); color:var(--color-primary-deep); margin-top:6px;">Bé Đã Đọc Xong Bài Hôm Nay!</h2>
         <p id="gameChoiceSub" style="font-size:clamp(14px, 2.5vh, 18px); font-weight:700; color:#475569; margin:6px 0 12px 0;">Giữ nút bên dưới để chọn bước tiếp theo nhé:</p>
       </div>
       <div class="modal-actions-fixed">
@@ -504,12 +504,12 @@
     <div class="victory-card">
       <div class="modal-scroll-body">
         <div style="font-size:clamp(40px, 8vh, 66px);">🎉❄️👑</div>
-        <h2 id="victoryTitle" style="font-size:clamp(22px, 4vh, 30px); color:#0A6FC2; margin-top:6px;">Bé Tuyệt Vời Quá!</h2>
+        <h2 id="victoryTitle" style="font-size:clamp(22px, 4vh, 30px); color:var(--color-primary-deep); margin-top:6px;">Bé Tuyệt Vời Quá!</h2>
         <div class="victory-stars-row" id="victoryStarsDisplay">⭐⭐⭐</div>
         <p id="victoryScoreText" style="font-size:clamp(15px, 2.6vh, 20px); font-weight:700; color:#334155;">Bé đã hoàn thành xuất sắc!</p>
 
         <div class="victory-sticker-reward" id="victoryStickerBox">
-          <div style="font-size:14px; font-weight:800; color:#0369A1; margin-bottom:4px;">PHẦN THƯỞNG STICKER MỚI:</div>
+          <div style="font-size:14px; font-weight:800; color:var(--color-primary-deep); margin-bottom:4px;">PHẦN THƯỞNG STICKER MỚI:</div>
           <div class="sticker-emoji" id="victoryStickerEmoji">🦄</div>
           <div style="font-weight:800; color:#1E293B;" id="victoryStickerName">Linh thú Lumi</div>
         </div>
@@ -534,7 +534,7 @@
     <div class="day-selector-card">
       <div class="day-selector-header">
         <div>
-          <h2 id="daySelectorTitle" style="color:#0A6FC2; font-size:24px; margin:0;">📅 Chọn Bài Học</h2>
+          <h2 id="daySelectorTitle" style="color:var(--color-primary-deep); font-size:24px; margin:0;">📅 Chọn Bài Học</h2>
           <p id="daySelectorSubtitle" style="color:#64748B; font-size:15px; margin:4px 0 0 0;">Chạm vào bất kỳ bài nào để học ngay</p>
         </div>
         <button id="daySelectorCloseBtn" class="icon-btn" style="font-size:20px; width:44px; height:44px;">✕</button>
@@ -547,7 +547,7 @@
   <div id="parentModal" class="victory-modal-backdrop" style="display:none;">
     <div class="parent-modal parent-modal-wide">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <h2 style="color:#0A6FC2;">⚙️ Góc Phụ Huynh</h2>
+        <h2 style="color:var(--color-primary-deep);">⚙️ Góc Phụ Huynh</h2>
         <button id="parentCloseBtn" class="icon-btn">✕</button>
       </div>
 
@@ -566,6 +566,11 @@
           <option value="medium">Vừa</option>
           <option value="hard">Khó</option>
         </select>
+      </div>
+
+      <div class="parent-form-group">
+        <label for="parentHoldDuration">⏱️ Thời gian giữ nút: <strong id="parentHoldDurationLabel" style="color:var(--color-primary-deep);">1.2 giây</strong></label>
+        <input type="range" id="parentHoldDuration" min="800" max="2000" step="100" value="1200" style="width:100%; accent-color:var(--color-primary);">
       </div>
 
       <!-- Tiến độ học (3 tabs: Chữ Cái / Từ Vựng / Đánh Vần) -->
@@ -600,7 +605,7 @@
   <div id="rimeWordsModal" class="victory-modal-backdrop" style="display:none;">
     <div class="parent-modal rime-words-modal">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <h2 id="rimeWordsModalTitle" style="color:#0A6FC2; margin:0; font-size:20px;">Các từ có vần</h2>
+        <h2 id="rimeWordsModalTitle" style="color:var(--color-primary-deep); margin:0; font-size:20px;">Các từ có vần</h2>
         <button id="rimeWordsCloseBtn" class="icon-btn" type="button">✕</button>
       </div>
       <div id="rimeWordsList" class="rime-words-list"></div>
@@ -611,7 +616,7 @@
   <div id="stickersModal" class="victory-modal-backdrop" style="display:none;">
     <div class="parent-modal">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-        <h2 style="color:#0A6FC2;">👑 Bộ Sưu Tập Sticker</h2>
+        <h2 style="color:var(--color-primary-deep);">👑 Bộ Sưu Tập Sticker</h2>
         <button onclick="document.getElementById('stickersModal').style.display='none'" class="icon-btn">✕</button>
       </div>
 
@@ -633,12 +638,12 @@
   <script src="js/data/audioManifest.js?v=2026112702"></script>
 
   <script src="js/services/audioService.js?v=2026112608"></script>
-  <script src="js/services/progressService.js?v=2026112802"></script>
+  <script src="js/services/progressService.js?v=2026112803"></script>
   <script src="js/services/quizService.js?v=2026112613"></script>
-  <script src="js/services/handwritingService.js?v=2026112802"></script>
+  <script src="js/services/handwritingService.js?v=2026112803"></script>
   <script src="js/services/storyService.js?v=2026112608"></script>
   <script src="js/services/matchingGameService.js?v=2026112613"></script>
 
-  <script src="js/app.js?v=2026112802"></script>
+  <script src="js/app.js?v=2026112803"></script>
 </body>
 </html>

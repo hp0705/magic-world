@@ -18,6 +18,8 @@ class MagicWorldApp {
     this.currentQuizSession = null;
     this.currentExerciseContext = null;
     this.currentLessonListModule = 'alphabet';
+    this.alphabetListMode = 'read';
+    this.hwContext = { mode: 'alphabet', returnScreen: 'alphabet' };
     this.parentProgressTab = 'alphabet';
 
     // Services
@@ -243,9 +245,14 @@ class MagicWorldApp {
     const titleEl = document.getElementById('lessonListTitle');
     const countEl = document.getElementById('lessonListProgressCount');
     const gridEl = document.getElementById('lessonListGrid');
+    const modeBarEl = document.getElementById('lessonListModeBar');
     if (!gridEl) return;
 
     gridEl.innerHTML = '';
+    if (modeBarEl) {
+      modeBarEl.innerHTML = '';
+      modeBarEl.style.display = 'none';
+    }
     const counts = this.getModuleCounts();
     let markedNextUp = false;
 
@@ -272,9 +279,28 @@ class MagicWorldApp {
       if (titleEl) titleEl.textContent = '🌲 Rừng Chữ Lung Linh';
       if (countEl) countEl.textContent = `Đã học ${counts.alphaDone}/${counts.alphaTotal} chữ`;
 
+      if (modeBarEl) {
+        modeBarEl.style.display = 'inline-flex';
+        modeBarEl.innerHTML = `
+          <button type="button" class="lesson-mode-btn ${this.alphabetListMode === 'read' ? 'active' : ''}" data-alpha-mode="read">📖 Học đọc</button>
+          <button type="button" class="lesson-mode-btn ${this.alphabetListMode === 'write' ? 'active' : ''}" data-alpha-mode="write">✍️ Tập viết</button>
+        `;
+        modeBarEl.querySelectorAll('button').forEach(btn => {
+          btn.addEventListener('click', () => {
+            this.audio.playPop();
+            this.alphabetListMode = btn.dataset.alphaMode;
+            this.renderLessonListScreen();
+          });
+        });
+      }
+
+      const isWriteMode = this.alphabetListMode === 'write';
       this.alphabetData.forEach((letter, idx) => {
-        const status = this.progress.getLessonStatus('alphabet', letter.id, 1);
-        const statusLabel = status === 'done' ? '✓ ⭐ Đã học' : '🌱 Chưa học';
+        const isWritten = !!(this.progress.data.letters[letter.id] && this.progress.data.letters[letter.id].written);
+        const status = isWriteMode ? (isWritten ? 'done' : 'todo') : this.progress.getLessonStatus('alphabet', letter.id, 1);
+        const statusLabel = isWriteMode
+          ? (isWritten ? '✓ ⭐ Đã viết' : '✍️ Tập viết')
+          : (status === 'done' ? '✓ ⭐ Đã học' : '🌱 Chưa học');
         createTile(
           `${letter.lower} ${letter.upper}`,
           `${this.renderEmojiHtml(letter.emoji)} ${letter.word}`,
@@ -282,13 +308,35 @@ class MagicWorldApp {
           statusLabel,
           () => {
             this.alphabetIndex = idx;
-            this.showScreen('alphabet');
+            if (isWriteMode) {
+              this.hwContext = { mode: 'alphabet-direct', returnScreen: 'lesson-list' };
+              this.showScreen('handwriting');
+            } else {
+              this.showScreen('alphabet');
+            }
           }
         );
       });
     } else if (mod === 'vocab') {
       if (titleEl) titleEl.textContent = '🏞️ Thung Lũng Từ Vựng';
       if (countEl) countEl.textContent = `Đã học ${counts.vocabDone}/${counts.vocabTotal} ngày`;
+
+      if (modeBarEl) {
+        modeBarEl.style.display = 'inline-flex';
+        modeBarEl.innerHTML = `
+          <button type="button" class="lesson-mode-btn active" id="vocabListReadJumpBtn">📖 Học đọc</button>
+          <button type="button" class="lesson-mode-btn" id="vocabListWriteJumpBtn">✍️ Tập viết từ vựng</button>
+        `;
+        document.getElementById('vocabListReadJumpBtn')?.addEventListener('click', () => {
+          this.audio.playPop();
+          gridEl.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        document.getElementById('vocabListWriteJumpBtn')?.addEventListener('click', () => {
+          this.audio.playPop();
+          const sec = document.getElementById('vocabWriteSectionDivider');
+          if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      }
 
       const days = Object.keys(this.vocabDaysData).map(k => parseInt(k, 10)).sort((a, b) => a - b);
       days.forEach(day => {
@@ -311,6 +359,34 @@ class MagicWorldApp {
             this.vocabWordIndex = 0;
             this.showScreen('vocab');
           }
+        );
+      });
+
+      // Section "✍️ Tập viết từ vựng" inside the same list
+      const divider = document.createElement('div');
+      divider.id = 'vocabWriteSectionDivider';
+      divider.className = 'lesson-section-divider';
+      divider.innerHTML = '<span>✍️ Tập viết từ vựng (viết từng chữ cái)</span><span style="font-size:13px; font-weight:700;">Chọn bài để tập viết</span>';
+      gridEl.appendChild(divider);
+
+      days.forEach(day => {
+        const words = this.vocabDaysData[day] || [];
+        const firstW = words[0] || {};
+        const writtenList = this.progress.getVocabDayWriteProgress(day);
+        const writtenCount = writtenList.length;
+        const status = writtenCount >= words.length && words.length > 0
+          ? 'done'
+          : (writtenCount > 0 ? 'in_progress' : 'todo');
+        const statusLabel = status === 'done'
+          ? '✓ ⭐ Đã viết'
+          : (status === 'in_progress' ? `✍️ ${writtenCount}/${words.length}` : '✍️ Tập viết');
+
+        createTile(
+          `Viết Ngày ${day}`,
+          firstW.group || firstW.topic || `${words.length} từ`,
+          status,
+          statusLabel,
+          () => this.startVocabWordWriting(day, 0, 0)
         );
       });
     } else if (mod === 'spelling') {
@@ -578,6 +654,7 @@ class MagicWorldApp {
     document.getElementById('spellingEmoji').innerHTML = this.renderEmojiHtml(currentWord.emoji);
     document.getElementById('spellingText').textContent = currentWord.text;
     document.getElementById('spellingSentence').textContent = this.audio ? this.audio.replaceTokens(currentWord.example) : currentWord.example;
+    this.renderSpellingRimeBar(currentWord);
 
     // Render 3-Group Karaoke Chips
     const chipsContainer = document.getElementById('spellingChipsContainer');
@@ -614,6 +691,120 @@ class MagicWorldApp {
     if (this.audio) {
       this.audio.speak(currentWord.text);
     }
+  }
+
+  renderSpellingRimeBar(currentWord) {
+    const bar = document.getElementById('spellingRimeBar');
+    if (!bar || !currentWord) return;
+    bar.innerHTML = '';
+
+    const rime = currentWord.rime || '';
+    const g1Chips = (currentWord.chips || []).filter(c => c.group === 1);
+    const chipTexts = (rime.length >= 2 && g1Chips.length > 0)
+      ? g1Chips.map(c => c.text)
+      : (rime ? [rime] : []);
+
+    if (chipTexts.length === 0) {
+      bar.style.display = 'none';
+      return;
+    }
+    bar.style.display = 'inline-flex';
+
+    const chipsWrap = document.createElement('div');
+    chipsWrap.className = 'rime-chips-mini';
+    chipTexts.forEach((txt, idx) => {
+      if (idx > 0) {
+        const sep = document.createElement('span');
+        sep.className = 'rime-chip-sep';
+        sep.textContent = '–';
+        chipsWrap.appendChild(sep);
+      }
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      const isFinal = (idx === chipTexts.length - 1);
+      btn.className = `spell-chip-sm ${isFinal ? 'rime-final' : ''}`;
+      btn.textContent = txt;
+      btn.addEventListener('click', () => this.speakWithBtn(null, txt));
+      chipsWrap.appendChild(btn);
+    });
+    bar.appendChild(chipsWrap);
+
+    const spkBtn = document.createElement('button');
+    spkBtn.type = 'button';
+    spkBtn.id = 'btnReadRimeBox';
+    spkBtn.className = 'rime-speaker-sm';
+    spkBtn.title = `Đọc vần ${rime}`;
+    spkBtn.textContent = '🔊';
+    spkBtn.addEventListener('click', async () => {
+      if (!this.audio) return;
+      for (const part of chipTexts) {
+        await this.audio.speak(part);
+      }
+    });
+    bar.appendChild(spkBtn);
+
+    const otherBtn = document.createElement('button');
+    otherBtn.type = 'button';
+    otherBtn.id = 'btnOtherRimeWords';
+    otherBtn.className = 'rime-other-btn';
+    otherBtn.innerHTML = '☰ Từ khác';
+    otherBtn.addEventListener('click', () => {
+      this.audio.playPop();
+      this.openRimeWordsModal(rime);
+    });
+    bar.appendChild(otherBtn);
+  }
+
+  openRimeWordsModal(rime) {
+    const modal = document.getElementById('rimeWordsModal');
+    const titleEl = document.getElementById('rimeWordsModalTitle');
+    const listEl = document.getElementById('rimeWordsList');
+    if (!modal || !listEl) return;
+
+    if (titleEl) titleEl.textContent = `Các từ có vần "${rime}"`;
+    listEl.innerHTML = '';
+
+    const matches = [];
+    this.spellingDaysData.forEach(d => {
+      (d.words || []).forEach(w => {
+        if (w.rime === rime) matches.push(w);
+      });
+    });
+
+    matches.forEach(w => {
+      const row = document.createElement('div');
+      row.className = 'rime-word-row';
+      const spellStr = (w.spellingRead || '').replace(/\s*\|\s*/g, ' → ');
+      row.innerHTML = `
+        <div class="rime-word-row-left">
+          <span class="rime-word-emoji">${w.emoji && w.emoji !== '✨' ? this.renderEmojiHtml(w.emoji) : ''}</span>
+          <div>
+            <div class="rime-word-text">${w.text}</div>
+            <div class="rime-word-spell">${spellStr}</div>
+          </div>
+        </div>
+        <button type="button" class="rime-speaker-sm" title="Đọc từ và cách đánh vần">🔊</button>
+      `;
+      const spk = row.querySelector('button');
+      spk.addEventListener('click', async () => {
+        if (!this.audio) return;
+        await this.audio.speak(w.text);
+        if (w.spellingRead) {
+          const parts = w.spellingRead.split('|').map(p => p.trim()).filter(Boolean);
+          for (const p of parts) {
+            await this.audio.speak(p);
+          }
+        }
+      });
+      listEl.appendChild(row);
+    });
+
+    modal.style.display = 'flex';
+  }
+
+  closeRimeWordsModal() {
+    const modal = document.getElementById('rimeWordsModal');
+    if (modal) modal.style.display = 'none';
   }
 
   stopAllAudioIndicators() {
@@ -917,11 +1108,51 @@ class MagicWorldApp {
     this.showScreen('world-map');
   }
 
+  startVocabWordWriting(day, wordIndex = 0, letterIndex = 0) {
+    const words = this.vocabDaysData[day] || [];
+    if (!words.length) return;
+    const word = words[wordIndex] || words[0];
+    const decompose = window.MagicWorld.HandwritingGrade && window.MagicWorld.HandwritingGrade.decomposeVietnameseWord;
+    const charSpecs = decompose ? decompose(word.text) : [];
+    if (!charSpecs.length) return;
+
+    this.hwContext = {
+      mode: 'vocab-word',
+      day,
+      words,
+      wordIndex,
+      letterIndex: Math.min(letterIndex, charSpecs.length - 1),
+      charSpecs,
+      returnScreen: 'lesson-list'
+    };
+    this.showScreen('handwriting');
+  }
+
   // --- HANDWRITING SCREEN ---
   renderHandwritingScreen() {
-    const letter = this.alphabetData[this.alphabetIndex] || this.alphabetData[0];
+    const isVocabWord = this.hwContext && this.hwContext.mode === 'vocab-word';
+    let strokeKey = 'a';
+    let customStrokes = null;
     const wordEl = document.getElementById('hwLetterWord');
-    if (wordEl) wordEl.innerHTML = `Ví dụ: ${letter.word} (${this.renderEmojiHtml(letter.emoji)})`;
+
+    if (isVocabWord) {
+      const ctx = this.hwContext;
+      const word = ctx.words[ctx.wordIndex];
+      const spec = ctx.charSpecs[ctx.letterIndex] || ctx.charSpecs[0];
+      strokeKey = spec.strokeKey;
+      customStrokes = spec.strokes;
+
+      if (wordEl && word) {
+        const charsHtml = ctx.charSpecs.map((c, idx) =>
+          `<span class="hw-word-char ${idx === ctx.letterIndex ? 'active' : ''}">${c.char}</span>`
+        ).join('');
+        wordEl.innerHTML = `Từ: ${charsHtml} (${this.renderEmojiHtml(word.emoji)}) <span style="font-size:13px; color:#0284C7;">(${ctx.wordIndex + 1}/${ctx.words.length})</span>`;
+      }
+    } else {
+      const letter = this.alphabetData[this.alphabetIndex] || this.alphabetData[0];
+      strokeKey = letter.id;
+      if (wordEl) wordEl.innerHTML = `Ví dụ: ${letter.word} (${this.renderEmojiHtml(letter.emoji)})`;
+    }
 
     // Hide "Đã viết xong" until all strokes are traced
     this.onHandwritingReset();
@@ -930,7 +1161,7 @@ class MagicWorldApp {
     const svgContainer = document.getElementById('hwLetterSvgPreview');
     if (svgContainer) {
       const strokesData = window.MagicWorld.Strokes || {};
-      const guides = strokesData[letter.id] || strokesData['a'] || [];
+      const guides = customStrokes || strokesData[strokeKey] || strokesData['a'] || [];
       const pathsHtml = guides.map(st => `<path d="${st.d}" fill="none" stroke="#2563EB" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />`).join('');
       svgContainer.innerHTML = `
         <svg viewBox="0 0 100 160" width="112" height="148" style="background:#FAFDFE; border-radius:14px; border:1.5px solid #BAE6FD; box-shadow:inset 0 1px 4px rgba(0,0,0,0.05);">
@@ -947,7 +1178,7 @@ class MagicWorldApp {
     requestAnimationFrame(() => {
       if (this.handwriting) {
         this.handwriting.setupResolution();
-        this.handwriting.loadLetter(letter.id);
+        this.handwriting.loadLetter(strokeKey, customStrokes);
       }
     });
   }
@@ -959,15 +1190,19 @@ class MagicWorldApp {
     }
   }
 
-  onHandwritingCompleted() {
-    const letter = this.alphabetData[this.alphabetIndex];
-    if (letter) {
-      this.progress.markLetterWritten(letter.id);
+  onHandwritingCompleted(stars = 3) {
+    if (!this.hwContext || this.hwContext.mode !== 'vocab-word') {
+      const letter = this.alphabetData[this.alphabetIndex];
+      if (letter) {
+        this.progress.markLetterWritten(letter.id);
+      }
     }
     this.showRandomPraise();
-    // Auto-reveal celebratory "✓ Đã viết xong" button
+    // Auto-reveal celebratory "✓ Đã viết xong" button with 1-3 star rating
     const doneBtn = document.getElementById('hwSkipBtn');
     if (doneBtn) {
+      const starStr = '⭐'.repeat(Math.max(1, Math.min(3, stars || 1)));
+      doneBtn.textContent = `✓ Đã viết xong ${starStr}`;
       doneBtn.style.display = 'flex';
     }
   }
@@ -1529,7 +1764,10 @@ class MagicWorldApp {
     document.getElementById('alphabetSentenceBox')?.addEventListener('click', readAlphaSentence);
 
     // Hold 1s (HOLD_ACTION_MS): Tập viết, Con đã đọc ✓, ◀ ▶
-    this.HoldButton(document.getElementById('btnWriteLetter'), HOLD_ACTION_MS, () => this.showScreen('handwriting'));
+    this.HoldButton(document.getElementById('btnWriteLetter'), HOLD_ACTION_MS, () => {
+      this.hwContext = { mode: 'alphabet', returnScreen: 'alphabet' };
+      this.showScreen('handwriting');
+    });
     this.HoldButton(document.getElementById('btnAlphabetDone'), HOLD_ACTION_MS, () => this.onAlphabetReadConfirmed());
     this.HoldButton(document.getElementById('alphaPrevBtn'), HOLD_ACTION_MS, () => this.prevLetter());
     this.HoldButton(document.getElementById('alphaNextBtn'), HOLD_ACTION_MS, () => this.nextLetter());
@@ -1633,10 +1871,41 @@ class MagicWorldApp {
     // Xóa lại, Quay lại, Đã viết xong: Hold 1s (HOLD_ACTION_MS)
     this.HoldButton(document.getElementById('hwClearBtn'), HOLD_ACTION_MS, () => this.handwriting.clear());
     this.HoldButton(document.getElementById('hwSkipBtn'), HOLD_ACTION_MS, () => {
+      const ctx = this.hwContext || { mode: 'alphabet', returnScreen: 'alphabet' };
+      if (ctx.mode === 'vocab-word') {
+        if (ctx.letterIndex < ctx.charSpecs.length - 1) {
+          ctx.letterIndex++;
+          this.renderHandwritingScreen();
+          return;
+        }
+        const finishedWord = ctx.words[ctx.wordIndex];
+        if (finishedWord) {
+          this.progress.markVocabWordWritten(ctx.day, finishedWord.id);
+        }
+        if (ctx.wordIndex < ctx.words.length - 1) {
+          this.startVocabWordWriting(ctx.day, ctx.wordIndex + 1, 0);
+          return;
+        }
+        this.showHoldHint(`🎉 Bé đã viết xong hết từ Ngày ${ctx.day}!`);
+        this.showScreen('lesson-list');
+        return;
+      }
+      if (ctx.mode === 'alphabet-direct') {
+        if (this.alphabetIndex < this.alphabetData.length - 1) {
+          this.alphabetIndex++;
+          this.renderHandwritingScreen();
+          return;
+        }
+        this.showScreen('lesson-list');
+        return;
+      }
       this.handwriting.skip();
       this.showScreen('alphabet');
     });
-    this.HoldButton(document.getElementById('hwBackBtn'), HOLD_ACTION_MS, () => this.showScreen('alphabet'));
+    this.HoldButton(document.getElementById('hwBackBtn'), HOLD_ACTION_MS, () => {
+      const ret = (this.hwContext && this.hwContext.returnScreen) || 'alphabet';
+      this.showScreen(ret);
+    });
 
     // Story Controls (Back to Story List uses 3s hold)
     this.HoldButton(document.getElementById('storyCloseBtn'), HOLD_BACK_MS, () => {
@@ -1658,6 +1927,10 @@ class MagicWorldApp {
 
     // Parent Modal handlers
     document.getElementById('parentCloseBtn').addEventListener('click', () => this.closeParentModal());
+    document.getElementById('rimeWordsCloseBtn')?.addEventListener('click', () => this.closeRimeWordsModal());
+    document.getElementById('rimeWordsModal')?.addEventListener('click', (e) => {
+      if (e.target && e.target.id === 'rimeWordsModal') this.closeRimeWordsModal();
+    });
     document.getElementById('parentSaveBtn').addEventListener('click', () => this.saveParentSettings());
     this.HoldButton(document.getElementById('parentResetBtn'), HOLD_BACK_MS, () => {
       if (confirm('Bạn có chắc chắn muốn đặt lại toàn bộ tiến độ không?')) {
@@ -1808,7 +2081,7 @@ class MagicWorldApp {
 
     if (moduleType === 'vocab') {
       titleEl.textContent = '📅 Thung Lũng Từ Vựng — 38 Ngày Học';
-      subEl.textContent = 'Chạm vào ngày bất kỳ để cùng Bé Mây học 8 từ vựng mới';
+      subEl.textContent = 'Chạm vào ngày bất kỳ để cùng Bé Mây học các từ vựng mới';
 
       const daysList = Object.keys(this.vocabDaysData).map(k => parseInt(k, 10)).sort((a, b) => a - b);
       daysList.forEach(day => {
@@ -1838,7 +2111,7 @@ class MagicWorldApp {
         gridEl.appendChild(card);
       });
     } else if (moduleType === 'spelling') {
-      titleEl.textContent = '🏰 Lâu Đài Đánh Vần — 15 Ngày Học';
+      titleEl.textContent = '🏰 Lâu Đài Đánh Vần — 21 Ngày Học';
       subEl.textContent = 'Chạm vào ngày bất kỳ để cùng Bé Mây ghép vần diệu kỳ';
 
       this.spellingDaysData.forEach(d => {

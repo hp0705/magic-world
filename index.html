@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=2026112616">
+  <link rel="stylesheet" href="css/style.css?v=2026112802">
 </head>
 <body>
   <!-- Portrait Phone Rotate Overlay -->
@@ -82,10 +82,10 @@
             <div class="zone-card" data-target="spelling">
               <div class="zone-icon">🏰✨</div>
               <div class="zone-title">Lâu Đài Đánh Vần</div>
-              <div class="zone-sub">15 Ngày (120 Nhóm Vần)</div>
+              <div class="zone-sub">21 Ngày (121 Từ Đánh Vần)</div>
               <div class="zone-progress-wrap">
                 <div class="zone-progress-track"><div class="zone-progress-fill" id="mapProgressSpellingBar" style="width:0%"></div></div>
-                <div class="zone-progress-text" id="mapProgressSpellingText">Đã học 0/15 ngày</div>
+                <div class="zone-progress-text" id="mapProgressSpellingText">Đã học 0/21 ngày</div>
               </div>
               <button class="zone-btn">Chọn bài ▶</button>
             </div>
@@ -232,7 +232,8 @@
 
           <!-- Right Content -->
           <div class="lesson-content-pane">
-            <div class="lesson-top-bar lesson-top-bar-end">
+            <div class="lesson-top-bar spelling-top-bar">
+              <div class="rime-study-bar" id="spellingRimeBar"></div>
               <div class="crystals-bar" id="spellingCrystals"></div>
             </div>
 
@@ -409,7 +410,7 @@
             <button id="exQuizBtn" class="exercise-card-btn">
               <div class="exercise-card-icon">🎯</div>
               <div class="exercise-card-title">Đọc Chữ Chọn Hình</div>
-              <div class="exercise-card-sub">Bé tự đọc 8 từ vừa học và chọn hình đúng</div>
+              <div class="exercise-card-sub">Bé tự đọc các từ vừa học và chọn hình đúng</div>
             </button>
 
             <button id="exMatchingBtn" class="exercise-card-btn exercise-card-purple">
@@ -426,7 +427,10 @@
         <div class="list-screen-container">
           <div class="list-screen-header">
             <h2 id="lessonListTitle" style="font-size:24px; color:#0A6FC2; margin:0;">🌲 Rừng Chữ Lung Linh</h2>
-            <span id="lessonListProgressCount" class="list-progress-pill">Đã học 0/29</span>
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <div id="lessonListModeBar" class="lesson-mode-bar" style="display:none;"></div>
+              <span id="lessonListProgressCount" class="list-progress-pill">Đã học 0/29</span>
+            </div>
           </div>
           <div id="lessonListGrid" class="lesson-list-grid"></div>
         </div>
@@ -592,6 +596,17 @@
     </div>
   </div>
 
+  <!-- RIME OTHER WORDS POPUP MODAL -->
+  <div id="rimeWordsModal" class="victory-modal-backdrop" style="display:none;">
+    <div class="parent-modal rime-words-modal">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h2 id="rimeWordsModalTitle" style="color:#0A6FC2; margin:0; font-size:20px;">Các từ có vần</h2>
+        <button id="rimeWordsCloseBtn" class="icon-btn" type="button">✕</button>
+      </div>
+      <div id="rimeWordsList" class="rime-words-list"></div>
+    </div>
+  </div>
+
   <!-- STICKERS MODAL -->
   <div id="stickersModal" class="victory-modal-backdrop" style="display:none;">
     <div class="parent-modal">
@@ -611,19 +626,19 @@
   <script src="js/data/emojiMap.js?v=2026112614"></script>
   <script src="js/data/alphabet.js?v=2026112617"></script>
   <script src="js/data/vocab.js?v=2026112617"></script>
-  <script src="js/data/spelling.js?v=2026112616"></script>
+  <script src="js/data/spelling.js?v=2026112802"></script>
   <script src="js/data/feedback.js?v=2026112608"></script>
   <script src="js/data/stories.js?v=2026112608"></script>
   <script src="js/data/strokes.js?v=2026112608"></script>
   <script src="js/data/audioManifest.js?v=2026112702"></script>
 
   <script src="js/services/audioService.js?v=2026112608"></script>
-  <script src="js/services/progressService.js?v=2026112615"></script>
+  <script src="js/services/progressService.js?v=2026112802"></script>
   <script src="js/services/quizService.js?v=2026112613"></script>
-  <script src="js/services/handwritingService.js?v=2026112612"></script>
+  <script src="js/services/handwritingService.js?v=2026112802"></script>
   <script src="js/services/storyService.js?v=2026112608"></script>
   <script src="js/services/matchingGameService.js?v=2026112613"></script>
 
-  <script src="js/app.js?v=2026112617"></script>
+  <script src="js/app.js?v=2026112802"></script>
 </body>
 </html>

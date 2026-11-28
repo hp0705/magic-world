@@ -1,20 +1,10 @@
-// Magic World Vietnamese Spelling Data (15 Days - 121 Core Phonetic Patterns)
+// Magic World Vietnamese Spelling Data (21 Days - 121 Core Phonetic Patterns, 6 words/day)
 window.MagicWorld = window.MagicWorld || {};
+
 window.MagicWorld.SpellingDays = [
   {
     "day": 1,
-    "title": "Nhóm vần mở",
-    "rimeIntro": [
-      "a",
-      "e",
-      "ê",
-      "i",
-      "o",
-      "ô",
-      "ơ",
-      "u",
-      "ư"
-    ],
+    "title": "Vần đơn (a, e, ê, i, o, ô)",
     "words": [
       {
         "id": "spell_d1_1",
@@ -225,11 +215,17 @@ window.MagicWorld.SpellingDays = [
             "group": 2
           }
         ]
-      },
+      }
+    ]
+  },
+  {
+    "day": 2,
+    "title": "Vần 2 chữ (ơ, u, ư, ai, oi, ôi)",
+    "words": [
       {
         "id": "spell_d1_7",
         "day": 1,
-        "order": 7,
+        "order": 1,
         "text": "bơ",
         "rime": "ơ",
         "initial": "b",
@@ -259,7 +255,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d1_mu",
         "day": 1,
-        "order": 8,
+        "order": 2,
         "text": "mũ",
         "rime": "u",
         "initial": "m",
@@ -299,7 +295,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d1_8",
         "day": 1,
-        "order": 9,
+        "order": 3,
         "text": "thư",
         "rime": "ư",
         "initial": "th",
@@ -325,27 +321,11 @@ window.MagicWorld.SpellingDays = [
             "group": 1
           }
         ]
-      }
-    ]
-  },
-  {
-    "day": 2,
-    "title": "Nhóm âm cuối -i",
-    "rimeIntro": [
-      "ai",
-      "oi",
-      "ôi",
-      "ơi",
-      "ui",
-      "ưi",
-      "uôi",
-      "ươi"
-    ],
-    "words": [
+      },
       {
         "id": "spell_d2_1",
         "day": 2,
-        "order": 1,
+        "order": 4,
         "text": "tai",
         "rime": "ai",
         "initial": "t",
@@ -390,7 +370,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d2_2",
         "day": 2,
-        "order": 2,
+        "order": 5,
         "text": "voi",
         "rime": "oi",
         "initial": "v",
@@ -435,7 +415,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d2_3",
         "day": 2,
-        "order": 3,
+        "order": 6,
         "text": "môi",
         "rime": "ôi",
         "initial": "m",
@@ -476,11 +456,17 @@ window.MagicWorld.SpellingDays = [
             "group": 2
           }
         ]
-      },
+      }
+    ]
+  },
+  {
+    "day": 3,
+    "title": "Vần 2 chữ (ơi, ui, ưi, ay, ây)",
+    "words": [
       {
         "id": "spell_d2_4",
         "day": 2,
-        "order": 4,
+        "order": 1,
         "text": "trời",
         "rime": "ơi",
         "initial": "tr",
@@ -535,7 +521,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d2_5",
         "day": 2,
-        "order": 5,
+        "order": 2,
         "text": "mũi",
         "rime": "ui",
         "initial": "m",
@@ -590,7 +576,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d2_6",
         "day": 2,
-        "order": 6,
+        "order": 3,
         "text": "gửi",
         "rime": "ưi",
         "initial": "g",
@@ -643,141 +629,9 @@ window.MagicWorld.SpellingDays = [
         ]
       },
       {
-        "id": "spell_d2_7",
-        "day": 2,
-        "order": 7,
-        "text": "chuối",
-        "rime": "uôi",
-        "initial": "ch",
-        "tone": "sắc",
-        "spellingRead": "u - ô - i - uôi | chờ - uôi - chuôi | sắc - chuối",
-        "example": "Bé Mây ăn quả chuối chín.",
-        "emoji": "🍌",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "u",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ô",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "i",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "uôi",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "chờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "uôi",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "chuôi",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "chuối",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d2_8",
-        "day": 2,
-        "order": 8,
-        "text": "cười",
-        "rime": "ươi",
-        "initial": "c",
-        "tone": "huyền",
-        "spellingRead": "ư - ơ - i - ươi | cờ - ươi - cươi | huyền - cười",
-        "example": "Bé Mây cười vang thật vui.",
-        "emoji": "😄",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ư",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ơ",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "i",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ươi",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "cờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ươi",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "cươi",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "huyền",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "cười",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "day": 3,
-    "title": "Nhóm âm cuối -y & -o",
-    "rimeIntro": [
-      "ay",
-      "ây",
-      "ao",
-      "eo"
-    ],
-    "words": [
-      {
         "id": "spell_d3_1",
         "day": 3,
-        "order": 1,
+        "order": 4,
         "text": "tay",
         "rime": "ay",
         "initial": "t",
@@ -822,7 +676,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d3_2",
         "day": 3,
-        "order": 2,
+        "order": 5,
         "text": "bay",
         "rime": "ay",
         "initial": "b",
@@ -867,7 +721,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d3_3",
         "day": 3,
-        "order": 3,
+        "order": 6,
         "text": "cây",
         "rime": "ây",
         "initial": "c",
@@ -908,11 +762,17 @@ window.MagicWorld.SpellingDays = [
             "group": 2
           }
         ]
-      },
+      }
+    ]
+  },
+  {
+    "day": 4,
+    "title": "Vần 2 chữ (ây, ao, eo, au)",
+    "words": [
       {
         "id": "spell_d3_4",
         "day": 3,
-        "order": 4,
+        "order": 1,
         "text": "mây",
         "rime": "ây",
         "initial": "m",
@@ -957,7 +817,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d3_5",
         "day": 3,
-        "order": 5,
+        "order": 2,
         "text": "áo",
         "rime": "ao",
         "initial": "",
@@ -997,7 +857,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d3_6",
         "day": 3,
-        "order": 6,
+        "order": 3,
         "text": "bão",
         "rime": "ao",
         "initial": "b",
@@ -1052,7 +912,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d3_7",
         "day": 3,
-        "order": 7,
+        "order": 4,
         "text": "mèo",
         "rime": "eo",
         "initial": "m",
@@ -1107,7 +967,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d3_8",
         "day": 3,
-        "order": 8,
+        "order": 5,
         "text": "kẹo",
         "rime": "eo",
         "initial": "k",
@@ -1158,26 +1018,11 @@ window.MagicWorld.SpellingDays = [
             "group": 3
           }
         ]
-      }
-    ]
-  },
-  {
-    "day": 4,
-    "title": "Nhóm âm cuối -u",
-    "rimeIntro": [
-      "au",
-      "âu",
-      "êu",
-      "iu",
-      "iêu",
-      "ưu",
-      "ươu"
-    ],
-    "words": [
+      },
       {
         "id": "spell_d4_1",
         "day": 4,
-        "order": 1,
+        "order": 6,
         "text": "rau",
         "rime": "au",
         "initial": "r",
@@ -1218,11 +1063,17 @@ window.MagicWorld.SpellingDays = [
             "group": 2
           }
         ]
-      },
+      }
+    ]
+  },
+  {
+    "day": 5,
+    "title": "Vần 2 chữ (âu, êu, iu, ưu, ia)",
+    "words": [
       {
         "id": "spell_d4_2",
         "day": 4,
-        "order": 2,
+        "order": 1,
         "text": "gấu",
         "rime": "âu",
         "initial": "g",
@@ -1277,7 +1128,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d4_3",
         "day": 4,
-        "order": 3,
+        "order": 2,
         "text": "dâu",
         "rime": "âu",
         "initial": "d",
@@ -1322,7 +1173,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d4_4",
         "day": 4,
-        "order": 4,
+        "order": 3,
         "text": "lều",
         "rime": "êu",
         "initial": "l",
@@ -1377,7 +1228,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d4_5",
         "day": 4,
-        "order": 5,
+        "order": 4,
         "text": "rìu",
         "rime": "iu",
         "initial": "r",
@@ -1430,69 +1281,9 @@ window.MagicWorld.SpellingDays = [
         ]
       },
       {
-        "id": "spell_d4_6",
-        "day": 4,
-        "order": 6,
-        "text": "diều",
-        "rime": "iêu",
-        "initial": "d",
-        "tone": "huyền",
-        "spellingRead": "i - ê - u - iêu | dờ - iêu - diêu | huyền - diều",
-        "example": "Bé Mây thả cánh diều bay.",
-        "emoji": "🪁",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "i",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ê",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "u",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "iêu",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "dờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "iêu",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "diêu",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "huyền",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "diều",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
         "id": "spell_d4_7",
         "day": 4,
-        "order": 7,
+        "order": 5,
         "text": "cừu",
         "rime": "ưu",
         "initial": "c",
@@ -1545,16 +1336,287 @@ window.MagicWorld.SpellingDays = [
         ]
       },
       {
-        "id": "spell_d4_8",
-        "day": 4,
-        "order": 8,
-        "text": "hươu",
-        "rime": "ươu",
-        "initial": "h",
+        "id": "spell_d12_1",
+        "day": 12,
+        "order": 6,
+        "text": "thìa",
+        "rime": "ia",
+        "initial": "th",
+        "tone": "huyền",
+        "spellingRead": "i - a - ia | thờ - ia - thia | huyền - thìa",
+        "example": "Bé Mây cầm thìa xúc cơm giỏi quá.",
+        "emoji": "🥄",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "i",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "a",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ia",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "thờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ia",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "thia",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "huyền",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "thìa",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "day": 6,
+    "title": "Vần 2 chữ (ia, ua, ưa)",
+    "words": [
+      {
+        "id": "spell_d12_3",
+        "day": 12,
+        "order": 1,
+        "text": "mía",
+        "rime": "ia",
+        "initial": "m",
+        "tone": "sắc",
+        "spellingRead": "i - a - ia | mờ - ia - mia | sắc - mía",
+        "example": "Bé Mây thấy cây mía ngọt.",
+        "emoji": "assets/emojis/mia.svg",
+        "quiz": false,
+        "chips": [
+          {
+            "text": "i",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "a",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ia",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "mờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ia",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "mia",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "mía",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d12_5",
+        "day": 12,
+        "order": 2,
+        "text": "cua",
+        "rime": "ua",
+        "initial": "c",
         "tone": "ngang",
-        "spellingRead": "ư - ơ - u - ươu | hờ - ươu - hươu",
-        "example": "Chú hươu cao cổ ăn lá non.",
-        "emoji": "🦒",
+        "spellingRead": "u - a - ua | cờ - ua - cua",
+        "example": "Bé Mây thấy chú cua bò ngang trên cát.",
+        "emoji": "assets/emojis/mia.svg",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "u",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "a",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ua",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "cờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ua",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "cua",
+            "role": "word",
+            "group": 2
+          }
+        ]
+      },
+      {
+        "id": "spell_d12_4",
+        "day": 12,
+        "order": 3,
+        "text": "rùa",
+        "rime": "ua",
+        "initial": "r",
+        "tone": "huyền",
+        "spellingRead": "u - a - ua | rờ - ua - rua | huyền - rùa",
+        "example": "Chú rùa bò chậm, Bé Mây đi chầm chậm theo.",
+        "emoji": "🐢",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "u",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "a",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ua",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "rờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ua",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "rua",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "huyền",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "rùa",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d12_6",
+        "day": 12,
+        "order": 4,
+        "text": "đũa",
+        "rime": "ua",
+        "initial": "đ",
+        "tone": "ngã",
+        "spellingRead": "u - a - ua | đờ - ua - đũa",
+        "example": "Bé Mây tập cầm đũa gắp cơm.",
+        "emoji": "🥢",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "u",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "a",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ua",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "đờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ua",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "đua",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ngã",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "đũa",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d12_2",
+        "day": 12,
+        "order": 5,
+        "text": "mưa",
+        "rime": "ưa",
+        "initial": "m",
+        "tone": "ngang",
+        "spellingRead": "ư - a - ưa | mờ - ưa - mưa",
+        "example": "Bé Mây nghe tiếng mưa rơi.",
+        "emoji": "🌧️",
         "quiz": true,
         "chips": [
           {
@@ -1563,17 +1625,173 @@ window.MagicWorld.SpellingDays = [
             "group": 1
           },
           {
-            "text": "ơ",
+            "text": "a",
             "role": "rime",
             "group": 1
           },
           {
-            "text": "u",
+            "text": "ưa",
             "role": "rime",
             "group": 1
           },
           {
-            "text": "ươu",
+            "text": "mờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ưa",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "mưa",
+            "role": "word",
+            "group": 2
+          }
+        ]
+      },
+      {
+        "id": "spell_d12_7",
+        "day": 12,
+        "order": 6,
+        "text": "dừa",
+        "rime": "ưa",
+        "initial": "d",
+        "tone": "huyền",
+        "spellingRead": "ư - a - ưa | dờ - ưa - dưa | huyền - dừa",
+        "example": "Bé Mây uống nước quả dừa.",
+        "emoji": "🥥",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ư",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "a",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ưa",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "dờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ưa",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "dưa",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "huyền",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "dừa",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "day": 7,
+    "title": "Vần 2 chữ (ưa, oa, oe)",
+    "words": [
+      {
+        "id": "spell_d12_8",
+        "day": 12,
+        "order": 1,
+        "text": "ngựa",
+        "rime": "ưa",
+        "initial": "ng",
+        "tone": "nặng",
+        "spellingRead": "ư - a - ưa | ngờ - ưa - ngưa | nặng - ngựa",
+        "example": "Bé Mây nhìn chú ngựa chạy nhanh.",
+        "emoji": "🐴",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ư",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "a",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ưa",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ngờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ưa",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "ngưa",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "nặng",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "ngựa",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d13_1",
+        "day": 13,
+        "order": 2,
+        "text": "hoa",
+        "rime": "oa",
+        "initial": "h",
+        "tone": "ngang",
+        "spellingRead": "o - a - oa | hờ - oa - hoa",
+        "example": "Bé Mây tưới bông hoa xinh.",
+        "emoji": "🌸",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "o",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "a",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "oa",
             "role": "rime",
             "group": 1
           },
@@ -1583,37 +1801,382 @@ window.MagicWorld.SpellingDays = [
             "group": 2
           },
           {
-            "text": "ươu",
+            "text": "oa",
             "role": "rime",
             "group": 2
           },
           {
-            "text": "hươu",
+            "text": "hoa",
             "role": "word",
             "group": 2
+          }
+        ]
+      },
+      {
+        "id": "spell_d13_2",
+        "day": 13,
+        "order": 3,
+        "text": "loa",
+        "rime": "oa",
+        "initial": "l",
+        "tone": "ngang",
+        "spellingRead": "o - a - oa | lờ - oa - loa",
+        "example": "Chiếc loa phát nhạc vui.",
+        "emoji": "🔊",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "o",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "a",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "oa",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "lờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "oa",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "loa",
+            "role": "word",
+            "group": 2
+          }
+        ]
+      },
+      {
+        "id": "spell_d13_3",
+        "day": 13,
+        "order": 4,
+        "text": "tỏa",
+        "rime": "oa",
+        "initial": "t",
+        "tone": "hỏi",
+        "spellingRead": "o - a - oa | tờ - oa - toa | hỏi - tỏa",
+        "example": "Ánh nắng tỏa sáng khắp sân.",
+        "emoji": "☀️",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "o",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "a",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "oa",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "tờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "oa",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "toa",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "hỏi",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "tỏa",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d13_4",
+        "day": 13,
+        "order": 5,
+        "text": "khoe",
+        "rime": "oe",
+        "initial": "kh",
+        "tone": "ngang",
+        "spellingRead": "o - e - oe | khờ - oe - khoe",
+        "example": "Bé Mây khoe áo mới với bạn.",
+        "emoji": "👗",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "o",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "e",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "oe",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "khờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "oe",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "khoe",
+            "role": "word",
+            "group": 2
+          }
+        ]
+      },
+      {
+        "id": "spell_d13_5",
+        "day": 13,
+        "order": 6,
+        "text": "khỏe",
+        "rime": "oe",
+        "initial": "kh",
+        "tone": "hỏi",
+        "spellingRead": "o - e - oe | khờ - oe - khoe | hỏi - khỏe",
+        "example": "Bé Mây ăn nhiều rau nên khỏe mạnh.",
+        "emoji": "💪",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "o",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "e",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "oe",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "khờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "oe",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "khoe",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "hỏi",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "khỏe",
+            "role": "word",
+            "group": 3
           }
         ]
       }
     ]
   },
   {
-    "day": 5,
-    "title": "Nhóm âm cuối -m",
-    "rimeIntro": [
-      "am",
-      "ăm",
-      "âm",
-      "em",
-      "im",
-      "ôm",
-      "ơm",
-      "ươm"
-    ],
+    "day": 8,
+    "title": "Vần 2 chữ (oe, uê, uy, am, ăm, âm)",
     "words": [
+      {
+        "id": "spell_d13_6",
+        "day": 13,
+        "order": 1,
+        "text": "xòe",
+        "rime": "oe",
+        "initial": "x",
+        "tone": "huyền",
+        "spellingRead": "o - e - oe | xờ - oe - xoe | huyền - xòe",
+        "example": "Chú công xòe đuôi thật đẹp.",
+        "emoji": "🦚",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "o",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "e",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "oe",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "xờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "oe",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "xoe",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "huyền",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "xòe",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d13_7",
+        "day": 13,
+        "order": 2,
+        "text": "huệ",
+        "rime": "uê",
+        "initial": "h",
+        "tone": "nặng",
+        "spellingRead": "u - ê - uê | hờ - uê - huê | nặng - huệ",
+        "example": "Bé Mây ngửi bông hoa huệ trắng.",
+        "emoji": "assets/emojis/hue.svg",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "u",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "ê",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "uê",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "hờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "uê",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "huê",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "nặng",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "huệ",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d13_8",
+        "day": 13,
+        "order": 3,
+        "text": "khuy",
+        "rime": "uy",
+        "initial": "kh",
+        "tone": "ngang",
+        "spellingRead": "u - i - uy | khờ - uy - khuy",
+        "example": "Bé Mây cài khuy áo ngay ngắn.",
+        "emoji": "assets/emojis/hue.svg",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "u",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "i",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "uy",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "khờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "uy",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "khuy",
+            "role": "word",
+            "group": 2
+          }
+        ]
+      },
       {
         "id": "spell_d5_1",
         "day": 5,
-        "order": 1,
+        "order": 4,
         "text": "cam",
         "rime": "am",
         "initial": "c",
@@ -1658,7 +2221,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d5_2",
         "day": 5,
-        "order": 2,
+        "order": 5,
         "text": "tắm",
         "rime": "ăm",
         "initial": "t",
@@ -1713,7 +2276,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d5_3",
         "day": 5,
-        "order": 3,
+        "order": 6,
         "text": "nấm",
         "rime": "âm",
         "initial": "n",
@@ -1764,11 +2327,17 @@ window.MagicWorld.SpellingDays = [
             "group": 3
           }
         ]
-      },
+      }
+    ]
+  },
+  {
+    "day": 9,
+    "title": "Vần 2 chữ (em, êm, im, om, ôm, ơm)",
+    "words": [
       {
         "id": "spell_d5_4",
         "day": 5,
-        "order": 4,
+        "order": 1,
         "text": "kem",
         "rime": "em",
         "initial": "k",
@@ -1811,9 +2380,54 @@ window.MagicWorld.SpellingDays = [
         ]
       },
       {
+        "id": "spell_d15_1",
+        "day": 15,
+        "order": 2,
+        "text": "đêm",
+        "rime": "êm",
+        "initial": "đ",
+        "tone": "ngang",
+        "spellingRead": "ê - mờ - êm | đờ - êm - đêm",
+        "example": "Đêm đến, Bé Mây đi ngủ.",
+        "emoji": "🌃",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ê",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "mờ",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "êm",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "đờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "êm",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "đêm",
+            "role": "word",
+            "group": 2
+          }
+        ]
+      },
+      {
         "id": "spell_d5_5",
         "day": 5,
-        "order": 5,
+        "order": 3,
         "text": "chim",
         "rime": "im",
         "initial": "ch",
@@ -1856,9 +2470,64 @@ window.MagicWorld.SpellingDays = [
         ]
       },
       {
+        "id": "spell_d15_2",
+        "day": 15,
+        "order": 4,
+        "text": "xóm",
+        "rime": "om",
+        "initial": "x",
+        "tone": "sắc",
+        "spellingRead": "o - mờ - om | xờ - om - xom | sắc - xóm",
+        "example": "Xóm nhỏ của Bé Mây rất vui.",
+        "emoji": "🏘️",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "o",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "mờ",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "om",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "xờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "om",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "xom",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "xóm",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
         "id": "spell_d5_6",
         "day": 5,
-        "order": 6,
+        "order": 5,
         "text": "tôm",
         "rime": "ôm",
         "initial": "t",
@@ -1903,7 +2572,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d5_7",
         "day": 5,
-        "order": 7,
+        "order": 6,
         "text": "cơm",
         "rime": "ơm",
         "initial": "c",
@@ -1944,82 +2613,12 @@ window.MagicWorld.SpellingDays = [
             "group": 2
           }
         ]
-      },
-      {
-        "id": "spell_d5_8",
-        "day": 5,
-        "order": 8,
-        "text": "bướm",
-        "rime": "ươm",
-        "initial": "b",
-        "tone": "sắc",
-        "spellingRead": "ư - ơ - mờ - ươm | bờ - ươm - bươm | sắc - bướm",
-        "example": "Chú bướm xinh bay quanh Bé Mây.",
-        "emoji": "🦋",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ư",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ơ",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "mờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "ươm",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "bờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ươm",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "bươm",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "bướm",
-            "role": "word",
-            "group": 3
-          }
-        ]
       }
     ]
   },
   {
-    "day": 6,
-    "title": "Nhóm âm cuối -n",
-    "rimeIntro": [
-      "an",
-      "ăn",
-      "ân",
-      "en",
-      "in",
-      "on",
-      "ôn",
-      "un"
-    ],
+    "day": 10,
+    "title": "Vần 2 chữ (an, ăn, ân, en, ên, in)",
     "words": [
       {
         "id": "spell_d6_1",
@@ -2222,9 +2821,64 @@ window.MagicWorld.SpellingDays = [
         ]
       },
       {
+        "id": "spell_d15_3",
+        "day": 15,
+        "order": 5,
+        "text": "nến",
+        "rime": "ên",
+        "initial": "n",
+        "tone": "sắc",
+        "spellingRead": "ê - nờ - ên | nờ - ên - nên | sắc - nến",
+        "example": "Bé Mây thổi nến sinh nhật.",
+        "emoji": "🕯️",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ê",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "nờ",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ên",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "nờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ên",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "nên",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "nến",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
         "id": "spell_d6_5",
         "day": 6,
-        "order": 5,
+        "order": 6,
         "text": "pin",
         "rime": "in",
         "initial": "p",
@@ -2265,11 +2919,17 @@ window.MagicWorld.SpellingDays = [
             "group": 2
           }
         ]
-      },
+      }
+    ]
+  },
+  {
+    "day": 11,
+    "title": "Vần 2 chữ (on, ôn, ơn, un, ac, ăc)",
+    "words": [
       {
         "id": "spell_d6_6",
         "day": 6,
-        "order": 6,
+        "order": 1,
         "text": "nón",
         "rime": "on",
         "initial": "n",
@@ -2324,7 +2984,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d6_7",
         "day": 6,
-        "order": 7,
+        "order": 2,
         "text": "bốn",
         "rime": "ôn",
         "initial": "b",
@@ -2377,9 +3037,64 @@ window.MagicWorld.SpellingDays = [
         ]
       },
       {
+        "id": "spell_d15_4",
+        "day": 15,
+        "order": 3,
+        "text": "lợn",
+        "rime": "ơn",
+        "initial": "l",
+        "tone": "nặng",
+        "spellingRead": "ơ - nờ - ơn | lờ - ơn - lơn | nặng - lợn",
+        "example": "Chú lợn con ủn ỉn chào Bé Mây.",
+        "emoji": "🐖",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ơ",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "nờ",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ơn",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "lờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ơn",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "lơn",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "nặng",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "lợn",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
         "id": "spell_d6_8",
         "day": 6,
-        "order": 8,
+        "order": 4,
         "text": "cún",
         "rime": "un",
         "initial": "c",
@@ -2430,22 +3145,1808 @@ window.MagicWorld.SpellingDays = [
             "group": 3
           }
         ]
+      },
+      {
+        "id": "spell_d9_1",
+        "day": 9,
+        "order": 5,
+        "text": "bác",
+        "rime": "ac",
+        "initial": "b",
+        "tone": "sắc",
+        "spellingRead": "a - cờ - ac | bờ - ac - bac | sắc - bác",
+        "example": "Bé Mây khoanh tay chào bác.",
+        "emoji": "👨‍🦳",
+        "noPictureQuiz": true,
+        "quiz": true,
+        "chips": [
+          {
+            "text": "a",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "cờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "ac",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "bờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ac",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "bac",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "bác",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d9_2",
+        "day": 9,
+        "order": 6,
+        "text": "mặc",
+        "rime": "ăc",
+        "initial": "m",
+        "tone": "nặng",
+        "spellingRead": "á - cờ - ăc | mờ - ăc - măc | nặng - mặc",
+        "example": "Bé Mây tự mặc áo khoác.",
+        "emoji": "🧥",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ă",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "cờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "ăc",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "mờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ăc",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "măc",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "nặng",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "mặc",
+            "role": "word",
+            "group": 3
+          }
+        ]
       }
     ]
   },
   {
-    "day": 7,
-    "title": "Nhóm âm cuối -ng",
-    "rimeIntro": [
-      "ang",
-      "ăng",
-      "ong",
-      "ông",
-      "ung",
-      "ưng",
-      "uông",
-      "ương"
-    ],
+    "day": 12,
+    "title": "Vần 2 chữ (oc, ôc, uc, ưc, at)",
+    "words": [
+      {
+        "id": "spell_d9_3",
+        "day": 9,
+        "order": 1,
+        "text": "tóc",
+        "rime": "oc",
+        "initial": "t",
+        "tone": "sắc",
+        "spellingRead": "o - cờ - oc | tờ - oc - toc | sắc - tóc",
+        "example": "Mẹ buộc tóc xinh cho Bé Mây.",
+        "emoji": "💇",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "o",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "cờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "oc",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "tờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "oc",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "toc",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "tóc",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d9_4",
+        "day": 9,
+        "order": 2,
+        "text": "sóc",
+        "rime": "oc",
+        "initial": "s",
+        "tone": "sắc",
+        "spellingRead": "o - cờ - oc | sờ - oc - soc | sắc - sóc",
+        "example": "Chú sóc nhỏ nhặt hạt thông.",
+        "emoji": "🐿️",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "o",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "cờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "oc",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "sờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "oc",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "soc",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "sóc",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d9_5",
+        "day": 9,
+        "order": 3,
+        "text": "cốc",
+        "rime": "ôc",
+        "initial": "c",
+        "tone": "sắc",
+        "spellingRead": "ô - cờ - ôc | cờ - ôc - côc | sắc - cốc",
+        "example": "Bé Mây cầm cốc uống nước.",
+        "emoji": "🥛",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ô",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "cờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "ôc",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "cờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ôc",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "côc",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "cốc",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d9_6",
+        "day": 9,
+        "order": 4,
+        "text": "cúc",
+        "rime": "uc",
+        "initial": "c",
+        "tone": "sắc",
+        "spellingRead": "u - cờ - uc | cờ - uc - cuc | sắc - cúc",
+        "example": "Bông hoa cúc nở vàng rực.",
+        "emoji": "🌼",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "u",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "cờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "uc",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "cờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "uc",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "cuc",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "cúc",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d9_7",
+        "day": 9,
+        "order": 5,
+        "text": "mực",
+        "rime": "ưc",
+        "initial": "m",
+        "tone": "nặng",
+        "spellingRead": "ư - cờ - ưc | mờ - ưc - mưc | nặng - mực",
+        "example": "Chú mực bơi dưới biển.",
+        "emoji": "🦑",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ư",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "cờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "ưc",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "mờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ưc",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "mưc",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "nặng",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "mực",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d10_1",
+        "day": 10,
+        "order": 6,
+        "text": "bát",
+        "rime": "at",
+        "initial": "b",
+        "tone": "sắc",
+        "spellingRead": "a - tờ - at | bờ - at - bat | sắc - bát",
+        "example": "Bé Mây cầm bát ăn cơm.",
+        "emoji": "🥣",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "a",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "tờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "at",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "bờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "at",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "bat",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "bát",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "day": 13,
+    "title": "Vần 2 chữ (ăt, ât, et, êt, it, ot)",
+    "words": [
+      {
+        "id": "spell_d10_2",
+        "day": 10,
+        "order": 1,
+        "text": "mắt",
+        "rime": "ăt",
+        "initial": "m",
+        "tone": "sắc",
+        "spellingRead": "á - tờ - ăt | mờ - ăt - măt | sắc - mắt",
+        "example": "Bé Mây chớp đôi mắt tròn.",
+        "emoji": "👀",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ă",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "tờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "ăt",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "mờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ăt",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "măt",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "mắt",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d10_3",
+        "day": 10,
+        "order": 2,
+        "text": "tất",
+        "rime": "ât",
+        "initial": "t",
+        "tone": "sắc",
+        "spellingRead": "ớ - tờ - ât | tờ - ât - tât | sắc - tất",
+        "example": "Bé Mây đi tất giữ ấm chân.",
+        "emoji": "🧦",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "â",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "tờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "ât",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "tờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ât",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "tât",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "tất",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d15_6",
+        "day": 15,
+        "order": 3,
+        "text": "vẹt",
+        "rime": "et",
+        "initial": "v",
+        "tone": "nặng",
+        "spellingRead": "e - tờ - et | vờ - et - vet | nặng - vẹt",
+        "example": "Chú vẹt biết nói chào Bé Mây.",
+        "emoji": "🦜",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "e",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "tờ",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "et",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "vờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "et",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "vet",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "nặng",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "vẹt",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d10_4",
+        "day": 10,
+        "order": 4,
+        "text": "tết",
+        "rime": "êt",
+        "initial": "t",
+        "tone": "sắc",
+        "spellingRead": "ê - tờ - êt | tờ - êt - têt | sắc - tết",
+        "example": "Ngày tết Bé Mây được nhận bao lì xì.",
+        "emoji": "🧧",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ê",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "tờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "êt",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "tờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "êt",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "têt",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "tết",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d10_5",
+        "day": 10,
+        "order": 5,
+        "text": "vịt",
+        "rime": "it",
+        "initial": "v",
+        "tone": "nặng",
+        "spellingRead": "i - tờ - it | vờ - it - vit | nặng - vịt",
+        "example": "Chú vịt con bơi dưới hồ.",
+        "emoji": "🦆",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "i",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "tờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "it",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "vờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "it",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "vit",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "nặng",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "vịt",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d10_6",
+        "day": 10,
+        "order": 6,
+        "text": "hót",
+        "rime": "ot",
+        "initial": "h",
+        "tone": "sắc",
+        "spellingRead": "o - tờ - ot | hờ - ot - hot | sắc - hót",
+        "example": "Chú chim hót vang buổi sáng.",
+        "emoji": "🐦",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "o",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "tờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "ot",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "hờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ot",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "hot",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "hót",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "day": 14,
+    "title": "Vần 2 chữ (ôt, ơt, ut, ap, ăp, âp)",
+    "words": [
+      {
+        "id": "spell_d10_7",
+        "day": 10,
+        "order": 1,
+        "text": "một",
+        "rime": "ôt",
+        "initial": "m",
+        "tone": "nặng",
+        "spellingRead": "ô - tờ - ôt | mờ - ôt - môt | nặng - một",
+        "example": "Bé Mây giơ một ngón tay.",
+        "emoji": "1️⃣",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ô",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "tờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "ôt",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "mờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ôt",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "môt",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "nặng",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "một",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d15_7",
+        "day": 15,
+        "order": 2,
+        "text": "ớt",
+        "rime": "ơt",
+        "initial": "",
+        "tone": "sắc",
+        "spellingRead": "ơ - tờ - ơt | sắc - ớt",
+        "example": "Quả ớt đỏ rất cay, Bé Mây không ăn.",
+        "emoji": "🌶️",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ơ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "tờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "ơt",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 2
+          },
+          {
+            "text": "ớt",
+            "role": "word",
+            "group": 2
+          }
+        ]
+      },
+      {
+        "id": "spell_d10_8",
+        "day": 10,
+        "order": 3,
+        "text": "bút",
+        "rime": "ut",
+        "initial": "b",
+        "tone": "sắc",
+        "spellingRead": "u - tờ - ut | bờ - ut - but | sắc - bút",
+        "example": "Bé Mây cầm bút vẽ bông tuyết.",
+        "emoji": "🖊️",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "u",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "tờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "ut",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "bờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ut",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "but",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "bút",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d11_1",
+        "day": 11,
+        "order": 4,
+        "text": "đạp",
+        "rime": "ap",
+        "initial": "đ",
+        "tone": "nặng",
+        "spellingRead": "a - pờ - ap | đờ - ap - đap | nặng - đạp",
+        "example": "Bé Mây đạp xe quanh công viên.",
+        "emoji": "🚲",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "a",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "pờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "ap",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "đờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ap",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "đap",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "nặng",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "đạp",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d11_2",
+        "day": 11,
+        "order": 5,
+        "text": "bắp",
+        "rime": "ăp",
+        "initial": "b",
+        "tone": "sắc",
+        "spellingRead": "á - pờ - ăp | bờ - ăp - băp | sắc - bắp",
+        "example": "Bé Mây ăn bắp ngô luộc ngọt.",
+        "emoji": "🌽",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ă",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "pờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "ăp",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "bờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ăp",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "băp",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "bắp",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d11_3",
+        "day": 11,
+        "order": 6,
+        "text": "tập",
+        "rime": "âp",
+        "initial": "t",
+        "tone": "nặng",
+        "spellingRead": "ớ - pờ - âp | tờ - âp - tâp | nặng - tập",
+        "example": "Bé Mây tập viết chữ đẹp.",
+        "emoji": "✍️",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "â",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "pờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "âp",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "tờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "âp",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "tâp",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "nặng",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "tập",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "day": 15,
+    "title": "Vần 2 chữ (ep, êp, op, ôp, ơp, up)",
+    "words": [
+      {
+        "id": "spell_d11_4",
+        "day": 11,
+        "order": 1,
+        "text": "dép",
+        "rime": "ep",
+        "initial": "d",
+        "tone": "sắc",
+        "spellingRead": "e - pờ - ep | dờ - ep - dep | sắc - dép",
+        "example": "Bé Mây xếp đôi dép ngay ngắn.",
+        "emoji": "🩴",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "e",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "pờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "ep",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "dờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ep",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "dep",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "dép",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d11_5",
+        "day": 11,
+        "order": 2,
+        "text": "bếp",
+        "rime": "êp",
+        "initial": "b",
+        "tone": "sắc",
+        "spellingRead": "ê - pờ - êp | bờ - êp - bêp | sắc - bếp",
+        "example": "Mẹ nấu cơm thơm trong bếp.",
+        "emoji": "🍳",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ê",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "pờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "êp",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "bờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "êp",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "bêp",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "bếp",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d11_6",
+        "day": 11,
+        "order": 3,
+        "text": "cọp",
+        "rime": "op",
+        "initial": "c",
+        "tone": "nặng",
+        "spellingRead": "o - pờ - op | cờ - op - cop | nặng - cọp",
+        "example": "Chú cọp con trong truyện tranh.",
+        "emoji": "🐯",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "o",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "pờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "op",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "cờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "op",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "cop",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "nặng",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "cọp",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d11_7",
+        "day": 11,
+        "order": 4,
+        "text": "hộp",
+        "rime": "ôp",
+        "initial": "h",
+        "tone": "nặng",
+        "spellingRead": "ô - pờ - ôp | hờ - ôp - hôp | nặng - hộp",
+        "example": "Bé Mây mở chiếc hộp quà.",
+        "emoji": "📦",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ô",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "pờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "ôp",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "hờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ôp",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "hôp",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "nặng",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "hộp",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d15_8",
+        "day": 15,
+        "order": 5,
+        "text": "chớp",
+        "rime": "ơp",
+        "initial": "ch",
+        "tone": "sắc",
+        "spellingRead": "ơ - pờ - ơp | chờ - ơp - chơp | sắc - chớp",
+        "example": "Bé Mây thấy tia chớp sáng loé.",
+        "emoji": "⚡",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ơ",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "pờ",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ơp",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "chờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ơp",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "chơp",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "chớp",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d11_8",
+        "day": 11,
+        "order": 6,
+        "text": "búp",
+        "rime": "up",
+        "initial": "b",
+        "tone": "sắc",
+        "spellingRead": "u - pờ - up | bờ - up - bup | sắc - búp",
+        "example": "Bé Mây ôm búp bê đi ngủ.",
+        "emoji": "🪆",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "u",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "pờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "up",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "bờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "up",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "bup",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "búp",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "day": 16,
+    "title": "Vần 3–4 chữ (uôi, ươi, iêu, ươu, ươm, ươc)",
+    "words": [
+      {
+        "id": "spell_d2_7",
+        "day": 2,
+        "order": 1,
+        "text": "chuối",
+        "rime": "uôi",
+        "initial": "ch",
+        "tone": "sắc",
+        "spellingRead": "u - ô - i - uôi | chờ - uôi - chuôi | sắc - chuối",
+        "example": "Bé Mây ăn quả chuối chín.",
+        "emoji": "🍌",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "u",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ô",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "i",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "uôi",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "chờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "uôi",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "chuôi",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "chuối",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d2_8",
+        "day": 2,
+        "order": 2,
+        "text": "cười",
+        "rime": "ươi",
+        "initial": "c",
+        "tone": "huyền",
+        "spellingRead": "ư - ơ - i - ươi | cờ - ươi - cươi | huyền - cười",
+        "example": "Bé Mây cười vang thật vui.",
+        "emoji": "😄",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ư",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ơ",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "i",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ươi",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "cờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ươi",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "cươi",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "huyền",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "cười",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d4_6",
+        "day": 4,
+        "order": 3,
+        "text": "diều",
+        "rime": "iêu",
+        "initial": "d",
+        "tone": "huyền",
+        "spellingRead": "i - ê - u - iêu | dờ - iêu - diêu | huyền - diều",
+        "example": "Bé Mây thả cánh diều bay.",
+        "emoji": "🪁",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "i",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ê",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "u",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "iêu",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "dờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "iêu",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "diêu",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "huyền",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "diều",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d4_8",
+        "day": 4,
+        "order": 4,
+        "text": "hươu",
+        "rime": "ươu",
+        "initial": "h",
+        "tone": "ngang",
+        "spellingRead": "ư - ơ - u - ươu | hờ - ươu - hươu",
+        "example": "Chú hươu cao cổ ăn lá non.",
+        "emoji": "🦒",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ư",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ơ",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "u",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ươu",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "hờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ươu",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "hươu",
+            "role": "word",
+            "group": 2
+          }
+        ]
+      },
+      {
+        "id": "spell_d5_8",
+        "day": 5,
+        "order": 5,
+        "text": "bướm",
+        "rime": "ươm",
+        "initial": "b",
+        "tone": "sắc",
+        "spellingRead": "ư - ơ - mờ - ươm | bờ - ươm - bươm | sắc - bướm",
+        "example": "Chú bướm xinh bay quanh Bé Mây.",
+        "emoji": "🦋",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ư",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ơ",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "mờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "ươm",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "bờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ươm",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "bươm",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "bướm",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      },
+      {
+        "id": "spell_d9_8",
+        "day": 9,
+        "order": 6,
+        "text": "nước",
+        "rime": "ươc",
+        "initial": "n",
+        "tone": "sắc",
+        "spellingRead": "ư - ơ - cờ - ươc | nờ - ươc - nươc | sắc - nước",
+        "example": "Bé Mây uống nước lọc mỗi ngày.",
+        "emoji": "💧",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "ư",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ơ",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "cờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "ươc",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "nờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "ươc",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "nươc",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "sắc",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "nước",
+            "role": "word",
+            "group": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "day": 17,
+    "title": "Vần 3–4 chữ (ang, ăng, ong, ông, ung, ưng)",
     "words": [
       {
         "id": "spell_d7_1",
@@ -2766,11 +5267,73 @@ window.MagicWorld.SpellingDays = [
             "group": 3
           }
         ]
+      }
+    ]
+  },
+  {
+    "day": 18,
+    "title": "Vần 3–4 chữ (âng, uông, ương, anh, inh)",
+    "words": [
+      {
+        "id": "spell_d15_5",
+        "day": 15,
+        "order": 1,
+        "text": "tầng",
+        "rime": "âng",
+        "initial": "t",
+        "tone": "huyền",
+        "spellingRead": "â - ngờ - âng | tờ - âng - tâng | huyền - tầng",
+        "example": "Nhà Bé Mây có hai tầng.",
+        "emoji": "🏢",
+        "quiz": false,
+        "noPictureQuiz": true,
+        "chips": [
+          {
+            "text": "â",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "ngờ",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "âng",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "tờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "âng",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "tâng",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "huyền",
+            "role": "tone",
+            "group": 3
+          },
+          {
+            "text": "tầng",
+            "role": "word",
+            "group": 3
+          }
+        ]
       },
       {
         "id": "spell_d7_7",
         "day": 7,
-        "order": 7,
+        "order": 2,
         "text": "chuông",
         "rime": "uông",
         "initial": "ch",
@@ -2820,7 +5383,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d7_8",
         "day": 7,
-        "order": 8,
+        "order": 3,
         "text": "đường",
         "rime": "ương",
         "initial": "đ",
@@ -2876,24 +5439,11 @@ window.MagicWorld.SpellingDays = [
             "group": 3
           }
         ]
-      }
-    ]
-  },
-  {
-    "day": 8,
-    "title": "Nhóm âm cuối -nh & -ch",
-    "rimeIntro": [
-      "anh",
-      "inh",
-      "ach",
-      "êch",
-      "ich"
-    ],
-    "words": [
+      },
       {
         "id": "spell_d8_1",
         "day": 8,
-        "order": 1,
+        "order": 4,
         "text": "bánh",
         "rime": "anh",
         "initial": "b",
@@ -2948,7 +5498,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d8_2",
         "day": 8,
-        "order": 2,
+        "order": 5,
         "text": "xanh",
         "rime": "anh",
         "initial": "x",
@@ -2993,7 +5543,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d8_3",
         "day": 8,
-        "order": 3,
+        "order": 6,
         "text": "kính",
         "rime": "inh",
         "initial": "k",
@@ -3044,11 +5594,17 @@ window.MagicWorld.SpellingDays = [
             "group": 3
           }
         ]
-      },
+      }
+    ]
+  },
+  {
+    "day": 19,
+    "title": "Vần 3–4 chữ (inh, ach, êch, ich, oan)",
+    "words": [
       {
         "id": "spell_d8_4",
         "day": 8,
-        "order": 4,
+        "order": 1,
         "text": "bình",
         "rime": "inh",
         "initial": "b",
@@ -3103,7 +5659,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d8_5",
         "day": 8,
-        "order": 5,
+        "order": 2,
         "text": "sách",
         "rime": "ach",
         "initial": "s",
@@ -3158,7 +5714,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d8_6",
         "day": 8,
-        "order": 6,
+        "order": 3,
         "text": "gạch",
         "rime": "ach",
         "initial": "g",
@@ -3213,7 +5769,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d8_7",
         "day": 8,
-        "order": 7,
+        "order": 4,
         "text": "ếch",
         "rime": "êch",
         "initial": "",
@@ -3253,7 +5809,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d8_8",
         "day": 8,
-        "order": 8,
+        "order": 5,
         "text": "lịch",
         "rime": "ich",
         "initial": "l",
@@ -3304,2242 +5860,11 @@ window.MagicWorld.SpellingDays = [
             "group": 3
           }
         ]
-      }
-    ]
-  },
-  {
-    "day": 9,
-    "title": "Nhóm âm cuối -c",
-    "rimeIntro": [
-      "ac",
-      "ăc",
-      "oc",
-      "ôc",
-      "uc",
-      "ưc",
-      "ươc"
-    ],
-    "words": [
-      {
-        "id": "spell_d9_1",
-        "day": 9,
-        "order": 1,
-        "text": "bác",
-        "rime": "ac",
-        "initial": "b",
-        "tone": "sắc",
-        "spellingRead": "a - cờ - ac | bờ - ac - bac | sắc - bác",
-        "example": "Bé Mây khoanh tay chào bác.",
-        "emoji": "👨‍🦳",
-        "noPictureQuiz": true,
-        "quiz": true,
-        "chips": [
-          {
-            "text": "a",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "cờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "ac",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "bờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ac",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "bac",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "bác",
-            "role": "word",
-            "group": 3
-          }
-        ]
       },
-      {
-        "id": "spell_d9_2",
-        "day": 9,
-        "order": 2,
-        "text": "mặc",
-        "rime": "ăc",
-        "initial": "m",
-        "tone": "nặng",
-        "spellingRead": "á - cờ - ăc | mờ - ăc - măc | nặng - mặc",
-        "example": "Bé Mây tự mặc áo khoác.",
-        "emoji": "🧥",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ă",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "cờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "ăc",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "mờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ăc",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "măc",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "nặng",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "mặc",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d9_3",
-        "day": 9,
-        "order": 3,
-        "text": "tóc",
-        "rime": "oc",
-        "initial": "t",
-        "tone": "sắc",
-        "spellingRead": "o - cờ - oc | tờ - oc - toc | sắc - tóc",
-        "example": "Mẹ buộc tóc xinh cho Bé Mây.",
-        "emoji": "💇",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "o",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "cờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "oc",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "tờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "oc",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "toc",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "tóc",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d9_4",
-        "day": 9,
-        "order": 4,
-        "text": "sóc",
-        "rime": "oc",
-        "initial": "s",
-        "tone": "sắc",
-        "spellingRead": "o - cờ - oc | sờ - oc - soc | sắc - sóc",
-        "example": "Chú sóc nhỏ nhặt hạt thông.",
-        "emoji": "🐿️",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "o",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "cờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "oc",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "sờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "oc",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "soc",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "sóc",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d9_5",
-        "day": 9,
-        "order": 5,
-        "text": "cốc",
-        "rime": "ôc",
-        "initial": "c",
-        "tone": "sắc",
-        "spellingRead": "ô - cờ - ôc | cờ - ôc - côc | sắc - cốc",
-        "example": "Bé Mây cầm cốc uống nước.",
-        "emoji": "🥛",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ô",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "cờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "ôc",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "cờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ôc",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "côc",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "cốc",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d9_6",
-        "day": 9,
-        "order": 6,
-        "text": "cúc",
-        "rime": "uc",
-        "initial": "c",
-        "tone": "sắc",
-        "spellingRead": "u - cờ - uc | cờ - uc - cuc | sắc - cúc",
-        "example": "Bông hoa cúc nở vàng rực.",
-        "emoji": "🌼",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "u",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "cờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "uc",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "cờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "uc",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "cuc",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "cúc",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d9_7",
-        "day": 9,
-        "order": 7,
-        "text": "mực",
-        "rime": "ưc",
-        "initial": "m",
-        "tone": "nặng",
-        "spellingRead": "ư - cờ - ưc | mờ - ưc - mưc | nặng - mực",
-        "example": "Chú mực bơi dưới biển.",
-        "emoji": "🦑",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ư",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "cờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "ưc",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "mờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ưc",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "mưc",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "nặng",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "mực",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d9_8",
-        "day": 9,
-        "order": 8,
-        "text": "nước",
-        "rime": "ươc",
-        "initial": "n",
-        "tone": "sắc",
-        "spellingRead": "ư - ơ - cờ - ươc | nờ - ươc - nươc | sắc - nước",
-        "example": "Bé Mây uống nước lọc mỗi ngày.",
-        "emoji": "💧",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ư",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ơ",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "cờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "ươc",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "nờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ươc",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "nươc",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "nước",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "day": 10,
-    "title": "Nhóm âm cuối -t",
-    "rimeIntro": [
-      "at",
-      "ăt",
-      "ât",
-      "êt",
-      "it",
-      "ot",
-      "ôt",
-      "ut"
-    ],
-    "words": [
-      {
-        "id": "spell_d10_1",
-        "day": 10,
-        "order": 1,
-        "text": "bát",
-        "rime": "at",
-        "initial": "b",
-        "tone": "sắc",
-        "spellingRead": "a - tờ - at | bờ - at - bat | sắc - bát",
-        "example": "Bé Mây cầm bát ăn cơm.",
-        "emoji": "🥣",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "a",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "tờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "at",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "bờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "at",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "bat",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "bát",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d10_2",
-        "day": 10,
-        "order": 2,
-        "text": "mắt",
-        "rime": "ăt",
-        "initial": "m",
-        "tone": "sắc",
-        "spellingRead": "á - tờ - ăt | mờ - ăt - măt | sắc - mắt",
-        "example": "Bé Mây chớp đôi mắt tròn.",
-        "emoji": "👀",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ă",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "tờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "ăt",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "mờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ăt",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "măt",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "mắt",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d10_3",
-        "day": 10,
-        "order": 3,
-        "text": "tất",
-        "rime": "ât",
-        "initial": "t",
-        "tone": "sắc",
-        "spellingRead": "ớ - tờ - ât | tờ - ât - tât | sắc - tất",
-        "example": "Bé Mây đi tất giữ ấm chân.",
-        "emoji": "🧦",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "â",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "tờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "ât",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "tờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ât",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "tât",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "tất",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d10_4",
-        "day": 10,
-        "order": 4,
-        "text": "tết",
-        "rime": "êt",
-        "initial": "t",
-        "tone": "sắc",
-        "spellingRead": "ê - tờ - êt | tờ - êt - têt | sắc - tết",
-        "example": "Ngày tết Bé Mây được nhận bao lì xì.",
-        "emoji": "🧧",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ê",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "tờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "êt",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "tờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "êt",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "têt",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "tết",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d10_5",
-        "day": 10,
-        "order": 5,
-        "text": "vịt",
-        "rime": "it",
-        "initial": "v",
-        "tone": "nặng",
-        "spellingRead": "i - tờ - it | vờ - it - vit | nặng - vịt",
-        "example": "Chú vịt con bơi dưới hồ.",
-        "emoji": "🦆",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "i",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "tờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "it",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "vờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "it",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "vit",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "nặng",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "vịt",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d10_6",
-        "day": 10,
-        "order": 6,
-        "text": "hót",
-        "rime": "ot",
-        "initial": "h",
-        "tone": "sắc",
-        "spellingRead": "o - tờ - ot | hờ - ot - hot | sắc - hót",
-        "example": "Chú chim hót vang buổi sáng.",
-        "emoji": "🐦",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "o",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "tờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "ot",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "hờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ot",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "hot",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "hót",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d10_7",
-        "day": 10,
-        "order": 7,
-        "text": "một",
-        "rime": "ôt",
-        "initial": "m",
-        "tone": "nặng",
-        "spellingRead": "ô - tờ - ôt | mờ - ôt - môt | nặng - một",
-        "example": "Bé Mây giơ một ngón tay.",
-        "emoji": "1️⃣",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ô",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "tờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "ôt",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "mờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ôt",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "môt",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "nặng",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "một",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d10_8",
-        "day": 10,
-        "order": 8,
-        "text": "bút",
-        "rime": "ut",
-        "initial": "b",
-        "tone": "sắc",
-        "spellingRead": "u - tờ - ut | bờ - ut - but | sắc - bút",
-        "example": "Bé Mây cầm bút vẽ bông tuyết.",
-        "emoji": "🖊️",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "u",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "tờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "ut",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "bờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ut",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "but",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "bút",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "day": 11,
-    "title": "Nhóm âm cuối -p",
-    "rimeIntro": [
-      "ap",
-      "ăp",
-      "âp",
-      "ep",
-      "êp",
-      "op",
-      "ôp",
-      "up"
-    ],
-    "words": [
-      {
-        "id": "spell_d11_1",
-        "day": 11,
-        "order": 1,
-        "text": "đạp",
-        "rime": "ap",
-        "initial": "đ",
-        "tone": "nặng",
-        "spellingRead": "a - pờ - ap | đờ - ap - đap | nặng - đạp",
-        "example": "Bé Mây đạp xe quanh công viên.",
-        "emoji": "🚲",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "a",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "pờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "ap",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "đờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ap",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "đap",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "nặng",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "đạp",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d11_2",
-        "day": 11,
-        "order": 2,
-        "text": "bắp",
-        "rime": "ăp",
-        "initial": "b",
-        "tone": "sắc",
-        "spellingRead": "á - pờ - ăp | bờ - ăp - băp | sắc - bắp",
-        "example": "Bé Mây ăn bắp ngô luộc ngọt.",
-        "emoji": "🌽",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ă",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "pờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "ăp",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "bờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ăp",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "băp",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "bắp",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d11_3",
-        "day": 11,
-        "order": 3,
-        "text": "tập",
-        "rime": "âp",
-        "initial": "t",
-        "tone": "nặng",
-        "spellingRead": "ớ - pờ - âp | tờ - âp - tâp | nặng - tập",
-        "example": "Bé Mây tập viết chữ đẹp.",
-        "emoji": "✍️",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "â",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "pờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "âp",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "tờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "âp",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "tâp",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "nặng",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "tập",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d11_4",
-        "day": 11,
-        "order": 4,
-        "text": "dép",
-        "rime": "ep",
-        "initial": "d",
-        "tone": "sắc",
-        "spellingRead": "e - pờ - ep | dờ - ep - dep | sắc - dép",
-        "example": "Bé Mây xếp đôi dép ngay ngắn.",
-        "emoji": "🩴",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "e",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "pờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "ep",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "dờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ep",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "dep",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "dép",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d11_5",
-        "day": 11,
-        "order": 5,
-        "text": "bếp",
-        "rime": "êp",
-        "initial": "b",
-        "tone": "sắc",
-        "spellingRead": "ê - pờ - êp | bờ - êp - bêp | sắc - bếp",
-        "example": "Mẹ nấu cơm thơm trong bếp.",
-        "emoji": "🍳",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ê",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "pờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "êp",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "bờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "êp",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "bêp",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "bếp",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d11_6",
-        "day": 11,
-        "order": 6,
-        "text": "cọp",
-        "rime": "op",
-        "initial": "c",
-        "tone": "nặng",
-        "spellingRead": "o - pờ - op | cờ - op - cop | nặng - cọp",
-        "example": "Chú cọp con trong truyện tranh.",
-        "emoji": "🐯",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "o",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "pờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "op",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "cờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "op",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "cop",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "nặng",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "cọp",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d11_7",
-        "day": 11,
-        "order": 7,
-        "text": "hộp",
-        "rime": "ôp",
-        "initial": "h",
-        "tone": "nặng",
-        "spellingRead": "ô - pờ - ôp | hờ - ôp - hôp | nặng - hộp",
-        "example": "Bé Mây mở chiếc hộp quà.",
-        "emoji": "📦",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ô",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "pờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "ôp",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "hờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ôp",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "hôp",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "nặng",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "hộp",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d11_8",
-        "day": 11,
-        "order": 8,
-        "text": "búp",
-        "rime": "up",
-        "initial": "b",
-        "tone": "sắc",
-        "spellingRead": "u - pờ - up | bờ - up - bup | sắc - búp",
-        "example": "Bé Mây ôm búp bê đi ngủ.",
-        "emoji": "🪆",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "u",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "pờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "up",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "bờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "up",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "bup",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "búp",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "day": 12,
-    "title": "Vần mở bổ sung (ia, ua, ưa)",
-    "rimeIntro": [
-      "ia",
-      "ua",
-      "ưa"
-    ],
-    "words": [
-      {
-        "id": "spell_d12_1",
-        "day": 12,
-        "order": 1,
-        "text": "thìa",
-        "rime": "ia",
-        "initial": "th",
-        "tone": "huyền",
-        "spellingRead": "i - a - ia | thờ - ia - thia | huyền - thìa",
-        "example": "Bé Mây cầm thìa xúc cơm giỏi quá.",
-        "emoji": "🥄",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "i",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "a",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ia",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "thờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ia",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "thia",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "huyền",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "thìa",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d12_3",
-        "day": 12,
-        "order": 2,
-        "text": "mía",
-        "rime": "ia",
-        "initial": "m",
-        "tone": "sắc",
-        "spellingRead": "i - a - ia | mờ - ia - mia | sắc - mía",
-        "example": "Bé Mây thấy cây mía ngọt.",
-        "emoji": "assets/emojis/mia.svg",
-        "quiz": false,
-        "chips": [
-          {
-            "text": "i",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "a",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ia",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "mờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ia",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "mia",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "mía",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d12_5",
-        "day": 12,
-        "order": 3,
-        "text": "cua",
-        "rime": "ua",
-        "initial": "c",
-        "tone": "ngang",
-        "spellingRead": "u - a - ua | cờ - ua - cua",
-        "example": "Bé Mây thấy chú cua bò ngang trên cát.",
-        "emoji": "assets/emojis/mia.svg",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "u",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "a",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ua",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "cờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ua",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "cua",
-            "role": "word",
-            "group": 2
-          }
-        ]
-      },
-      {
-        "id": "spell_d12_4",
-        "day": 12,
-        "order": 4,
-        "text": "rùa",
-        "rime": "ua",
-        "initial": "r",
-        "tone": "huyền",
-        "spellingRead": "u - a - ua | rờ - ua - rua | huyền - rùa",
-        "example": "Chú rùa bò chậm, Bé Mây đi chầm chậm theo.",
-        "emoji": "🐢",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "u",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "a",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ua",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "rờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ua",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "rua",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "huyền",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "rùa",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d12_6",
-        "day": 12,
-        "order": 5,
-        "text": "đũa",
-        "rime": "ua",
-        "initial": "đ",
-        "tone": "ngã",
-        "spellingRead": "u - a - ua | đờ - ua - đũa",
-        "example": "Bé Mây tập cầm đũa gắp cơm.",
-        "emoji": "🥢",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "u",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "a",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ua",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "đờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ua",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "đua",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ngã",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "đũa",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d12_2",
-        "day": 12,
-        "order": 6,
-        "text": "mưa",
-        "rime": "ưa",
-        "initial": "m",
-        "tone": "ngang",
-        "spellingRead": "ư - a - ưa | mờ - ưa - mưa",
-        "example": "Bé Mây nghe tiếng mưa rơi.",
-        "emoji": "🌧️",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ư",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "a",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ưa",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "mờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ưa",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "mưa",
-            "role": "word",
-            "group": 2
-          }
-        ]
-      },
-      {
-        "id": "spell_d12_7",
-        "day": 12,
-        "order": 7,
-        "text": "dừa",
-        "rime": "ưa",
-        "initial": "d",
-        "tone": "huyền",
-        "spellingRead": "ư - a - ưa | dờ - ưa - dưa | huyền - dừa",
-        "example": "Bé Mây uống nước quả dừa.",
-        "emoji": "🥥",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ư",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "a",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ưa",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "dờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ưa",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "dưa",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "huyền",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "dừa",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d12_8",
-        "day": 12,
-        "order": 8,
-        "text": "ngựa",
-        "rime": "ưa",
-        "initial": "ng",
-        "tone": "nặng",
-        "spellingRead": "ư - a - ưa | ngờ - ưa - ngưa | nặng - ngựa",
-        "example": "Bé Mây nhìn chú ngựa chạy nhanh.",
-        "emoji": "🐴",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ư",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "a",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ưa",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ngờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ưa",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "ngưa",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "nặng",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "ngựa",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "day": 13,
-    "title": "Vần có âm đệm (oa, oe, uê, uy)",
-    "rimeIntro": [
-      "oa",
-      "oe",
-      "uê",
-      "uy"
-    ],
-    "words": [
-      {
-        "id": "spell_d13_1",
-        "day": 13,
-        "order": 1,
-        "text": "hoa",
-        "rime": "oa",
-        "initial": "h",
-        "tone": "ngang",
-        "spellingRead": "o - a - oa | hờ - oa - hoa",
-        "example": "Bé Mây tưới bông hoa xinh.",
-        "emoji": "🌸",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "o",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "a",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "oa",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "hờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "oa",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "hoa",
-            "role": "word",
-            "group": 2
-          }
-        ]
-      },
-      {
-        "id": "spell_d13_2",
-        "day": 13,
-        "order": 2,
-        "text": "loa",
-        "rime": "oa",
-        "initial": "l",
-        "tone": "ngang",
-        "spellingRead": "o - a - oa | lờ - oa - loa",
-        "example": "Chiếc loa phát nhạc vui.",
-        "emoji": "🔊",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "o",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "a",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "oa",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "lờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "oa",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "loa",
-            "role": "word",
-            "group": 2
-          }
-        ]
-      },
-      {
-        "id": "spell_d13_3",
-        "day": 13,
-        "order": 3,
-        "text": "tỏa",
-        "rime": "oa",
-        "initial": "t",
-        "tone": "hỏi",
-        "spellingRead": "o - a - oa | tờ - oa - toa | hỏi - tỏa",
-        "example": "Ánh nắng tỏa sáng khắp sân.",
-        "emoji": "☀️",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "o",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "a",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "oa",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "tờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "oa",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "toa",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "hỏi",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "tỏa",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d13_4",
-        "day": 13,
-        "order": 4,
-        "text": "khoe",
-        "rime": "oe",
-        "initial": "kh",
-        "tone": "ngang",
-        "spellingRead": "o - e - oe | khờ - oe - khoe",
-        "example": "Bé Mây khoe áo mới với bạn.",
-        "emoji": "👗",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "o",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "e",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "oe",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "khờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "oe",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "khoe",
-            "role": "word",
-            "group": 2
-          }
-        ]
-      },
-      {
-        "id": "spell_d13_5",
-        "day": 13,
-        "order": 5,
-        "text": "khỏe",
-        "rime": "oe",
-        "initial": "kh",
-        "tone": "hỏi",
-        "spellingRead": "o - e - oe | khờ - oe - khoe | hỏi - khỏe",
-        "example": "Bé Mây ăn nhiều rau nên khỏe mạnh.",
-        "emoji": "💪",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "o",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "e",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "oe",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "khờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "oe",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "khoe",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "hỏi",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "khỏe",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d13_6",
-        "day": 13,
-        "order": 6,
-        "text": "xòe",
-        "rime": "oe",
-        "initial": "x",
-        "tone": "huyền",
-        "spellingRead": "o - e - oe | xờ - oe - xoe | huyền - xòe",
-        "example": "Chú công xòe đuôi thật đẹp.",
-        "emoji": "🦚",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "o",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "e",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "oe",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "xờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "oe",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "xoe",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "huyền",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "xòe",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d13_7",
-        "day": 13,
-        "order": 7,
-        "text": "huệ",
-        "rime": "uê",
-        "initial": "h",
-        "tone": "nặng",
-        "spellingRead": "u - ê - uê | hờ - uê - huê | nặng - huệ",
-        "example": "Bé Mây ngửi bông hoa huệ trắng.",
-        "emoji": "assets/emojis/hue.svg",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "u",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "ê",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "uê",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "hờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "uê",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "huê",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "nặng",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "huệ",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d13_8",
-        "day": 13,
-        "order": 8,
-        "text": "khuy",
-        "rime": "uy",
-        "initial": "kh",
-        "tone": "ngang",
-        "spellingRead": "u - i - uy | khờ - uy - khuy",
-        "example": "Bé Mây cài khuy áo ngay ngắn.",
-        "emoji": "assets/emojis/hue.svg",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "u",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "i",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "uy",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "khờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "uy",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "khuy",
-            "role": "word",
-            "group": 2
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "day": 14,
-    "title": "Mở rộng: âm đệm & âm cuối",
-    "rimeIntro": [
-      "oan",
-      "oanh",
-      "oai",
-      "oay",
-      "uây",
-      "oăn",
-      "uyên"
-    ],
-    "words": [
       {
         "id": "spell_d14_1",
         "day": 14,
-        "order": 1,
+        "order": 6,
         "text": "ngoan",
         "rime": "oan",
         "initial": "ng",
@@ -5585,61 +5910,17 @@ window.MagicWorld.SpellingDays = [
             "group": 2
           }
         ]
-      },
-      {
-        "id": "spell_d14_2",
-        "day": 14,
-        "order": 2,
-        "text": "khoanh",
-        "rime": "oanh",
-        "initial": "kh",
-        "tone": "ngang",
-        "spellingRead": "o - a - nhờ - oanh | khờ - oanh - khoanh",
-        "example": "Bé Mây khoanh tay chào cô.",
-        "emoji": "⭕",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "o",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "a",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "nhờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "oanh",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "khờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "oanh",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "khoanh",
-            "role": "word",
-            "group": 2
-          }
-        ]
-      },
+      }
+    ]
+  },
+  {
+    "day": 20,
+    "title": "Vần 3–4 chữ (oai, oay, uây, oăn, oanh)",
+    "words": [
       {
         "id": "spell_d14_3",
         "day": 14,
-        "order": 3,
+        "order": 1,
         "text": "xoài",
         "rime": "oai",
         "initial": "x",
@@ -5699,7 +5980,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d14_4",
         "day": 14,
-        "order": 4,
+        "order": 2,
         "text": "khoai",
         "rime": "oai",
         "initial": "kh",
@@ -5749,7 +6030,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d14_5",
         "day": 14,
-        "order": 5,
+        "order": 3,
         "text": "xoay",
         "rime": "oay",
         "initial": "x",
@@ -5799,7 +6080,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d14_6",
         "day": 14,
-        "order": 6,
+        "order": 4,
         "text": "khuấy",
         "rime": "uây",
         "initial": "kh",
@@ -5859,7 +6140,7 @@ window.MagicWorld.SpellingDays = [
       {
         "id": "spell_d14_7",
         "day": 14,
-        "order": 7,
+        "order": 5,
         "text": "xoăn",
         "rime": "oăn",
         "initial": "x",
@@ -5907,9 +6188,65 @@ window.MagicWorld.SpellingDays = [
         ]
       },
       {
+        "id": "spell_d14_2",
+        "day": 14,
+        "order": 6,
+        "text": "khoanh",
+        "rime": "oanh",
+        "initial": "kh",
+        "tone": "ngang",
+        "spellingRead": "o - a - nhờ - oanh | khờ - oanh - khoanh",
+        "example": "Bé Mây khoanh tay chào cô.",
+        "emoji": "⭕",
+        "quiz": true,
+        "chips": [
+          {
+            "text": "o",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "a",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "nhờ",
+            "role": "onset",
+            "group": 1
+          },
+          {
+            "text": "oanh",
+            "role": "rime",
+            "group": 1
+          },
+          {
+            "text": "khờ",
+            "role": "onset",
+            "group": 2
+          },
+          {
+            "text": "oanh",
+            "role": "rime",
+            "group": 2
+          },
+          {
+            "text": "khoanh",
+            "role": "word",
+            "group": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "day": 21,
+    "title": "Vần 3–4 chữ (uyên)",
+    "words": [
+      {
         "id": "spell_d14_8",
         "day": 14,
-        "order": 8,
+        "order": 1,
         "text": "chuyện",
         "rime": "uyên",
         "initial": "ch",
@@ -5966,438 +6303,6 @@ window.MagicWorld.SpellingDays = [
           },
           {
             "text": "chuyện",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "day": 15,
-    "title": "Bổ sung vần còn thiếu (êm, om, ên, ơn, âng, et, ơt, ơp)",
-    "rimeIntro": [
-      "êm",
-      "om",
-      "ên",
-      "ơn",
-      "âng",
-      "et",
-      "ơt",
-      "ơp"
-    ],
-    "words": [
-      {
-        "id": "spell_d15_1",
-        "day": 15,
-        "order": 1,
-        "text": "đêm",
-        "rime": "êm",
-        "initial": "đ",
-        "tone": "ngang",
-        "spellingRead": "ê - mờ - êm | đờ - êm - đêm",
-        "example": "Đêm đến, Bé Mây đi ngủ.",
-        "emoji": "🌃",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ê",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "mờ",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "êm",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "đờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "êm",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "đêm",
-            "role": "word",
-            "group": 2
-          }
-        ]
-      },
-      {
-        "id": "spell_d15_2",
-        "day": 15,
-        "order": 2,
-        "text": "xóm",
-        "rime": "om",
-        "initial": "x",
-        "tone": "sắc",
-        "spellingRead": "o - mờ - om | xờ - om - xom | sắc - xóm",
-        "example": "Xóm nhỏ của Bé Mây rất vui.",
-        "emoji": "🏘️",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "o",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "mờ",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "om",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "xờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "om",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "xom",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "xóm",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d15_3",
-        "day": 15,
-        "order": 3,
-        "text": "nến",
-        "rime": "ên",
-        "initial": "n",
-        "tone": "sắc",
-        "spellingRead": "ê - nờ - ên | nờ - ên - nên | sắc - nến",
-        "example": "Bé Mây thổi nến sinh nhật.",
-        "emoji": "🕯️",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ê",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "nờ",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ên",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "nờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ên",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "nên",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "nến",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d15_4",
-        "day": 15,
-        "order": 4,
-        "text": "lợn",
-        "rime": "ơn",
-        "initial": "l",
-        "tone": "nặng",
-        "spellingRead": "ơ - nờ - ơn | lờ - ơn - lơn | nặng - lợn",
-        "example": "Chú lợn con ủn ỉn chào Bé Mây.",
-        "emoji": "🐖",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ơ",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "nờ",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ơn",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "lờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ơn",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "lơn",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "nặng",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "lợn",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d15_5",
-        "day": 15,
-        "order": 5,
-        "text": "tầng",
-        "rime": "âng",
-        "initial": "t",
-        "tone": "huyền",
-        "spellingRead": "â - ngờ - âng | tờ - âng - tâng | huyền - tầng",
-        "example": "Nhà Bé Mây có hai tầng.",
-        "emoji": "🏢",
-        "quiz": false,
-        "noPictureQuiz": true,
-        "chips": [
-          {
-            "text": "â",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ngờ",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "âng",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "tờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "âng",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "tâng",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "huyền",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "tầng",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d15_6",
-        "day": 15,
-        "order": 6,
-        "text": "vẹt",
-        "rime": "et",
-        "initial": "v",
-        "tone": "nặng",
-        "spellingRead": "e - tờ - et | vờ - et - vet | nặng - vẹt",
-        "example": "Chú vẹt biết nói chào Bé Mây.",
-        "emoji": "🦜",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "e",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "tờ",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "et",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "vờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "et",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "vet",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "nặng",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "vẹt",
-            "role": "word",
-            "group": 3
-          }
-        ]
-      },
-      {
-        "id": "spell_d15_7",
-        "day": 15,
-        "order": 7,
-        "text": "ớt",
-        "rime": "ơt",
-        "initial": "",
-        "tone": "sắc",
-        "spellingRead": "ơ - tờ - ơt | sắc - ớt",
-        "example": "Quả ớt đỏ rất cay, Bé Mây không ăn.",
-        "emoji": "🌶️",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ơ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "tờ",
-            "role": "onset",
-            "group": 1
-          },
-          {
-            "text": "ơt",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 2
-          },
-          {
-            "text": "ớt",
-            "role": "word",
-            "group": 2
-          }
-        ]
-      },
-      {
-        "id": "spell_d15_8",
-        "day": 15,
-        "order": 8,
-        "text": "chớp",
-        "rime": "ơp",
-        "initial": "ch",
-        "tone": "sắc",
-        "spellingRead": "ơ - pờ - ơp | chờ - ơp - chơp | sắc - chớp",
-        "example": "Bé Mây thấy tia chớp sáng loé.",
-        "emoji": "⚡",
-        "quiz": true,
-        "chips": [
-          {
-            "text": "ơ",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "pờ",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "ơp",
-            "role": "rime",
-            "group": 1
-          },
-          {
-            "text": "chờ",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "ơp",
-            "role": "rime",
-            "group": 2
-          },
-          {
-            "text": "chơp",
-            "role": "onset",
-            "group": 2
-          },
-          {
-            "text": "sắc",
-            "role": "tone",
-            "group": 3
-          },
-          {
-            "text": "chớp",
             "role": "word",
             "group": 3
           }

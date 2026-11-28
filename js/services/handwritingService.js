@@ -3,21 +3,125 @@ window.MagicWorld = window.MagicWorld || {};
 
 // Ratio-based stroke grading constants (relative to letter height H on canvas)
 const HW_CONSTANTS = {
-  START_R_RATIO: 0.30,
-  END_R_RATIO: 0.35,
-  WP_R_RATIO: 0.20,
-  COVER_MIN: 2 / 3,
-  TIDY_MIN: 0.75,
-  EARLY_RELEASE_COVER: 0.85,
-  TIDY_BAND_MULT: 2,
-  WAYPOINT_COUNT: 10,
-  DENSE_SAMPLE_COUNT: 40,
+  RESAMPLE_COUNT: 50,      // resample both guide and user stroke to 50 points
+  TOLERANCE: 0.14,         // 14% of letter box height H (within 12-15% range)
+  START_TOLERANCE: 0.28,   // 28% of H for starting point check
+  PASS_THRESHOLD: 0.65,    // >= 65% coverage required to pass
+  MIN_DIRECTION_DOT: 0.20, // start->end direction alignment for open strokes
+  TIDY_MIN: 0.65,          // anti-scribble: >= 65% of user points near guide
+  STAR_3_MIN: 0.90,        // >= 90% = 3 stars
+  STAR_2_MIN: 0.80,        // 80-89% = 2 stars, 65-79% = 1 star
   DIFFICULTIES: {
-    easy: { radiusMult: 1.3, coverMin: 0.6 },
-    medium: { radiusMult: 1.0, coverMin: 2 / 3 },
-    hard: { radiusMult: 0.8, coverMin: 0.75 }
+    easy: { tolMult: 1.25, passMin: 0.65 },
+    medium: { tolMult: 1.0, passMin: 0.65 },
+    hard: { tolMult: 0.85, passMin: 0.72 }
   }
 };
+
+function resampleStrokePoints(pts, count) {
+  if (!pts || pts.length === 0) return [];
+  if (pts.length === 1 || count <= 1) return [pts[0]];
+  const cumLen = [0];
+  for (let i = 1; i < pts.length; i++) {
+    cumLen.push(cumLen[i - 1] + Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y));
+  }
+  const totalLen = cumLen[cumLen.length - 1];
+  if (totalLen === 0) return Array.from({ length: count }, () => ({ x: pts[0].x, y: pts[0].y }));
+
+  const out = [];
+  let segIdx = 0;
+  for (let k = 0; k < count; k++) {
+    const target = (totalLen * k) / (count - 1);
+    while (segIdx < cumLen.length - 2 && cumLen[segIdx + 1] < target) {
+      segIdx++;
+    }
+    const segStart = cumLen[segIdx];
+    const segEnd = cumLen[segIdx + 1];
+    const t = segEnd > segStart ? (target - segStart) / (segEnd - segStart) : 0;
+    out.push({
+      x: pts[segIdx].x + (pts[segIdx + 1].x - pts[segIdx].x) * t,
+      y: pts[segIdx].y + (pts[segIdx + 1].y - pts[segIdx].y) * t
+    });
+  }
+  return out;
+}
+
+function gradeStroke(userPts, guidePts, H, difficulty = 'easy') {
+  const diff = HW_CONSTANTS.DIFFICULTIES[difficulty] || HW_CONSTANTS.DIFFICULTIES.easy;
+  const n = HW_CONSTANTS.RESAMPLE_COUNT;
+  const uRes = resampleStrokePoints(userPts, n);
+  const gRes = resampleStrokePoints(guidePts, n);
+  if (uRes.length < 2 || gRes.length < 2) {
+    return { passed: false, startOk: false, directionOk: false, coverage: 0, tidyRatio: 0, score: 0, H };
+  }
+
+  const tol = HW_CONSTANTS.TOLERANCE * H * diff.tolMult;
+  const startTol = HW_CONSTANTS.START_TOLERANCE * H * diff.tolMult;
+  const tidyTol = tol * 1.5;
+
+  const startOk = Math.hypot(uRes[0].x - gRes[0].x, uRes[0].y - gRes[0].y) <= startTol;
+
+  // Coverage: % of guide resampled points that have a user point within tol
+  let guideCovered = 0;
+  for (let g = 0; g < gRes.length; g++) {
+    const gp = gRes[g];
+    for (let u = 0; u < uRes.length; u++) {
+      if (Math.hypot(uRes[u].x - gp.x, uRes[u].y - gp.y) <= tol) {
+        guideCovered++;
+        break;
+      }
+    }
+  }
+  const coverage = guideCovered / gRes.length;
+
+  // Anti-scribble: % of user resampled points within tidyTol of guide
+  let tidyHits = 0;
+  for (let u = 0; u < uRes.length; u++) {
+    const up = uRes[u];
+    let minDist = Infinity;
+    for (let g = 0; g < gRes.length; g++) {
+      const d = Math.hypot(up.x - gRes[g].x, up.y - gRes[g].y);
+      if (d < minDist) minDist = d;
+    }
+    if (minDist <= tidyTol) tidyHits++;
+  }
+  const tidyRatio = tidyHits / uRes.length;
+
+  // Direction check: forward sequential match vs reverse sequential match + start->end vector
+  const seqMatchCount = (uArr, gArr) => {
+    let matched = 0;
+    let uSearch = 0;
+    for (let g = 0; g < gArr.length; g++) {
+      for (let u = uSearch; u < uArr.length; u++) {
+        if (Math.hypot(uArr[u].x - gArr[g].x, uArr[u].y - gArr[g].y) <= tol * 1.35) {
+          matched++;
+          uSearch = u;
+          break;
+        }
+      }
+    }
+    return matched / gArr.length;
+  };
+  const fwdSeq = seqMatchCount(uRes, gRes);
+  const revSeq = seqMatchCount(uRes, [...gRes].reverse());
+
+  const gDx = gRes[gRes.length - 1].x - gRes[0].x;
+  const gDy = gRes[gRes.length - 1].y - gRes[0].y;
+  const gSpan = Math.hypot(gDx, gDy);
+  const uDx = uRes[uRes.length - 1].x - uRes[0].x;
+  const uDy = uRes[uRes.length - 1].y - uRes[0].y;
+  const uSpan = Math.hypot(uDx, uDy);
+
+  let vectorOk = true;
+  if (gSpan > 0.18 * H && uSpan > 0.1 * H) {
+    const dot = (gDx * uDx + gDy * uDy) / (gSpan * uSpan);
+    vectorOk = dot >= HW_CONSTANTS.MIN_DIRECTION_DOT;
+  }
+  const directionOk = vectorOk && fwdSeq >= 0.45 && fwdSeq >= revSeq - 0.05;
+
+  const passed = startOk && directionOk && coverage >= diff.passMin && tidyRatio >= HW_CONSTANTS.TIDY_MIN;
+  return { passed, startOk, directionOk, coverage, tidyRatio, fwdSeq, revSeq, score: coverage, H };
+}
 
 class HandwritingService {
   constructor() {
@@ -30,6 +134,8 @@ class HandwritingService {
     this.activePointerId = null;
     this.activePointers = new Set();
     this.userPoints = [];
+    this.completedUserStrokes = [];
+    this.lastWrongPoints = null;
     this.sparkles = [];
     this.animationId = null;
     this.onComplete = null;
@@ -82,12 +188,14 @@ class HandwritingService {
     this.height = rect.height;
   }
 
-  loadLetter(letterKey) {
+  loadLetter(letterKey, customStrokes = null) {
     this.currentLetter = letterKey;
     const strokesData = window.MagicWorld.Strokes || {};
-    this.strokesGuide = strokesData[letterKey] || strokesData['a'];
+    this.strokesGuide = customStrokes || strokesData[letterKey] || strokesData['a'];
     this.currentStrokeIndex = 0;
     this.userPoints = [];
+    this.completedUserStrokes = [];
+    this.lastWrongPoints = null;
     this.demoRunning = false;
     this.demoDotPos = null;
     this.wrongShakeUntil = 0;
@@ -153,6 +261,7 @@ class HandwritingService {
       this.activePointerId = e.pointerId;
       this.setupResolution();
       this.isDrawing = true;
+      this.lastWrongPoints = null;
       const pos = getPos(e);
       this.userPoints = [pos];
       this.addSparkle(pos.x, pos.y);
@@ -300,12 +409,12 @@ class HandwritingService {
       }
 
       if (isDone) {
-        // Completed stroke turns vivid green!
-        ctx.strokeStyle = '#16A34A';
-        ctx.lineWidth = 15 / tr.uniformScale;
+        // Keep faint dashed guide behind the child's actual drawn stroke
+        ctx.strokeStyle = '#E2E8F0';
+        ctx.lineWidth = 10 / tr.uniformScale;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
-        ctx.setLineDash([]);
+        ctx.setLineDash([5, 5]);
         ctx.stroke(p);
       } else {
         // Thicker dashed guide path
@@ -350,46 +459,74 @@ class HandwritingService {
     ctx.restore();
   }
 
-  // Smooth thick user stroke (>= 10px) using quadratic midpoint smoothing
-  drawUserStroke() {
-    if (this.userPoints.length < 2) return;
+  // Smooth thick polyline renderer for exact child strokes
+  drawSmoothPolyline(pts, strokeStyle, lineWidth) {
+    if (!pts || pts.length < 2) return;
     const ctx = this.ctx;
 
     ctx.save();
     ctx.beginPath();
-    ctx.moveTo(this.userPoints[0].x, this.userPoints[0].y);
-    for (let i = 1; i < this.userPoints.length - 1; i++) {
-      const midX = (this.userPoints[i].x + this.userPoints[i + 1].x) / 2;
-      const midY = (this.userPoints[i].y + this.userPoints[i + 1].y) / 2;
-      ctx.quadraticCurveTo(this.userPoints[i].x, this.userPoints[i].y, midX, midY);
+    ctx.moveTo(pts[0].x, pts[0].y);
+    for (let i = 1; i < pts.length - 1; i++) {
+      const midX = (pts[i].x + pts[i + 1].x) / 2;
+      const midY = (pts[i].y + pts[i + 1].y) / 2;
+      ctx.quadraticCurveTo(pts[i].x, pts[i].y, midX, midY);
     }
-    const last = this.userPoints[this.userPoints.length - 1];
+    const last = pts[pts.length - 1];
     ctx.lineTo(last.x, last.y);
 
-    ctx.strokeStyle = '#1E40AF';
-    ctx.lineWidth = 14;
+    ctx.strokeStyle = strokeStyle;
+    ctx.lineWidth = lineWidth;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.stroke();
     ctx.restore();
   }
 
+  drawUserStroke() {
+    for (const item of this.completedUserStrokes) {
+      this.drawSmoothPolyline(item.points, '#16A34A', 13);
+    }
+    if (this.lastWrongPoints && this.lastWrongPoints.length >= 2) {
+      this.drawSmoothPolyline(this.lastWrongPoints, '#F97316', 13);
+    }
+    if (this.userPoints.length >= 2) {
+      this.drawSmoothPolyline(this.userPoints, '#1E40AF', 14);
+    }
+  }
+
   getLetterHeightPx(tr) {
     return (tr && tr.oliSize ? tr.oliSize * 2 : 96);
   }
 
-  // Ratio-based stroke validation (scales with letter height H, direction, early release, anti-scribble)
+  // Ratio-based stroke validation (scales with letter height H, direction, stroke order, anti-scribble)
   evaluateStroke() {
     const st = this.strokesGuide && this.strokesGuide[this.currentStrokeIndex];
     if (!st) return;
 
     const tr = this.getLetterTransform();
     const H = this.getLetterHeightPx(tr);
-    const { pts: guidePts, totalLen } = this.getGuideSamplePoints(st.d, tr, HW_CONSTANTS.WAYPOINT_COUNT);
-    const { pts: densePts } = this.getGuideSamplePoints(st.d, tr, HW_CONSTANTS.DENSE_SAMPLE_COUNT);
+
+    // Special forgiving check for dot tone mark ("Dấu nặng")
+    if (st.isDot && st.start) {
+      if (this.userPoints.length === 0) return;
+      const sx = tr.offsetX + st.start.x * tr.uniformScale;
+      const sy = tr.offsetY + st.start.y * tr.uniformScale;
+      const p0 = this.userPoints[0];
+      const pLast = this.userPoints[this.userPoints.length - 1];
+      const dist = Math.min(Math.hypot(p0.x - sx, p0.y - sy), Math.hypot(pLast.x - sx, pLast.y - sy));
+      if (dist <= HW_CONSTANTS.START_TOLERANCE * H) {
+        this.advanceStrokeSuccess(3, 1.0);
+      } else {
+        this.handleWrongStroke('mismatch', { startOk: false, directionOk: true, coverage: 0, tidyRatio: 0, score: 0 });
+      }
+      return;
+    }
+
+    const { pts: guidePts, totalLen } = this.getGuideSamplePoints(st.d, tr, HW_CONSTANTS.RESAMPLE_COUNT);
 
     if (this.userPoints.length < 3) {
-      this.handleWrongStroke('too-short', { startOk: false, coverage: 0, endOk: false, tidyRatio: 0 });
+      this.handleWrongStroke('too-short', { startOk: false, directionOk: false, coverage: 0, tidyRatio: 0, score: 0 });
       return;
     }
 
@@ -401,75 +538,42 @@ class HandwritingService {
       );
     }
     if (userLen < Math.max(8, totalLen * 0.15)) {
-      this.handleWrongStroke('too-short', { startOk: false, coverage: 0, endOk: false, tidyRatio: 0 });
+      this.handleWrongStroke('too-short', { startOk: false, directionOk: false, coverage: 0, tidyRatio: 0, score: 0 });
       return;
     }
 
-    const checkWithMult = (multOverride) => {
-      const diff = HW_CONSTANTS.DIFFICULTIES[this.difficulty] || HW_CONSTANTS.DIFFICULTIES.easy;
-      const mult = diff.radiusMult * (multOverride || this.retryRadiusMult);
-      const startR = HW_CONSTANTS.START_R_RATIO * H * mult;
-      const endR = HW_CONSTANTS.END_R_RATIO * H * mult;
-      const wpR = HW_CONSTANTS.WP_R_RATIO * H * mult;
-      const tidyR = HW_CONSTANTS.TIDY_BAND_MULT * wpR;
-      const coverMin = diff.coverMin;
-
-      const startPt = this.userPoints[0];
-      const endPt = this.userPoints[this.userPoints.length - 1];
-      const gStart = guidePts[0];
-      const gEnd = guidePts[guidePts.length - 1];
-
-      const startOk = Math.hypot(startPt.x - gStart.x, startPt.y - gStart.y) <= startR;
-
-      // Sequential waypoint coverage (must follow stroke direction)
-      let matchedIdx = 0;
-      let userSearchStart = 0;
-      for (let g = 0; g < guidePts.length; g++) {
-        const gp = guidePts[g];
-        for (let u = userSearchStart; u < this.userPoints.length; u++) {
-          if (Math.hypot(this.userPoints[u].x - gp.x, this.userPoints[u].y - gp.y) <= wpR) {
-            matchedIdx++;
-            userSearchStart = u;
-            break;
-          }
-        }
-      }
-      const coverage = matchedIdx / guidePts.length;
-      const endOk = Math.hypot(endPt.x - gEnd.x, endPt.y - gEnd.y) <= endR || coverage >= HW_CONSTANTS.EARLY_RELEASE_COVER;
-
-      // Anti-scribble: ratio of user points within 2*WP_R of the guide curve
-      let tidyHits = 0;
-      for (let u = 0; u < this.userPoints.length; u++) {
-        const up = this.userPoints[u];
-        let minDist = Infinity;
-        for (let d = 0; d < densePts.length; d++) {
-          const dist = Math.hypot(up.x - densePts[d].x, up.y - densePts[d].y);
-          if (dist < minDist) minDist = dist;
-        }
-        if (minDist <= tidyR) tidyHits++;
-      }
-      const tidyRatio = tidyHits / this.userPoints.length;
-      const passed = startOk && coverage >= coverMin && endOk && tidyRatio >= HW_CONSTANTS.TIDY_MIN;
-      return { passed, startOk, coverage, endOk, tidyRatio, H };
-    };
-
-    const evalRes = checkWithMult();
+    const evalRes = gradeStroke(this.userPoints, guidePts, H, this.difficulty);
     this.lastEvalDebug = evalRes;
 
     if (evalRes.passed) {
-      const score = evalRes.coverage * 0.5 + evalRes.tidyRatio * 0.5;
-      const stars = score >= 0.90 ? 3 : (score >= 0.78 ? 2 : 1);
-      this.advanceStrokeSuccess(stars, false);
-    } else {
-      this.handleWrongStroke('mismatch', evalRes);
+      const stars = evalRes.coverage >= HW_CONSTANTS.STAR_3_MIN ? 3 : (evalRes.coverage >= HW_CONSTANTS.STAR_2_MIN ? 2 : 1);
+      this.advanceStrokeSuccess(stars, evalRes.coverage);
+      return;
     }
+
+    // Check if the child drew a later stroke out of order (e.g. stroke 2 before stroke 1)
+    for (let k = this.currentStrokeIndex + 1; k < this.strokesGuide.length; k++) {
+      const laterGuide = this.getGuideSamplePoints(this.strokesGuide[k].d, tr, HW_CONSTANTS.RESAMPLE_COUNT).pts;
+      const laterRes = gradeStroke(this.userPoints, laterGuide, H, 'easy');
+      if (laterRes.passed || (laterRes.startOk && laterRes.coverage >= 0.55)) {
+        this.handleWrongStroke('wrong-order', evalRes);
+        return;
+      }
+    }
+
+    this.handleWrongStroke('mismatch', evalRes);
   }
 
-  advanceStrokeSuccess(stars, isAlmostRight) {
+  advanceStrokeSuccess(stars, coverageScore) {
+    this.completedUserStrokes.push({
+      points: this.userPoints.slice(),
+      stars,
+      score: typeof coverageScore === 'number' ? coverageScore : HW_CONSTANTS.PASS_THRESHOLD
+    });
     this.currentStrokeIndex++;
     this.userPoints = [];
+    this.lastWrongPoints = null;
     this.wrongAttempts = 0;
-    this.retryRadiusMult = 1.0;
     this.updateStrokeBadge();
 
     if (window.MagicWorld.AudioService) {
@@ -477,20 +581,22 @@ class HandwritingService {
     }
 
     if (window.MagicWorldAppInstance && window.MagicWorldAppInstance.showHoldHint) {
-      if (isAlmostRight) {
-        window.MagicWorldAppInstance.showHoldHint('Gần đúng rồi, cố lên nhé! ✨');
-      } else {
-        window.MagicWorldAppInstance.showHoldHint(`${'⭐'.repeat(stars)} Đẹp quá!`);
-      }
+      window.MagicWorldAppInstance.showHoldHint(`${'⭐'.repeat(stars)} Đẹp quá!`);
     }
 
     if (this.currentStrokeIndex >= this.strokesGuide.length) {
-      if (window.MagicWorld.AudioService) {
-        window.MagicWorld.AudioService.playChime();
-      }
-      this.explodeSparkles();
-      if (this.onComplete) {
-        this.onComplete();
+      const total = this.completedUserStrokes.reduce((sum, s) => sum + s.score, 0);
+      const avgScore = this.completedUserStrokes.length ? total / this.completedUserStrokes.length : 0;
+      const letterPassed = avgScore >= HW_CONSTANTS.PASS_THRESHOLD;
+      if (letterPassed) {
+        const letterStars = avgScore >= HW_CONSTANTS.STAR_3_MIN ? 3 : (avgScore >= HW_CONSTANTS.STAR_2_MIN ? 2 : 1);
+        if (window.MagicWorld.AudioService) {
+          window.MagicWorld.AudioService.playChime();
+        }
+        this.explodeSparkles();
+        if (this.onComplete) {
+          this.onComplete(letterStars, avgScore);
+        }
       }
     }
     this.redraw();
@@ -498,20 +604,17 @@ class HandwritingService {
 
   handleWrongStroke(reason, evalRes) {
     this.wrongAttempts++;
+    // Keep the child's stroke visible in coral-orange so they can compare with the guide
+    this.lastWrongPoints = this.userPoints.length >= 2 ? this.userPoints.slice() : null;
     this.userPoints = [];
     this.wrongShakeUntil = performance.now() + 450;
 
-    if (this.wrongAttempts === 2) {
-      if (window.MagicWorld.AudioService) window.MagicWorld.AudioService.playPop();
-      this.redraw();
-      this.playDemoForCurrentStroke();
-      return;
-    }
-
-    if (this.wrongAttempts >= 3) {
-      this.retryRadiusMult = 1.5;
-      this.advanceStrokeSuccess(1, true);
-      return;
+    if (window.MagicWorldAppInstance && window.MagicWorldAppInstance.showHoldHint) {
+      if (reason === 'wrong-order') {
+        window.MagicWorldAppInstance.showHoldHint(`Mình viết nét ${this.currentStrokeIndex + 1} trước nhé!`);
+      } else {
+        window.MagicWorldAppInstance.showHoldHint('Gần đúng rồi, con thử lại nhé!');
+      }
     }
 
     if (window.MagicWorld.AudioService) {
@@ -546,6 +649,8 @@ class HandwritingService {
   clear() {
     this.currentStrokeIndex = 0;
     this.userPoints = [];
+    this.completedUserStrokes = [];
+    this.lastWrongPoints = null;
     this.wrongShakeUntil = 0;
     this.wrongAttempts = 0;
     this.retryRadiusMult = 1.0;
@@ -570,6 +675,8 @@ class HandwritingService {
     this.demoRunning = true;
     this.currentStrokeIndex = 0;
     this.userPoints = [];
+    this.completedUserStrokes = [];
+    this.lastWrongPoints = null;
     this.updateStrokeBadge();
     if (this.onReset) this.onReset();
 
@@ -687,4 +794,74 @@ class HandwritingService {
   }
 }
 
+const VN_BASE_TO_STROKE_KEY = {
+  a: 'a', 'ă': 'aw', 'â': 'aa',
+  b: 'b', c: 'c', d: 'd', 'đ': 'dd',
+  e: 'e', 'ê': 'ee',
+  g: 'g', h: 'h', i: 'i', k: 'k', l: 'l', m: 'm', n: 'n',
+  o: 'o', 'ô': 'oo', 'ơ': 'ow',
+  p: 'p', q: 'q', r: 'r', s: 's', t: 't',
+  u: 'u', 'ư': 'uw',
+  v: 'v', x: 'x', y: 'y'
+};
+
+const VN_TONE_MARKS = {
+  '\u0301': 'sac',   // sắc
+  '\u0300': 'huyen', // huyền
+  '\u0309': 'hoi',   // hỏi
+  '\u0303': 'nga',   // ngã
+  '\u0323': 'nang'   // nặng
+};
+
+function buildToneStroke(tone, order, hasHatOrBreve) {
+  const dy = hasHatOrBreve ? -6 : 0;
+  if (tone === 'sac') {
+    return { order, label: 'Dấu sắc', d: `M 64 ${34 + dy} L 46 ${48 + dy}`, start: { x: 64, y: 34 + dy } };
+  }
+  if (tone === 'huyen') {
+    return { order, label: 'Dấu huyền', d: `M 44 ${34 + dy} L 62 ${48 + dy}`, start: { x: 44, y: 34 + dy } };
+  }
+  if (tone === 'hoi') {
+    return { order, label: 'Dấu hỏi', d: `M 48 ${34 + dy} C 58 ${28 + dy} 62 ${38 + dy} 50 ${44 + dy} L 54 ${49 + dy}`, start: { x: 48, y: 34 + dy } };
+  }
+  if (tone === 'nga') {
+    return { order, label: 'Dấu ngã', d: `M 42 ${44 + dy} Q 48 ${36 + dy} 54 ${42 + dy} Q 60 ${48 + dy} 66 ${40 + dy}`, start: { x: 42, y: 44 + dy } };
+  }
+  if (tone === 'nang') {
+    return { order, label: 'Dấu nặng', isDot: true, d: 'M 54 119 A 3.5 3.5 0 1 1 53.9 119', start: { x: 54, y: 122 } };
+  }
+  return null;
+}
+
+function decomposeVietnameseWord(wordText) {
+  const strokesData = window.MagicWorld.Strokes || {};
+  const chars = Array.from((wordText || '').toLowerCase());
+  const result = [];
+  for (const ch of chars) {
+    if (ch === ' ') continue;
+    const nfd = ch.normalize('NFD');
+    let tone = null;
+    let baseChars = '';
+    for (const part of Array.from(nfd)) {
+      if (VN_TONE_MARKS[part]) {
+        tone = VN_TONE_MARKS[part];
+      } else {
+        baseChars += part;
+      }
+    }
+    const baseLetter = baseChars.normalize('NFC');
+    const strokeKey = VN_BASE_TO_STROKE_KEY[baseLetter];
+    if (!strokeKey || !strokesData[strokeKey]) continue;
+    const baseStrokes = strokesData[strokeKey].map(s => ({ ...s, start: s.start ? { ...s.start } : undefined }));
+    const hasHatOrBreve = ['aw', 'aa', 'ee', 'oo'].includes(strokeKey);
+    if (tone) {
+      const toneStroke = buildToneStroke(tone, baseStrokes.length + 1, hasHatOrBreve);
+      if (toneStroke) baseStrokes.push(toneStroke);
+    }
+    result.push({ char: ch, baseLetter, strokeKey, tone, strokes: baseStrokes });
+  }
+  return result;
+}
+
+window.MagicWorld.HandwritingGrade = { HW_CONSTANTS, resampleStrokePoints, gradeStroke, decomposeVietnameseWord };
 window.MagicWorld.HandwritingService = new HandwritingService();

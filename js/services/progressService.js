@@ -57,21 +57,14 @@ class ProgressService {
     return this.getDefaultData();
   }
 
-  // Preserve Day 1 (8->9 words) and Day 12 (replaced words) completion across data update
+  // Reset old 15-day/8-word spelling progress once when migrating to 21-day 6-word curriculum
   migrateSpellingProgress(data) {
-    if (!data || data.spellingMigrationV15) return;
-    const sp = data.spellingProgress || {};
-    if (sp['1'] && Array.isArray(sp['1'].completedWords) && sp['1'].completedWords.length >= 8) {
-      sp['1'].completedLegacy = true;
+    if (!data || data.spellingMigrationV21) return;
+    data.spellingProgress = {};
+    if (data.manualOverrides && data.manualOverrides.spelling) {
+      data.manualOverrides.spelling = {};
     }
-    if (sp['12'] && Array.isArray(sp['12'].completedWords)) {
-      if (sp['12'].completedWords.length >= 8) {
-        sp['12'].completedLegacy = true;
-      }
-      const keptDay12Ids = new Set(['spell_d12_3', 'spell_d12_5', 'spell_d12_7']);
-      sp['12'].completedWords = sp['12'].completedWords.filter(id => keptDay12Ids.has(id));
-    }
-    data.spellingMigrationV15 = true;
+    data.spellingMigrationV21 = true;
   }
 
   save() {
@@ -170,6 +163,20 @@ class ProgressService {
 
   getVocabDayProgress(day) {
     return this.data.vocabProgress[day] || { completedWords: [], stars: 0, score: 0 };
+  }
+
+  markVocabWordWritten(day, wordId) {
+    if (!this.data.vocabWriteProgress) this.data.vocabWriteProgress = {};
+    if (!this.data.vocabWriteProgress[day]) this.data.vocabWriteProgress[day] = [];
+    if (!this.data.vocabWriteProgress[day].includes(wordId)) {
+      this.data.vocabWriteProgress[day].push(wordId);
+      this.addSnowflakes(2);
+      this.save();
+    }
+  }
+
+  getVocabDayWriteProgress(day) {
+    return (this.data.vocabWriteProgress && this.data.vocabWriteProgress[day]) || [];
   }
 
   // Spelling words
